@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class AppApplication {
 
 	public static void main(String[] args) {
+		/* Load OR Tools Library */
+		System.loadLibrary("jniortools");
 		SpringApplication.run(AppApplication.class, args);
 	}
 
