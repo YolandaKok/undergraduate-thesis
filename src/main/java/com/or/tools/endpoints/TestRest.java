@@ -16,7 +16,7 @@ import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
 @RestController
-@RequestMapping(value = "/test")
+@RequestMapping(value = "/tes")
 public class TestRest {
 
 	@GetMapping("/solver")
