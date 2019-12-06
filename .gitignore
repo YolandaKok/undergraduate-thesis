@@ -2,3 +2,4 @@ target/*
 .classpath
 .project
 .settings/
+src/main/webapp/node_modules/*
