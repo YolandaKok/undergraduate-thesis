@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 const axios = require('axios');
 
-
 export class HelloWorld extends Component {
 
   componentDidMount() {
