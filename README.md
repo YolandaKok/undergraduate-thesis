@@ -8,7 +8,6 @@ Clone the repository to your local machine using the following command:
 ```
 git clone https://github.com/YolandaKok/undergraduate-thesis.git
 ```
-
 ### Prerequisities
 
 You have to install:
