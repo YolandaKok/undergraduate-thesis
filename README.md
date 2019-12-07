@@ -5,7 +5,9 @@ This project was part of my Undergraduate Dissertation for my Bachelor Degree in
 ## Getting Started
 
 Clone the repository to your local machine using the following command:
-* git clone https://github.com/YolandaKok/undergraduate-thesis.git
+```
+git clone https://github.com/YolandaKok/undergraduate-thesis.git
+```
 
 ### Prerequisities
 
