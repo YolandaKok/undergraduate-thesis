@@ -16,13 +16,13 @@ import com.or.tools.dto.LinearProblemDTO;
 public class LinearOptEndpoint {
 	
 	@PostMapping("/constrains")
-	public void insertConstrains(@RequestBody LinearProblemDTO problem) {
+	public void insertConstrains() {
 	    MPSolver solver = new MPSolver(
 	            "LinearProgrammingExample", MPSolver.OptimizationProblemType.GLOP_LINEAR_PROGRAMMING);
 
         double infinity = java.lang.Double.POSITIVE_INFINITY;
         // x and y are continuous non-negative variables.
-        MPVariable x = solver.makeNumVar(0.0, infinity, "x");
+        MPVariable x = solver.makeNumVar(-infinity, infinity, "x");
         MPVariable y = solver.makeNumVar(0.0, infinity, "y");
         System.out.println("Number of variables = " + solver.numVariables());
 
@@ -36,16 +36,10 @@ public class LinearOptEndpoint {
         c1.setCoefficient(x, 3);
         c1.setCoefficient(y, -1);
 
-        // x - y <= 2.
+        // x - y <= 1.
         MPConstraint c2 = solver.makeConstraint(-infinity, 2.0, "c2");
         c2.setCoefficient(x, 1);
         c2.setCoefficient(y, -1);
-        System.out.println("Number of constraints = " + solver.numConstraints());
-
-        // x + 2 >=0
-        MPConstraint c3 = solver.makeConstraint(0.0, infinity, "c3");
-        c3.setCoefficient(x, 1);
-        c3.setCoefficient(y, 1);
         System.out.println("Number of constraints = " + solver.numConstraints());
         
         // Maximize 3 * x + 4 * y.
