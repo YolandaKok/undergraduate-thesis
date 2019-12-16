@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import IndexPage from './components/IndexPage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import TSP from './components/TSP';
 
 const routing = (
     <BrowserRouter>
@@ -22,10 +23,14 @@ const routing = (
                 <li>
                     <Link to="/signup">Sign Up</Link>
                 </li>
+                <li>
+                    <Link to="/tsp">Travelling Salesman Problem</Link>
+                </li>
             </ul>
             <Route exact path="/" component={IndexPage} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/tsp" component={TSP} />
         </div>
     </BrowserRouter>
 )

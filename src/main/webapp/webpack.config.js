@@ -31,8 +31,10 @@ module.exports = {
       ]
    },
    devServer: {
-     contentBase: './src',
-     publicPath: '/output',
-     port: 9090
+        contentBase: './src',
+        publicPath: '/output',
+        port: 9090,
+        historyApiFallback: true
+
    }
 };

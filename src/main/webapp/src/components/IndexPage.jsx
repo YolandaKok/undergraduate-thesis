@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Knapsack from "./Knapsack";
 
 export class IndexPage extends Component {
     render() {
         return (
-            <h1>Hello</h1>
+            <Knapsack></Knapsack>
         );
     }
 }
