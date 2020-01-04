@@ -13,20 +13,6 @@ import TSP from './components/TSP';
 const routing = (
     <BrowserRouter>
         <div>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/signin">Sign In</Link>
-                </li>
-                <li>
-                    <Link to="/signup">Sign Up</Link>
-                </li>
-                <li>
-                    <Link to="/tsp">Travelling Salesman Problem</Link>
-                </li>
-            </ul>
             <Route exact path="/" component={IndexPage} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
