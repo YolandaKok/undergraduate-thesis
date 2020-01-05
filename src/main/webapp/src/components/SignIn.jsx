@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
+import NavBar from "./NavBar";
 
 export class SignIn extends Component {
     render() {
         return (
-            <div className="sing-in">
-                <h1>SignIn</h1>
-            </div>
+            <Fragment>
+                <NavBar/>
+                <div>
+                    Sign In
+                </div>
+            </Fragment>
         );
     }
 }

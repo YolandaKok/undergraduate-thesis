@@ -1,9 +1,34 @@
-import React, { Component } from 'react';
-
+import React, {Component, Fragment} from 'react';
+import Knapsack from "./Knapsack";
+import {Container, Col, Row, Form, Button} from 'react-bootstrap';
+import NavBar from "./NavBar";
 export class SignUp extends Component {
     render() {
         return (
-            <h1>Sign Up bbb.</h1>
+            <Fragment>
+                <NavBar/>
+                <Container>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <Form>
+                                <Form.Group>
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control placeholder="Enter username"></Form.Control>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control placeholder="Enter password"></Form.Control>
+                                </Form.Group>
+                                <Button variant="primary" type="submit">
+                                    Submit
+                                </Button>
+                            </Form>
+                        </Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+            </Fragment>
         );
     }
 }
