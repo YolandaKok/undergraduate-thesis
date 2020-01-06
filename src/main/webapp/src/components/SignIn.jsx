@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import NavBar from "./NavBar";
+import Knapsack from "./Knapsack";
 
 export class SignIn extends Component {
     render() {
@@ -9,6 +10,7 @@ export class SignIn extends Component {
                 <div>
                     Sign In
                 </div>
+                <Knapsack/>
             </Fragment>
         );
     }
