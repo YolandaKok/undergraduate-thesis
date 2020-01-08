@@ -13,7 +13,7 @@ module.exports = {
      ]),
    ],
    resolve: {
-      extensions: ['.js', '.jsx', '.min.css']
+      extensions: ['.js', '.jsx', '.min.css', '.css']
    },
    module: {
       rules: [
@@ -27,7 +27,34 @@ module.exports = {
          {
             test: /\.scss/,
             use: ['style-loader', 'css-loader', 'sass-loader']
-         }
+         },
+          {
+              test: /\.css$/,
+              exclude: /node_modules/,
+              use: [{
+                  loader: "style-loader"
+              },
+                  {
+                      loader: "css-loader",
+                      options: {
+                          modules: true,
+                      },
+                  }
+              ],
+          }, {
+              test: /\.css$/,
+              include: /node_modules/,
+              use: [{
+                  loader: "style-loader"
+              },
+                  {
+                      loader: "css-loader",
+                      options: {
+                          modules: false,
+                      },
+                  }
+              ],
+          }
       ]
    },
    devServer: {
@@ -35,6 +62,5 @@ module.exports = {
         publicPath: '/output',
         port: 9090,
         historyApiFallback: true
-
    }
 };

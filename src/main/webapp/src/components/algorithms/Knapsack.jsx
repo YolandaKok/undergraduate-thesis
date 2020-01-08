@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-
+import '../../../node_modules/react-vis/dist/style.css';
 
 import {
     XYPlot,

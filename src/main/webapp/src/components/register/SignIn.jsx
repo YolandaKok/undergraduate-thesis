@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import NavBar from "./NavBar";
-import Knapsack from "./Knapsack";
+import NavBar from "../navigation/NavBar";
+import Knapsack from "../algorithms/Knapsack";
 
 export class SignIn extends Component {
     render() {

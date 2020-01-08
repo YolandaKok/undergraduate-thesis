@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {ForceGraph, ForceGraphNode, ForceGraphLink, ForceGraphArrowLink} from 'react-vis-force';
+import '../../../node_modules/react-vis/dist/style.css';
 
 export class TSP extends Component {
     render() {

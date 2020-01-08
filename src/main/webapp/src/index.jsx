@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/app.scss';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import IndexPage from './components/IndexPage';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import TSP from './components/TSP';
+import IndexPage from './components/register/IndexPage';
+import SignIn from './components/register/SignIn';
+import SignUp from './components/register/SignUp';
+import TSP from './components/algorithms/TSP';
 
 const routing = (
     <BrowserRouter>
