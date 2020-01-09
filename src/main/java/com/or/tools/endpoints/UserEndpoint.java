@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.or.tools.requests.SignUpRequest;
+import com.or.tools.requests.UserRequest;
 import com.or.tools.services.UserService;
 
 @RestController
@@ -20,6 +21,11 @@ public class UserEndpoint {
 	public boolean insertUser(@RequestBody SignUpRequest request) {
 		return service.createUser(request.getUsername(), request.getPassword(), request.getFirstname(),
 				request.getLastname(), request.getEmail());
+	}
+
+	@PostMapping(value = "/login")
+	public void signIn(@RequestBody UserRequest request) {
+
 	}
 
 }

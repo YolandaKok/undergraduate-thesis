@@ -12,8 +12,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER")
-public class User {
-	
+public class UserDTO {
+
 	@Id
 	@GeneratedValue
 	@Column(name = "ID")
@@ -38,9 +38,9 @@ public class User {
 	private String summary;
 	@Column(name = "IMAGE")
 	private Blob image;
-	
+
 	@OneToMany(mappedBy = "user", orphanRemoval = true)
-	private List<Experiment> experiments;
+	private List<ExperimentDTO> experiments;
 
 	public Long getId() {
 		return id;
@@ -130,12 +130,12 @@ public class User {
 		this.image = image;
 	}
 
-	public List<Experiment> getExperiments() {
+	public List<ExperimentDTO> getExperiments() {
 		return experiments;
 	}
 
-	public void setExperiments(List<Experiment> experiments) {
+	public void setExperiments(List<ExperimentDTO> experiments) {
 		this.experiments = experiments;
 	}
-	
+
 }
