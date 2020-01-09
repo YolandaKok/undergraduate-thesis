@@ -6,6 +6,11 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
 
 export class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        
+    }
+
     componentDidMount() {
         document.body.style.background = "#E5E9F2";
     }
