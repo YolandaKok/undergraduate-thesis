@@ -1,0 +1,6 @@
+{
+  "root": "src/main/resources/public",
+  "routes": {
+    "/**": "index.html"
+  }
+}

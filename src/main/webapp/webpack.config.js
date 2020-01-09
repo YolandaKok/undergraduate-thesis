@@ -5,7 +5,8 @@ module.exports = {
    entry: path.resolve(__dirname, 'src', 'index.jsx'),
    output: {
       path: path.resolve(__dirname, '../resources/public/output'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
+      publicPath: '/'
    },
    plugins: [
      new CopyPlugin([
