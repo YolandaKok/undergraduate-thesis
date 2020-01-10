@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
 
 import io.jsonwebtoken.io.IOException;
 
@@ -55,11 +54,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			// parse the token.
 			String user = JWT.require(Algorithm.HMAC512(jwtSecretPassword.getBytes())).build()
 					.verify(token.replace("Bearer ", "")).getSubject();
-			Claim claim = JWT.require(Algorithm.HMAC512(jwtSecretPassword.getBytes())).build()
-					.verify(token.replace("Bearer ", "")).getClaim("role");
-			String[] arrayString = claim.asArray(String.class);
+//			Claim claim = JWT.require(Algorithm.HMAC512(jwtSecretPassword.getBytes())).build()
+//					.verify(token.replace("Bearer ", "")).getClaim("role");
+			// String[] arrayString = claim.asArray(String.class);
+			// List<SimpleGrantedAuthority> updatedAuthorities = new
+			// ArrayList<SimpleGrantedAuthority>();
+			// updatedAuthorities.add(new SimpleGrantedAuthority(arrayString[0]));
 			List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
-			updatedAuthorities.add(new SimpleGrantedAuthority(arrayString[0]));
+			updatedAuthorities.add(new SimpleGrantedAuthority("GENERAL_USER"));
 			if (user != null) {
 				return new UsernamePasswordAuthenticationToken(user, null, updatedAuthorities);
 			}

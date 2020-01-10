@@ -1,5 +1,6 @@
 package com.or.tools.endpoints;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.google.ortools.linearsolver.MPVariable;
 @RequestMapping(value = "/tes")
 public class TestRest {
 
+	@PreAuthorize("hasAuthority('GENERAL_USER')")
 	@GetMapping("/solver")
 	public void testSolver() {
 		MPSolver solver = new MPSolver("LinearProgrammingExample",
