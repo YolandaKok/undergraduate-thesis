@@ -1,6 +1,9 @@
 // This library allows us to combine paths easily
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
+//let productionVar='development';
+
 module.exports = {
    entry: path.resolve(__dirname, 'src', 'index.jsx'),
    output: {
@@ -11,7 +14,10 @@ module.exports = {
    plugins: [
      new CopyPlugin([
        { from: 'src/index.html', to: '../' },
-     ]),
+     ]), new webpack.DefinePlugin({
+           'SERVICE_URL': JSON.stringify(process.env.productionVar === 'development' ?
+               "https://glacial-stream-43144.herokuapp.com" : "http://localhost:8080")
+       })
    ],
    resolve: {
       extensions: ['.js', '.jsx', '.min.css', '.css']

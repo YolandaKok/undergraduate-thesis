@@ -4,15 +4,17 @@ import {Container, Col, Row, Form, Button} from 'react-bootstrap';
 import NavBar from "../navigation/NavBar";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
+//import * as externals from "externals";
 
 export class SignUp extends Component {
     constructor(props) {
         super(props);
-        
     }
 
     componentDidMount() {
         document.body.style.background = "#E5E9F2";
+        console.log(SERVICE_URL);
+        console.log(process.env.NODE_ENV);
     }
 
     render() {
