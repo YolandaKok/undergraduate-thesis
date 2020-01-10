@@ -60,6 +60,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			// List<SimpleGrantedAuthority> updatedAuthorities = new
 			// ArrayList<SimpleGrantedAuthority>();
 			// updatedAuthorities.add(new SimpleGrantedAuthority(arrayString[0]));
+			logger.info(user);
 			List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
 			updatedAuthorities.add(new SimpleGrantedAuthority("GENERAL_USER"));
 			if (user != null) {
