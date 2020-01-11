@@ -79,19 +79,19 @@ export class SignUp extends Component {
                                         <Form.Control placeholder="Enter username" onChange={this.handlePostChange} name="username"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
-                                        <Form.Label>Email</Form.Label>
+                                        <Form.Label className={styles.formFont}>Email</Form.Label>
                                         <Form.Control placeholder="Enter email" onChange={this.handlePostChange} name="email"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
-                                        <Form.Label>Password</Form.Label>
+                                        <Form.Label className={styles.formFont}>Password</Form.Label>
                                         <Form.Control placeholder="Enter password" onChange={this.handlePostChange} name="password"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
-                                        <Form.Label>Repeat Password</Form.Label>
+                                        <Form.Label className={styles.formFont}>Repeat Password</Form.Label>
                                         <Form.Control placeholder="Repeat Password"></Form.Control>
                                     </Form.Group>
-                                    <Button onClick={this.handleSubmit} variant="primary" type="submit" block>
-                                        Submit
+                                    <Button onClick={this.handleSubmit} variant="secondary" type="submit" block>
+                                        Sign Up
                                     </Button>
                                 </Form>
                             </Jumbotron>
