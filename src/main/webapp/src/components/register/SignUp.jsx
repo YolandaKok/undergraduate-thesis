@@ -4,22 +4,66 @@ import {Container, Col, Row, Form, Button} from 'react-bootstrap';
 import NavBar from "../navigation/NavBar";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
-//import * as externals from "externals";
+const axios = require('axios');
 
 export class SignUp extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: '',
+            password: '',
+            firstname: '',
+            lastname: '',
+            email: '',
+            reRender: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePostChange = this.handlePostChange.bind(this);
     }
 
     componentDidMount() {
         document.body.style.background = "#E5E9F2";
         console.log(SERVICE_URL);
-        console.log(process.env.NODE_ENV);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return false;
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log("handle submit");
+        axios.post(
+            SERVICE_URL + '/users/signup', {
+            username: this.state.username,
+            password: this.state.password,
+            email: this.state.email
+        })
+        .then((response) => {
+            console.log(response);
+            console.log(response.config.data);
+            axios.post(SERVICE_URL + '/login', response.config.data).then((response) => {
+                console.log("loggedIn");
+                console.log(response);
+            }, (error) => {
+               console.log(error);
+            });
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    handlePostChange(event) {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({[nam]: val});
+        console.log(this.state);
     }
 
     render() {
         return (
             <Fragment>
+                <div></div>
                 <NavBar/>
                 <Container>
                     <Row className={styles.formMargin}>
@@ -32,21 +76,21 @@ export class SignUp extends Component {
                                         various <br></br> algorithms.</h6>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
-                                        <Form.Control placeholder="Enter username"></Form.Control>
+                                        <Form.Control placeholder="Enter username" onChange={this.handlePostChange} name="username"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Email</Form.Label>
-                                        <Form.Control placeholder="Enter email"></Form.Control>
+                                        <Form.Control placeholder="Enter email" onChange={this.handlePostChange} name="email"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control placeholder="Enter password"></Form.Control>
+                                        <Form.Control placeholder="Enter password" onChange={this.handlePostChange} name="password"></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Repeat Password</Form.Label>
                                         <Form.Control placeholder="Repeat Password"></Form.Control>
                                     </Form.Group>
-                                    <Button variant="primary" type="submit" block>
+                                    <Button onClick={this.handleSubmit} variant="primary" type="submit" block>
                                         Submit
                                     </Button>
                                 </Form>
