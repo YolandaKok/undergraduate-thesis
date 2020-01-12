@@ -79,7 +79,7 @@ function ResponsiveDrawer(props) {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {['Overview', 'My Experiments'].map((text, index) => (
+                {['Overview', 'My Experiments'].map((text) => (
                     <ListItem button key={text}>
                         <ListItemText primary={text} />
                     </ListItem>
@@ -102,12 +102,14 @@ function ResponsiveDrawer(props) {
                         </ListItem>
                         <Collapse in={openLibrary} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                <ListItem button className={classes.nested}>
-                                    <ListItemIcon>
-                                        <StarBorder />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Starred" />
-                                </ListItem>
+                                {['Linear Optimization', 'Knapsack', 'Multiple Knapsacks', 'Travelling Salesman'].map((text) => (
+                                    <ListItem button className={classes.nested}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText primary={text} />
+                                    </ListItem>
+                                ))}
                             </List>
                         </Collapse>
                     </List>

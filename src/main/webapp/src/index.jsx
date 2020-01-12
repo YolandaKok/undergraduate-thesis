@@ -10,7 +10,7 @@ import {Homepage} from "./components/pages/Homepage";
 const routing = (
     <BrowserRouter>
         <div>
-            <Route exact path="/" component={IndexPage} />
+            <Route exact path="/" component={localStorage.getItem('authorization') != null ? Homepage : IndexPage} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/app/tsp" component={TSP} />
