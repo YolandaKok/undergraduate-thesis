@@ -3,9 +3,15 @@ import {ForceGraph, ForceGraphNode, ForceGraphLink, ForceGraphArrowLink} from 'r
 import '../../../node_modules/react-vis/dist/style.css';
 
 export class TSP extends Component {
+
+    componentDidMount() {
+        document.body.style.background = "white";
+        console.log(SERVICE_URL);
+    }
+
     render() {
         return (
-            <ForceGraph simulationOptions={{ height: 600, width: 600, animate: true, strength: {
+            <ForceGraph simulationOptions={{ height: 600, width: 600, animate: false, strength: {
                     x: ({ radius }) => 15 / radius,
                     y: ({ radius }) => 3 / radius,
                 } }} >

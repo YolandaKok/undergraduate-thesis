@@ -4,6 +4,7 @@ import Knapsack from "../algorithms/Knapsack";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import {Redirect} from "react-router";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -11,7 +12,8 @@ export class SignIn extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePostChange = this.handlePostChange.bind(this);
@@ -19,10 +21,6 @@ export class SignIn extends Component {
 
     componentDidMount() {
         document.body.style.background = "#E5E9F2";
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return false;
     }
 
     handleSubmit (event) {
@@ -34,6 +32,7 @@ export class SignIn extends Component {
             console.log("loggedIn");
             console.log(response.headers.authorization);
             localStorage.setItem('authorization', response.headers.authorization);
+            this.setState({"redirect": true});
         }, (error) => {
             console.log(error);
         });
@@ -47,6 +46,10 @@ export class SignIn extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/app/homepage'/>;
+        }
+
         return (
             <Fragment>
                 <div></div>

@@ -4,6 +4,7 @@ import {Container, Col, Row, Form, Button} from 'react-bootstrap';
 import NavBar from "../navigation/NavBar";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
+import {Redirect} from "react-router";
 const axios = require('axios');
 
 export class SignUp extends Component {
@@ -15,7 +16,8 @@ export class SignUp extends Component {
             firstname: '',
             lastname: '',
             email: '',
-            reRender: false
+            reRender: false,
+            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePostChange = this.handlePostChange.bind(this);
@@ -24,10 +26,6 @@ export class SignUp extends Component {
     componentDidMount() {
         document.body.style.background = "#E5E9F2";
         console.log(SERVICE_URL);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return false;
     }
 
     handleSubmit(event) {
@@ -45,6 +43,8 @@ export class SignUp extends Component {
             axios.post(SERVICE_URL + '/login', response.config.data).then((response) => {
                 console.log("loggedIn");
                 console.log(response);
+                localStorage.setItem('authorization', response.headers.authorization);
+                this.setState({"redirect": true});
             }, (error) => {
                console.log(error);
             });
@@ -61,6 +61,10 @@ export class SignUp extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/app/homepage'/>;
+        }
+
         return (
             <Fragment>
                 <div></div>
