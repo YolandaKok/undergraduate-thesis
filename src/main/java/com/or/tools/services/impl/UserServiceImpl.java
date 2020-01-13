@@ -26,7 +26,13 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(password));
 		user.setFirstname(firstname);
 		user.setLastname(lastname);
+		user.setEmail(email);
 		return dao.save(user) != null ? true : false;
+	}
+
+	@Override
+	public boolean findUser(String username) {
+		return dao.findByUsername(username) != null ? true : false;
 	}
 
 }

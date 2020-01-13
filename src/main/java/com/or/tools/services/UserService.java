@@ -4,4 +4,5 @@ public interface UserService {
 
 	boolean createUser(String username, String password, String firstname, String lastname, String email);
 
+	boolean findUser(String username);
 }

@@ -33,6 +33,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/users/signup").permitAll();
 
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/users/exists/*").permitAll();
+
 		http.csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/", "/signin", "/signup", "/output/bundle.js", "/app/*").permitAll()
 				.anyRequest().authenticated().and()

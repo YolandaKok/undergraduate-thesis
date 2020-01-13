@@ -5,6 +5,7 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {Redirect} from "react-router";
+import {FormError} from "../errors/FormError";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -13,7 +14,8 @@ export class SignIn extends Component {
         this.state = {
             username: '',
             password: '',
-            redirect: false
+            redirect: false,
+            formError: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePostChange = this.handlePostChange.bind(this);
@@ -35,6 +37,7 @@ export class SignIn extends Component {
             this.setState({"redirect": true});
         }, (error) => {
             console.log(error);
+            this.setState({"formError": true});
         });
     }
 
@@ -68,6 +71,7 @@ export class SignIn extends Component {
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Password</Form.Label>
                                         <Form.Control placeholder="Enter password" onChange={this.handlePostChange} name="password" type="password"></Form.Control>
+                                        <FormError formError={this.state.formError == true ? "Wrong username or password." : ""}/>
                                     </Form.Group>
                                     <Button onClick={this.handleSubmit} variant="secondary" type="submit" block>
                                         Sign In
