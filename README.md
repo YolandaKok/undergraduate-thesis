@@ -16,6 +16,11 @@ yarn, webpack, java-11, mvn, nodejs
 ## Build
 
 ### Build command - Front end
+Run this to install all dependencies
+```
+yarn install
+```
+Create bundle.js file
 ```
 yarn run local_build
 ```
