@@ -16,8 +16,14 @@ yarn, webpack, java-11, mvn, nodejs
 ## Build
 
 ### Build command - Front end
-* yarn run local_build
+```
+yarn run local_build
+```
 ### Build command - Back end
-* mvn clean install -DskipTests
+```
+mvn clean install -DskipTests
+```
 ### Run microservice 
-* java -Djava.library.path=lib -jar -Dspring.profiles.active=local target/app-0.0.1-SNAPSHOT.jar
+```
+java -Djava.library.path=lib -jar -Dspring.profiles.active=local target/app-0.0.1-SNAPSHOT.jar
+```
