@@ -11,10 +11,24 @@ git clone https://github.com/YolandaKok/undergraduate-thesis.git
 ### Prerequisities
 
 You have to install:
-yarn, webpack, java-11, mvn
+yarn, webpack, java-11, mvn, nodejs
 
-### Build command
-* mvn clean install
+## Build
 
+### Build command - Front end
+Run this to install all dependencies
+```
+yarn install
+```
+Create bundle.js file
+```
+yarn run local_build
+```
+### Build command - Back end
+```
+mvn clean install -DskipTests
+```
 ### Run microservice 
-* java -Djava.library.path=lib -jar target/app-0.0.1-SNAPSHOT.jar
+```
+java -Djava.library.path=lib -jar -Dspring.profiles.active=local target/app-0.0.1-SNAPSHOT.jar
+```
