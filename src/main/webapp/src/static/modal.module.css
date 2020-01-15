@@ -1,0 +1,23 @@
+.modalItem {
+    padding-top: 6px;
+}
+
+.dot {
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.modal {
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.buttonStyle {
+    border-radius: 20%;
+    border-color: black;
+}
