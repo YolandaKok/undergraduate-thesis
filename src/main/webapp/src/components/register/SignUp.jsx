@@ -37,7 +37,7 @@ export class SignUp extends Component {
     checkNullOrUndefined(event) {
         console.log("hello");
         event.preventDefault();
-        if(this.state.username === '' || this.state.password === '' || this.state.email === '')
+        if(this.state.username === '' || this.state.password === '' || this.state.email === '' || this.state.firstname === '' || this.state.lastname === '')
             this.setState({"validated": true});
         else
             this.setState({"validated": false});
@@ -58,7 +58,7 @@ export class SignUp extends Component {
             SERVICE_URL + '/users/signup', {
             username: this.state.username,
             password: this.state.password,
-            email: this.state.email
+            email: this.state.email, firstname: this.state.firstname, lastname: this.state.lastname
         })
         .then((response) => {
             console.log(response);
@@ -113,6 +113,18 @@ export class SignUp extends Component {
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
                                         <Form.Control placeholder="Enter username" onChange={this.handlePostChange} name="username" required></Form.Control>
                                         <FormError formError={this.state.usernameFound == true ? "Username already used" : ""}/>
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Row>
+                                            <Col>
+                                                <Form.Label className={styles.formFont}>Firstname</Form.Label>
+                                                <Form.Control placeholder="First name" onChange={this.handlePostChange} name="firstname" />
+                                            </Col>
+                                            <Col>
+                                                <Form.Label className={styles.formFont}>Lastname</Form.Label>
+                                                <Form.Control placeholder="Last name" onChange={this.handlePostChange} name="lastname" />
+                                            </Col>
+                                        </Form.Row>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Email</Form.Label>
