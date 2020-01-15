@@ -130,7 +130,7 @@ function ResponsiveDrawer(props) {
 
     const handleSignOut = () => {
         localStorage.setItem('authorization', null);
-        history.push("/signin");
+        history.push("/");
     };
 
     const drawer = (

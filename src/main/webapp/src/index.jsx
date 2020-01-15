@@ -10,15 +10,15 @@ import {Homepage} from "./components/pages/Homepage";
 const routing = (
     <BrowserRouter>
         <div>
-            <Route exact path="/" component={ ["null", '', undefined, null].every((text) => {
-                return localStorage.getItem('authorization') !== text;
-            }) ? Homepage : IndexPage} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/app/tsp" component={TSP} />
-            <Route exact path="/app/homepage" component={ ["null", '', undefined, null].every((text) => {
+            <Route exact path="/app/homepage" component={()=>["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
-            }) ? Homepage : IndexPage} />
+            })?<Homepage/> : <IndexPage/>} />
+            <Route exact path="/" component={()=>["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            })?<Homepage/> : <IndexPage/>} />
         </div>
     </BrowserRouter>
 )

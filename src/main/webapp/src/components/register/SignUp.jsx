@@ -6,6 +6,9 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
 import {Redirect} from "react-router";
 import {FormError} from "../errors/FormError";
+import {Homepage} from "../pages/Homepage";
+import {IndexPage} from "./IndexPage";
+import Link from "@material-ui/core/Link";
 const axios = require('axios');
 
 export class SignUp extends Component {
@@ -93,7 +96,7 @@ export class SignUp extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to='/app/homepage'/>;
+            this.props.history.push("/");
         }
 
         return (

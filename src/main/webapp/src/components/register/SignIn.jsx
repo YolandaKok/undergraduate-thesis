@@ -6,6 +6,8 @@ import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {Redirect} from "react-router";
 import {FormError} from "../errors/FormError";
+import {Homepage} from "../pages/Homepage";
+import {IndexPage} from "./IndexPage";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -50,7 +52,7 @@ export class SignIn extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to='/app/homepage'/>;
+            this.props.history.push("/");
         }
 
         return (
