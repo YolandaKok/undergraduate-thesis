@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ResponsiveDrawer from "../navigation/ResponsiveDrawer";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 
 export class Homepage extends Component {
 
@@ -14,7 +16,14 @@ export class Homepage extends Component {
     render() {
         return(
             <div>
-                <ResponsiveDrawer/>
+                <Container fixed>
+                    <React.Fragment>
+                        <ResponsiveDrawer/>
+                        <Container fixed>
+                            <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} />
+                        </Container>
+                    </React.Fragment>
+                </Container>
             </div>
         );
     }
