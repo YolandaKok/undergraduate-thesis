@@ -10,3 +10,16 @@
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.gridPadding {
+  padding-top: 100px;
+}
+
+.marginHr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.breadCrumbStyle {
+  padding-bottom: 10px;
+}
