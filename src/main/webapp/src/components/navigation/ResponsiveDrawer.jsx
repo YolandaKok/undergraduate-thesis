@@ -28,6 +28,7 @@ import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Avatar from "@material-ui/core/Avatar";
 
 const drawerWidth = 240;
 
@@ -89,6 +90,9 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         padding: theme.spacing(0, 1),
         justifyContent: "flex-end"},
+    avatarStyle: {
+        cursor: "pointer"
+    }
 }));
 
 function ResponsiveDrawer(props) {
@@ -268,18 +272,18 @@ function ResponsiveDrawer(props) {
                     >
                         <MenuIcon />
                     </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Visualize Zone
+                    </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        <Avatar className={classes.avatarStyle}
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit">N</Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

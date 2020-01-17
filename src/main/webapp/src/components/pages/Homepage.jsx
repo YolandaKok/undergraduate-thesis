@@ -9,16 +9,20 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../../static/signup.module.css";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
+import CustomCard from "../layout/CustomCard";
 
 
 export class Homepage extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            "results": []
+        }
     }
 
     componentDidMount() {
-        document.body.style.background = "#white";
+        document.body.style.background = "white";
     }
 
     render() {
@@ -30,6 +34,16 @@ export class Homepage extends Component {
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,Overview" title="Recent Experiments"/>
                         </Grid>
+                        <Grid item xs={4}>
+                            <CustomCard title="New Experiment" content="Click to create a new experiment using an algorithm"/>
+                        </Grid>
+                        {
+                            this.state.results.map((text, index) => (
+                                <Grid item xs={4}>
+                                    <CustomCard title="Knapsack" content="Click to create a new experiment using an algorithm"/>
+                                </Grid>
+                            ))
+                        }
                     </Grid>
                 </Container>
             </div>

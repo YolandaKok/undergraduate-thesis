@@ -13,8 +13,8 @@ export default function CustomBreadCrumb(props) {
         <Fragment>
             <Breadcrumbs aria-label="breadcrumb" className={styles.breadCrumbStyle}>
                 {
-                    names.map((text)=>(
-                        <Link color="inherit" href="/">
+                    names.map((text, index)=>(
+                        <Link color="inherit" href="/" key={index}>
                             {text}
                         </Link>
                     ))

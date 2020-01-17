@@ -1,14 +1,14 @@
 Arguments: 
-  /usr/bin/node /usr/local/bin/yarn add react-router
+  /usr/local/bin/node /usr/local/bin/yarn add file-loader
 
 PATH: 
-  /home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.21.0
 
 Node version: 
-  8.10.0
+  12.14.1
 
 Platform: 
   linux x64
@@ -47,6 +47,7 @@ npm manifest:
     "dependencies": {
       "axios": "^0.19.0",
       "bootstrap": "^4.4.1",
+      "clsx": "latest",
       "copy-webpack-plugin": "^5.0.5",
       "create-react": "^0.0.0",
       "cross-env": "^6.0.3",
@@ -61,8 +62,7 @@ npm manifest:
       "react-router": "^5.1.2",
       "react-router-dom": "^5.1.2",
       "react-scripts": "^3.3.0",
-      "react-vis": "^1.11.7",
-      "clsx": "latest"
+      "react-vis": "^1.11.7"
     }
   }
 
@@ -961,6 +961,11 @@ Lockfile:
       "@babel/plugin-transform-react-jsx" "^7.7.4"
       "@babel/plugin-transform-react-jsx-self" "^7.7.4"
       "@babel/plugin-transform-react-jsx-source" "^7.7.4"
+  
+  "@babel/preset-stage-3@^7.8.3":
+    version "7.8.3"
+    resolved "https://registry.yarnpkg.com/@babel/preset-stage-3/-/preset-stage-3-7.8.3.tgz#cc270af0fdccd427c03dba175ffa53babe60488e"
+    integrity sha512-ll+6+81Gbf+Z+Ee10ygnpSWC0Wwn1qASS3JCZA1/5wnUlErCX1qARvbr8XWkQli85FTJh4Hnh/94JZvOyeuPfg==
   
   "@babel/preset-typescript@7.7.4":
     version "7.7.4"
@@ -3425,7 +3430,7 @@ Lockfile:
       kind-of "^6.0.2"
       shallow-clone "^3.0.0"
   
-  clsx@^1.0.2:
+  clsx@^1.0.2, clsx@latest:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
     integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
