@@ -143,6 +143,7 @@ function ResponsiveDrawer(props) {
 
     const handleSignOut = () => {
         localStorage.setItem('authorization', null);
+        localStorage.setItem('username_info', null);
         history.push("/");
     };
 
@@ -219,7 +220,7 @@ function ResponsiveDrawer(props) {
         >
             <div className={styles.modal}>
                 <span className={styles.dot}></span>
-                <p className={styles.modalItem}>Yolanda Kokkinou</p>
+                <p className={styles.modalItem}>{props.firstname + " " + props.lastname}</p>
             </div>
             <hr></hr>
             <MenuItem className={styles.buttonStyle} onClick={handleMenuClose}>Manage your Profile</MenuItem>
@@ -283,7 +284,7 @@ function ResponsiveDrawer(props) {
                                 aria-controls={menuId}
                                 aria-haspopup="true"
                                 onClick={handleProfileMenuOpen}
-                                color="inherit">N</Avatar>
+                                color="inherit">{props.firstname.charAt(0) + props.lastname.charAt(0)}</Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

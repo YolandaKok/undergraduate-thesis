@@ -70,6 +70,7 @@ export class SignUp extends Component {
                 console.log("loggedIn");
                 console.log(response);
                 localStorage.setItem('authorization', response.headers.authorization);
+                localStorage.setItem('username_info', this.state.username);
                 this.setState({"redirect": true});
             }, (error) => {
                console.log(error);

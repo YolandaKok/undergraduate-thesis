@@ -34,8 +34,10 @@ export class SignIn extends Component {
             "password": this.state.password
         }).then((response) => {
             console.log("loggedIn");
-            console.log(response.headers.authorization);
+            console.log(response);
+            console.log(this.state.username);
             localStorage.setItem('authorization', response.headers.authorization);
+            localStorage.setItem('username_info', this.state.username);
             this.setState({"redirect": true});
         }, (error) => {
             console.log(error);

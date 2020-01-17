@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
 		return dao.findByUsername(username) != null ? true : false;
 	}
 
+	@Override
+	public UserDTO findUserByUsername(String username) {
+		return dao.findByUsername(username);
+	}
+
 }

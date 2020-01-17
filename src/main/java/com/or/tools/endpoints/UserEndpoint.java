@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.or.tools.entities.UserDTO;
 import com.or.tools.requests.SignUpRequest;
 import com.or.tools.requests.UserRequest;
 import com.or.tools.response.AcceptResponse;
+import com.or.tools.response.UserResponse;
 import com.or.tools.services.UserService;
 
 @RestController
@@ -44,6 +46,16 @@ public class UserEndpoint {
 		response.setResult(service.findUser(username));
 
 		logger.debug("User with username: {}, {}", username, response);
+		return response;
+	}
+
+	@GetMapping("/{username}")
+	public UserResponse findUserByUsername(@PathVariable String username) {
+		UserDTO userDTO = service.findUserByUsername(username);
+		UserResponse response = new UserResponse();
+		response.setFirstname(userDTO.getFirstname());
+		response.setLastname(userDTO.getLastname());
+		response.setId(userDTO.getId());
 		return response;
 	}
 

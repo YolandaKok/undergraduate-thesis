@@ -1,15 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import ResponsiveDrawer from "../navigation/ResponsiveDrawer";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../../static/signup.module.css";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import CustomCard from "../layout/CustomCard";
+const axios = require('axios');
 
 
 export class Homepage extends Component {
@@ -17,8 +14,24 @@ export class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "results": []
+            "results": [],
+            "firstname": '',
+            "lastname": ''
         }
+    }
+
+    componentWillMount() {
+        axios.get(SERVICE_URL + '/users/' + localStorage.getItem('username_info'), {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+                console.log(response);
+                this.setState({"firstname": response.data.firstname,
+                                "lastname": response.data.lastname});
+                },
+            (error) => {
+                console.log("error");
+            });
     }
 
     componentDidMount() {
@@ -28,7 +41,7 @@ export class Homepage extends Component {
     render() {
         return(
             <div>
-                <ResponsiveDrawer/>
+                <ResponsiveDrawer firstname={this.state.firstname} lastname={this.state.lastname}/>
                 <Container fixed>
                     <Grid container spacing={3} className={styles.gridPadding}>
                         <Grid item xs={12}>
