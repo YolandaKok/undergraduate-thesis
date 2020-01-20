@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "EXPERIMENT")
+@Table(name = "Experiment")
 public class ExperimentDTO {
 
 	@Id
@@ -22,8 +22,6 @@ public class ExperimentDTO {
 	private Long id;
 	@Column(name = "ALGORITHM")
 	private String Algorithm;
-	@Column(name = "LIBRARY")
-	private String Library;
 	@Column(name = "DATA")
 	@Type(type = "text")
 	private String Data;
@@ -31,6 +29,8 @@ public class ExperimentDTO {
 	private Date modificationDate;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private UserDTO user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private AlgorithmDTO algorithm;
 
 	public Long getId() {
 		return id;
@@ -46,14 +46,6 @@ public class ExperimentDTO {
 
 	public void setAlgorithm(String algorithm) {
 		Algorithm = algorithm;
-	}
-
-	public String getLibrary() {
-		return Library;
-	}
-
-	public void setLibrary(String library) {
-		Library = library;
 	}
 
 	public String getData() {
@@ -78,6 +70,10 @@ public class ExperimentDTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+	public void setAlgorithm(AlgorithmDTO algorithm) {
+		this.algorithm = algorithm;
 	}
 
 }

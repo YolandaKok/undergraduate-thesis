@@ -31,13 +31,6 @@ module.exports = {
                 options: { presets: ['react', 'es2015'] }
              }
          },
-          {
-                  test: /\.js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-             loader: 'babel-loader',
-              }
-      },
          {
             test: /\.scss/,
             use: ['style-loader', 'css-loader', 'sass-loader']

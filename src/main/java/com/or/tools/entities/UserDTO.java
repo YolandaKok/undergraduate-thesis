@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "User")
 public class UserDTO {
 
 	@Id
@@ -32,8 +32,6 @@ public class UserDTO {
 	private String company;
 	@Column(name = "PROFESSION")
 	private String profession;
-	@Column(name = "ROLE")
-	private String role;
 	@Column(name = "SUMMARY")
 	private String summary;
 	@Column(name = "IMAGE")
@@ -41,6 +39,9 @@ public class UserDTO {
 
 	@OneToMany(mappedBy = "user", orphanRemoval = true)
 	private List<ExperimentDTO> experiments;
+
+	@OneToMany(mappedBy = "user", orphanRemoval = true)
+	private List<RoleDTO> roles;
 
 	public Long getId() {
 		return id;
@@ -106,14 +107,6 @@ public class UserDTO {
 		this.profession = profession;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public String getSummary() {
 		return summary;
 	}
@@ -136,6 +129,14 @@ public class UserDTO {
 
 	public void setExperiments(List<ExperimentDTO> experiments) {
 		this.experiments = experiments;
+	}
+
+	public List<RoleDTO> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleDTO> roles) {
+		this.roles = roles;
 	}
 
 }
