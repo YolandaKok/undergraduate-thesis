@@ -29,8 +29,10 @@ public class AlgorithmDTO {
 	private Date date;
 	@Column(name = "CATEGORY")
 	private String category;
+
 	@OneToMany(mappedBy = "algorithm", orphanRemoval = true)
 	private List<ExperimentDTO> experiments;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private LibraryDTO library;
 

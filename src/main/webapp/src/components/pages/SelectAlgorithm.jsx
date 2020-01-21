@@ -4,13 +4,26 @@ import Grid from "@material-ui/core/Grid";
 import styles from "../../static/signup.module.css";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import CustomCard from "../layout/CustomCard";
+import axios from 'axios';
 
 export default class SelectAlgorithm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "results": [3, 4]
+            "results": [2,3]
         }
+    }
+
+    componentDidMount() {
+        axios.get(SERVICE_URL + '/algorithms/findAll' , {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        }).then((response) => {
+                    console.log(response);
+                    this.setState({"results": response.data});
+                },
+                (error) => {
+                    console.log("error");
+                });
     }
 
     render() {
@@ -20,13 +33,10 @@ export default class SelectAlgorithm extends Component {
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,Select Algorithm" title="Choose Algorithm" />
                     </Grid>
-                    <Grid item xs={4}>
-                        <CustomCard title="New Experiment" content="Click to create a new experiment using an algorithm"/>
-                    </Grid>
                     {
-                        this.state.results.map((text, index) => (
+                        this.state.results.map((result, index) => (
                             <Grid item xs={4}>
-                                <CustomCard title="Knapsack" content="Click to create a new experiment using an algorithm"/>
+                                <CustomCard title={result.name} content={result.description}/>
                             </Grid>
                         ))
                     }
