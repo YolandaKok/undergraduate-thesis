@@ -6,6 +6,8 @@ import SignIn from './components/register/SignIn';
 import SignUp from './components/register/SignUp';
 import TSP from './components/algorithms/TSP';
 import {Homepage} from "./components/pages/Homepage";
+import HomepageLayout from "./components/layout/HomepageLayout";
+import SelectAlgorithm from "./components/pages/SelectAlgorithm";
 
 const routing = (
     <BrowserRouter>
@@ -15,10 +17,13 @@ const routing = (
             <Route exact path="/app/tsp" component={TSP} />
             <Route exact path="/app/homepage" component={()=>["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
-            })?<Homepage/> : <IndexPage/>} />
+            })?<Homepage><HomepageLayout /></Homepage> : <IndexPage/>} />
             <Route exact path="/" component={()=>["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
-            })?<Homepage/> : <IndexPage/>} />
+            })?<Homepage><HomepageLayout /></Homepage> : <IndexPage/>} />
+            <Route exact path="/select/algorithm" component={()=>["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            })?<Homepage><SelectAlgorithm /></Homepage> : <IndexPage/>} />
         </div>
     </BrowserRouter>
 )

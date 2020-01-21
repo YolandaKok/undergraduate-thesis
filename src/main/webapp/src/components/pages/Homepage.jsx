@@ -6,6 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../../static/signup.module.css";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import CustomCard from "../layout/CustomCard";
+import SvgIcon from "@material-ui/core/SvgIcon";
 const axios = require('axios');
 
 
@@ -14,7 +15,6 @@ export class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "results": [],
             "firstname": '',
             "lastname": ''
         }
@@ -42,23 +42,7 @@ export class Homepage extends Component {
         return(
             <div>
                 <ResponsiveDrawer firstname={this.state.firstname} lastname={this.state.lastname}/>
-                <Container fixed>
-                    <Grid container spacing={3} className={styles.gridPadding}>
-                        <Grid item xs={12}>
-                            <CustomBreadCrumb name="Home,Overview" title="Recent Experiments"/>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CustomCard title="New Experiment" content="Click to create a new experiment using an algorithm"/>
-                        </Grid>
-                        {
-                            this.state.results.map((text, index) => (
-                                <Grid item xs={4}>
-                                    <CustomCard title="Knapsack" content="Click to create a new experiment using an algorithm"/>
-                                </Grid>
-                            ))
-                        }
-                    </Grid>
-                </Container>
+                {this.props.children}
             </div>
         );
     }

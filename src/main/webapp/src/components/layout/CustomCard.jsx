@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import { Route , withRouter} from 'react-router-dom';
 
 const useStyles = makeStyles({
     card: {
@@ -17,16 +18,17 @@ const useStyles = makeStyles({
     },
 });
 
-export default function CustomCard(props) {
+export function CustomCard(props) {
     /* Get props for custom cards */
     let title = props.title;
     let content = props.content;
+    let href = props.href;
 
     const classes = useStyles();
 
     return (
         <Card className={classes.card}>
-            <CardActionArea>
+            <CardActionArea onClick={(event) => {props.history.push(href);}}>
                 <CardMedia
                     className={classes.media}
                     title={title}
@@ -49,3 +51,5 @@ export default function CustomCard(props) {
         </Card>
     );
 }
+
+export default withRouter(CustomCard);
