@@ -8,12 +8,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = "com.or.tools")
 @SpringBootApplication
 @EntityScan("com.or.tools.entities")
 @EnableJpaRepositories(basePackages = "com.or.tools.repositories")
+@EnableTransactionManagement
 public class AppApplication {
 
 	public static void main(String[] args) {

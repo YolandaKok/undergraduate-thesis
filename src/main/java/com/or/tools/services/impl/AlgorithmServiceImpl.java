@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.or.tools.entities.AlgorithmDTO;
 import com.or.tools.repositories.AlgorithmDAO;
@@ -18,22 +19,23 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 	private AlgorithmDAO algorithmDAO;
 
 	@Override
+	@Transactional
 	public List<AlgorithmResponse> findAll() {
-		List<AlgorithmDTO> algorithms;
-		algorithms = algorithmDAO.findAll();
+		List<AlgorithmDTO> algorithms = algorithmDAO.findAll();
 		List<AlgorithmResponse> responses = new ArrayList<>();
 		if (algorithms.isEmpty())
 			return responses;
-		algorithms.parallelStream().forEach((item) -> {
+
+		for (int i = 0; i < algorithms.size(); i++) {
 			AlgorithmResponse response = new AlgorithmResponse();
-			response.setId(item.getId());
-			response.setName(item.getName());
-			response.setCategory(item.getCategory());
-			response.setDescription(item.getDescription());
-			response.setLibrary(item.getLibrary().getName());
+			response.setId(algorithms.get(i).getId());
+			response.setName(algorithms.get(i).getName());
+			response.setCategory(algorithms.get(i).getCategory());
+			response.setDescription(algorithms.get(i).getDescription());
+			response.setLibrary(algorithms.get(i).getLibrary().getName());
 			responses.add(response);
-		});
+		}
+
 		return responses;
 	}
-
 }

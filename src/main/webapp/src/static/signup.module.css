@@ -23,3 +23,7 @@
 .breadCrumbStyle {
   padding-bottom: 10px;
 }
+
+.MuiFormControl-root {
+  min-width: 120px;
+}
