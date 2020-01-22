@@ -6,17 +6,17 @@ import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import SelectItemList from "../layout/SelectItemList";
 import CustomCard from "../layout/CustomCard";
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 
 export default class SelectAlgorithm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "results": [2,3],
-            "library": ''
+            "results": [],
+            "library": '',
+            "category": ''
         }
         this.passedFunction = this.passedFunction.bind(this)
+        this.categoryPassedFunction = this.categoryPassedFunction.bind(this)
     }
 
     componentDidMount() {
@@ -35,19 +35,71 @@ export default class SelectAlgorithm extends Component {
         console.log("Value: " + event.target.value);
         this.setState({"library": event.target.value});
 
-        axios.get(SERVICE_URL + '/algorithms/filter/library',{
-            params: {
-                library: event.target.value
-            },
-            headers: {"Authorization": localStorage.getItem('authorization')}
-        }).then((response) => {
-                console.log(response);
-                this.setState({"results": response.data});
-            },
-            (error) => {
-                console.log("error");
-            });
+        if(this.state.category === '') {
+            axios.get(SERVICE_URL + '/algorithms/filter/library',{
+                params: {
+                    library: event.target.value
+                },
+                headers: {"Authorization": localStorage.getItem('authorization')}
+            }).then((response) => {
+                    console.log(response);
+                    this.setState({"results": response.data});
+                },
+                (error) => {
+                    console.log("error");
+                });
+        } else {
 
+            axios.get(SERVICE_URL + '/algorithms/filter/both',{
+                params: {
+                    library: event.target.value,
+                    category: this.state.category
+                },
+                headers: {"Authorization": localStorage.getItem('authorization')}
+            }).then((response) => {
+                    console.log(response);
+                    this.setState({"results": response.data});
+                },
+                (error) => {
+                    console.log("error");
+                });
+        }
+
+
+    }
+
+    categoryPassedFunction(event) {
+        console.log("Value: " + event.target.value);
+        this.setState({"category": event.target.value});
+
+        if(this.state.library === '') {
+            axios.get(SERVICE_URL + '/algorithms/filter/category',{
+                params: {
+                    category: event.target.value
+                },
+                headers: {"Authorization": localStorage.getItem('authorization')}
+            }).then((response) => {
+                    console.log(response);
+                    this.setState({"results": response.data});
+                },
+                (error) => {
+                    console.log("error");
+                });
+        } else {
+            axios.get(SERVICE_URL + '/algorithms/filter/both',{
+                params: {
+                    category: event.target.value,
+                    library: this.state.library
+                },
+                headers: {"Authorization": localStorage.getItem('authorization')}
+            }).then((response) => {
+                    console.log(response);
+                    this.setState({"results": response.data});
+                },
+                (error) => {
+                    console.log("error");
+                });
+        }
     }
 
     render() {
@@ -58,12 +110,12 @@ export default class SelectAlgorithm extends Component {
                         <CustomBreadCrumb name="Home,Select Algorithm" title="Choose Algorithm" />
                     </Grid>
                     <Grid item xs={4}>
-
                     </Grid>
                     <Grid item xs={4}>
                     </Grid>
                     <Grid item xs={4}>
-                        <SelectItemList passedFunction={this.passedFunction} library={this.state.library}></SelectItemList>
+                        <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data="ORTools,py" label="Library"></SelectItemList>
+                        <SelectItemList passedFunction={this.categoryPassedFunction} library={this.state.category} data="Routing,Packing" label="Category"></SelectItemList>
                     </Grid>
                     {
                         this.state.results.map((result, index) => (

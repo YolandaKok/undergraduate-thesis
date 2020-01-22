@@ -28,6 +28,10 @@ public class AlgorithmEndpoint {
 	@GetMapping("/filter/both")
 	public List<AlgorithmResponse> findWithCriteria(@RequestParam("category") String category,
 			@RequestParam("library") String library) {
+		if (category.isBlank())
+			return filterByLibrary(library);
+		if (library.isBlank())
+			return filterByCategory(category);
 		List<AlgorithmResponse> responses = algorithmService.findAll();
 		if (responses.isEmpty())
 			return responses;
@@ -42,6 +46,8 @@ public class AlgorithmEndpoint {
 		if (responses.isEmpty())
 			return responses;
 
+		if (library.isBlank())
+			return responses;
 		return responses.parallelStream().filter(x -> x.getLibrary().contentEquals(library))
 				.collect(Collectors.toList());
 	}
@@ -50,6 +56,8 @@ public class AlgorithmEndpoint {
 	public List<AlgorithmResponse> filterByCategory(@RequestParam("category") String category) {
 		List<AlgorithmResponse> responses = algorithmService.findAll();
 		if (responses.isEmpty())
+			return responses;
+		if (category.isBlank())
 			return responses;
 
 		return responses.parallelStream().filter(x -> x.getCategory().contentEquals(category))

@@ -4,6 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Link from "@material-ui/core/Link";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 
 const styles = theme => ({
     button: {
@@ -44,10 +46,11 @@ export class SelectItemList extends Component {
 
     render() {
         const { classes } = this.props;
+        let data = this.props.data.split(',');
 
         return (
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-controlled-open-select-label">Library</InputLabel>
+                <InputLabel id="demo-controlled-open-select-label">{this.props.label}</InputLabel>
                 <Select
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
@@ -60,8 +63,11 @@ export class SelectItemList extends Component {
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    <MenuItem value={"ORTools"}>ORTools</MenuItem>
-                    <MenuItem value={"py"}>py</MenuItem>
+                    {
+                        data.map((text, index)=>(
+                            <MenuItem value={text} key={index}>{text}</MenuItem>
+                        ))
+                    }
                 </Select>
             </FormControl>
         );
