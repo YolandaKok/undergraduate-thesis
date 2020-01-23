@@ -12,8 +12,16 @@ const styles = theme => ({
         display: 'block',
     },
     formControl: {
-        minWidth: 120,
+        minWidth: 100,
+        margin: 4,
+        color: 'blue',
     },
+    selectStyle: {
+        boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
+    },
+    inputStyle: {
+        padding: 3
+    }
 });
 
 export class SelectItemList extends Component {
@@ -50,7 +58,7 @@ export class SelectItemList extends Component {
 
         return (
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-controlled-open-select-label">{this.props.label}</InputLabel>
+                <InputLabel id="demo-controlled-open-select-label" className={classes.inputStyle}>{this.props.label}</InputLabel>
                 <Select
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
@@ -59,6 +67,7 @@ export class SelectItemList extends Component {
                     onOpen={this.handleOpen}
                     value={this.props.library}
                     onChange={this.props.passedFunction}
+                    className={classes.selectStyle}
                 >
                     <MenuItem value="">
                         <em>None</em>

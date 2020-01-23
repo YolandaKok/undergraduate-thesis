@@ -13,10 +13,12 @@ export default class SelectAlgorithm extends Component {
         this.state = {
             "results": [],
             "library": '',
-            "category": ''
+            "category": '',
+            "order": ''
         }
-        this.passedFunction = this.passedFunction.bind(this)
-        this.categoryPassedFunction = this.categoryPassedFunction.bind(this)
+        this.passedFunction = this.passedFunction.bind(this);
+        this.categoryPassedFunction = this.categoryPassedFunction.bind(this);
+        this.orderPassedFunction = this.orderPassedFunction.bind(this);
     }
 
     componentDidMount() {
@@ -24,7 +26,10 @@ export default class SelectAlgorithm extends Component {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
                     console.log(response);
-                    this.setState({"results": response.data});
+                    if(this.state.order === 'Ascending')
+                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                    else
+                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
                 },
                 (error) => {
                     console.log("error");
@@ -43,7 +48,10 @@ export default class SelectAlgorithm extends Component {
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
                     console.log(response);
-                    this.setState({"results": response.data});
+                    if(this.state.order === 'Ascending')
+                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                    else
+                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
                 },
                 (error) => {
                     console.log("error");
@@ -58,7 +66,10 @@ export default class SelectAlgorithm extends Component {
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
                     console.log(response);
-                    this.setState({"results": response.data});
+                    if(this.state.order === 'Ascending')
+                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                    else
+                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
                 },
                 (error) => {
                     console.log("error");
@@ -80,7 +91,10 @@ export default class SelectAlgorithm extends Component {
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
                     console.log(response);
-                    this.setState({"results": response.data});
+                    if(this.state.order === 'Ascending')
+                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                    else
+                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
                 },
                 (error) => {
                     console.log("error");
@@ -94,12 +108,24 @@ export default class SelectAlgorithm extends Component {
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
                     console.log(response);
-                    this.setState({"results": response.data});
+                    if(this.state.order === 'Ascending')
+                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                    else
+                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
                 },
                 (error) => {
                     console.log("error");
                 });
         }
+    }
+
+    orderPassedFunction(event) {
+        console.log("Value: " + event.target.value);
+        this.setState({"order": event.target.value});
+        if(event.target.value === 'Ascending')
+            this.setState({"results": this.state.results.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+        else
+            this.setState({"results": this.state.results.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
     }
 
     render() {
@@ -116,6 +142,7 @@ export default class SelectAlgorithm extends Component {
                     <Grid item xs={4}>
                         <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data="ORTools,py" label="Library"></SelectItemList>
                         <SelectItemList passedFunction={this.categoryPassedFunction} library={this.state.category} data="Routing,Packing" label="Category"></SelectItemList>
+                        <SelectItemList passedFunction={this.orderPassedFunction} library={this.state.order} data="Ascending,Descending" label="Order By"></SelectItemList>
                     </Grid>
                     {
                         this.state.results.map((result, index) => (
