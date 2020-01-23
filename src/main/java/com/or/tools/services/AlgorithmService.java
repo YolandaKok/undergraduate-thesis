@@ -6,4 +6,6 @@ import com.or.tools.response.AlgorithmResponse;
 
 public interface AlgorithmService {
 	List<AlgorithmResponse> findAll();
+
+	List<String> findAllCategories();
 }

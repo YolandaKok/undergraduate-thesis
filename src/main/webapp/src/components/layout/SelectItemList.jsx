@@ -54,7 +54,6 @@ export class SelectItemList extends Component {
 
     render() {
         const { classes } = this.props;
-        let data = this.props.data.split(',');
 
         return (
             <FormControl className={classes.formControl}>
@@ -73,7 +72,7 @@ export class SelectItemList extends Component {
                         <em>None</em>
                     </MenuItem>
                     {
-                        data.map((text, index)=>(
+                        this.props.data.map((text, index)=>(
                             <MenuItem value={text} key={index}>{text}</MenuItem>
                         ))
                     }

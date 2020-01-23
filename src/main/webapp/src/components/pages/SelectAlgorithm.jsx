@@ -14,7 +14,10 @@ export default class SelectAlgorithm extends Component {
             "results": [],
             "library": '',
             "category": '',
-            "order": ''
+            "order": '',
+            "librariesNames": [],
+            "categoriesNames": [],
+            "orderNames": ['Ascending', 'Descending']
         }
         this.passedFunction = this.passedFunction.bind(this);
         this.categoryPassedFunction = this.categoryPassedFunction.bind(this);
@@ -34,6 +37,27 @@ export default class SelectAlgorithm extends Component {
                 (error) => {
                     console.log("error");
                 });
+
+        axios.get(SERVICE_URL + '/library/findAllNames' , {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        }).then((response) => {
+                console.log(response);
+                this.setState({"librariesNames": response.data.libraryNames});
+            },
+            (error) => {
+                console.log("error");
+            });
+
+        axios.get(SERVICE_URL + '/algorithms/categories' , {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        }).then((response) => {
+                console.log(response);
+                this.setState({"categoriesNames": response.data.libraryNames});
+            },
+            (error) => {
+                console.log("error");
+            });
+
     }
 
     passedFunction(event) {
@@ -140,9 +164,9 @@ export default class SelectAlgorithm extends Component {
                     <Grid item xs={4}>
                     </Grid>
                     <Grid item xs={4}>
-                        <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data="ORTools,py" label="Library"></SelectItemList>
-                        <SelectItemList passedFunction={this.categoryPassedFunction} library={this.state.category} data="Routing,Packing" label="Category"></SelectItemList>
-                        <SelectItemList passedFunction={this.orderPassedFunction} library={this.state.order} data="Ascending,Descending" label="Order By"></SelectItemList>
+                        <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data={this.state.librariesNames} label="Library"></SelectItemList>
+                        <SelectItemList passedFunction={this.categoryPassedFunction} library={this.state.category} data={this.state.categoriesNames} label="Category"></SelectItemList>
+                        <SelectItemList passedFunction={this.orderPassedFunction} library={this.state.order} data={this.state.orderNames} label="Order By"></SelectItemList>
                     </Grid>
                     {
                         this.state.results.map((result, index) => (

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.or.tools.response.AlgorithmResponse;
+import com.or.tools.response.LibraryNamesResponse;
 import com.or.tools.services.AlgorithmService;
 
 @RestController
@@ -18,6 +19,13 @@ public class AlgorithmEndpoint {
 
 	@Autowired
 	private AlgorithmService algorithmService;
+
+	@GetMapping("/categories")
+	public LibraryNamesResponse findAllCategories() {
+		LibraryNamesResponse response = new LibraryNamesResponse();
+		response.setLibraryNames(algorithmService.findAllCategories());
+		return response;
+	}
 
 	@GetMapping("/findAll")
 	public List<AlgorithmResponse> getAllAlgorithms() {
