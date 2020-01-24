@@ -9,28 +9,11 @@ import {
     HorizontalGridLines,
     MarkSeries
 } from 'react-vis';
-import * as PropTypes from "prop-types";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import CustomBreadCrumb from "../layout/CustomBreadCrumb";
+import styles from "../../static/signup.module.css";
 
-class ChildComponent extends Component {
-
-    constructor(props) {
-        super(props);
-        console.log('ChildComponent: state');
-    }
-
-    render() {
-        console.log('ChildComponent: render');
-        return (
-            <div>
-                Name: {this.props.name}
-            </div>
-        );
-    }
-}
-
-ChildComponent.defaultProps = {
-    name: "Nelly"
-};
 
 export class Knapsack extends Component {
     constructor(props) {
@@ -70,24 +53,37 @@ export class Knapsack extends Component {
         console.log('ParentComponent: render');
         return (
             <Fragment>
-                <XYPlot width={500} height={500}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis />
-                    <YAxis />
-                    <MarkSeries
-                        className="mark-series-example"
-                        strokeWidth={2}
-                        opacity="0.8"
-                        sizeRange={[3, 8]}
-                        colorType="linear"
-                        colorDomain={[0, 1, 2]}
-                        colorRange={['blue', 'red', 'yellow']}
-                        data={results}
-                    />
-                </XYPlot>
-                <button onClick={this.onButtonClick}>Click me</button>
-                <ChildComponent></ChildComponent>
+                <Container fixed>
+                    <Grid container spacing={2} className={styles.gridPadding}>
+                        <Grid item xs={12}>
+                            <CustomBreadCrumb name="Home,OR Tools,Knapsack" title="Knapsack" />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <h5>Graph</h5>
+                            <hr className={styles.marginHr}></hr>
+                            <XYPlot width={500} height={500}>
+                                <VerticalGridLines />
+                                <HorizontalGridLines />
+                                <XAxis />
+                                <YAxis />
+                                <MarkSeries
+                                    className="mark-series-example"
+                                    strokeWidth={2}
+                                    opacity="0.8"
+                                    sizeRange={[3, 8]}
+                                    colorType="linear"
+                                    colorDomain={[0, 1, 2]}
+                                    colorRange={['blue', 'red', 'yellow']}
+                                    data={results}
+                                />
+                            </XYPlot>
+                            <button onClick={this.onButtonClick}>Click me</button>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <h1>Upload File</h1>
+                        </Grid>
+                    </Grid>
+                </Container>
             </Fragment>
         );
     }
