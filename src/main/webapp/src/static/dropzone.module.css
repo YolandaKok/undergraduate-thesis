@@ -1,0 +1,53 @@
+.App {
+    max-width: 960px;
+    margin: 10px auto;
+}
+
+.textCenter {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+/* Dropzone */
+.dropzone {
+    padding: 30px;
+    height: 30vh;
+    border: 5px dashed #7649bc;
+    outline: none;
+    cursor: pointer;
+}
+.dropzoneActive {
+    background-color: #f1e2ff;
+    border: 5px solid #2fd7b5;
+}
+.dropzoneContent {
+    align-self: center;
+    font-size: 24px;
+}
+
+
+/* Tablets */
+@media (max-width: 1000px) {
+    .App {
+        max-width: 600px;
+    }
+    .file-item {
+        width: calc(50% - 22px);
+        height: 200px;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 640px) {
+    .App {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    .file-item {
+        width: calc(100% - 22px);
+        height: 200px;
+    }
+}

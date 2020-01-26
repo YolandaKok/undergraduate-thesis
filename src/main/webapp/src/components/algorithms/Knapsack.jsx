@@ -1,86 +1,55 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component, Fragment, useCallback} from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-
-import {
-    XYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    HorizontalGridLines,
-    MarkSeries
-} from 'react-vis';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import styles from "../../static/signup.module.css";
-
+import CustomizedSteppers from "../layout/CustomizedSteppers";
+import DragAndDrop from "../drag-and-drop/DragAndDrop";
+import CustomGraph from "../graphs/CustomGraph";
+const axios = require('axios');
 
 export class Knapsack extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: [
-                {x: 360, y: 7, size: 2, color: 0.3},
-                {x: 83, y: 0, size: 2, color: 0.3},
-                {x: 59, y: 30, size: 2, color: 0.3},
-                {x: 130, y: 22, size: 2, color: 0.3},
-                {x: 431, y: 80, size: 2, color: 0.3},
-                {x: 67, y: 94, size: 2, color: 0.3},
-                {x: 230, y: 11, size: 2, color: 0.3},
-                {x: 52, y: 81, size: 2, color: 0.3},
-            ]
-        };
-        this.onButtonClick = this.onButtonClick.bind(this);
+            results: [],
+            formData: null
+        }
+        this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
+        this.getResult = this.getResult.bind(this);
     }
 
-    onButtonClick() {
-        this.setState({
-            results: [
-                {x: 360, y: 7, size: 2, color: 1.3},
-                {x: 83, y: 0, size: 2, color: 1.3},
-                {x: 59, y: 30, size: 2, color: 0.3},
-                {x: 130, y: 22, size: 2, color: 1.3},
-                {x: 431, y: 80, size: 2, color: 1.3},
-                {x: 67, y: 94, size: 2, color: 0.3},
-                {x: 230, y: 11, size: 2, color: 1.3},
-                {x: 52, y: 81, size: 2, color: 0.3},
-            ]
-        });
+    /* Pass Function to Drag And Drop to get Data */
+    passedForDragAndDrop(formData) {
+        console.log("Passed !");
+        this.setState({"formData": formData});
+        this.getResult();
+    }
+
+    getResult() {
+        axios.post(SERVICE_URL + '/test/knapsack' , this.state.formData, {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+            .then((response) => {
+                    console.log(response);
+                },
+                (error) => {
+                    console.log("error");
+                });
+
     }
 
     render() {
-        let results = this.state.results;
-        console.log('ParentComponent: render');
         return (
             <Fragment>
                 <Container fixed>
-                    <Grid container spacing={2} className={styles.gridPadding}>
+                    <Grid container spacing={2} className={styles.gridPadding} justify="center">
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,OR Tools,Knapsack" title="Knapsack" />
                         </Grid>
-                        <Grid item xs={6}>
-                            <h5>Graph</h5>
-                            <hr className={styles.marginHr}></hr>
-                            <XYPlot width={500} height={500}>
-                                <VerticalGridLines />
-                                <HorizontalGridLines />
-                                <XAxis />
-                                <YAxis />
-                                <MarkSeries
-                                    className="mark-series-example"
-                                    strokeWidth={2}
-                                    opacity="0.8"
-                                    sizeRange={[3, 8]}
-                                    colorType="linear"
-                                    colorDomain={[0, 1, 2]}
-                                    colorRange={['blue', 'red', 'yellow']}
-                                    data={results}
-                                />
-                            </XYPlot>
-                            <button onClick={this.onButtonClick}>Click me</button>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <h1>Upload File</h1>
+                        <Grid item xs={12} md={12} lg={9} xl={9}>
+                            <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>} second={<CustomGraph/>}/>
                         </Grid>
                     </Grid>
                 </Container>
