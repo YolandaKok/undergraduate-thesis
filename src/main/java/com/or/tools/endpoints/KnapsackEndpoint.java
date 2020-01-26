@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,26 +16,15 @@ import com.or.tools.model.KnapsackModel;
 import com.or.tools.util.IOUtils;
 
 @RestController
-@RequestMapping(value = "/test")
-public class TestEndpoint {
+@RequestMapping("/knapsack")
+public class KnapsackEndpoint {
 
-	private static final Logger log = LoggerFactory.getLogger(TestEndpoint.class);
+	private static final Logger log = LoggerFactory.getLogger(KnapsackEndpoint.class);
 
 	@Autowired
 	private IOUtils ioUtils;
 
-	@GetMapping(value = "/hello")
-	public String sayHello() {
-		return "Hello World";
-	}
-
-	@PostMapping(value = "/upload")
-	public void uploadFile(@RequestParam("file") MultipartFile file) {
-		System.out.println("OK");
-		ioUtils.readKnapsackData(file);
-	}
-
-	@PostMapping(value = "/knapsack")
+	@PostMapping(value = "/result")
 	public void testKnapsack(@RequestParam("file") MultipartFile file) {
 		KnapsackSolver solver = new KnapsackSolver(
 				KnapsackSolver.SolverType.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER, "test");
