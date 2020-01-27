@@ -20,6 +20,7 @@ export class Knapsack extends Component {
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
+        this.saveExperiment = this.saveExperiment.bind(this);
     }
 
     /* Pass Function to Drag And Drop to get Data */
@@ -27,20 +28,20 @@ export class Knapsack extends Component {
         console.log("Passed !");
         this.setState({"formData": formData});
         this.getInitialData();
-        this.getResult();
     }
 
     getInitialData() {
         axios.post(SERVICE_URL + '/knapsack/data' , this.state.formData, {
             headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
         })
-            .then((response) => {
-                    console.log(response);
-                    this.setState({results: response.data.value0});
-                },
-                (error) => {
-                    console.log("error");
-                });
+        .then((response) => {
+            console.log(response);
+            this.setState({results: response.data.value0});
+            this.getResult();
+        },
+        (error) => {
+            console.log("error");
+        });
 
     }
 
@@ -48,19 +49,32 @@ export class Knapsack extends Component {
         axios.post(SERVICE_URL + '/knapsack/result' , this.state.formData, {
             headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
         })
-            .then((response) => {
-                    console.log(response);
-                    this.setState({packedItems: response.data.packedItems});
-                    let temp = JSON.parse(JSON.stringify(this.state.results));
-                    response.data.packedItems.map((item) => {
-                        temp[item].color = 0.3;
-                    });
-                    this.setState({packedItems: temp});
-                },
-                (error) => {
-                    console.log("error");
-                });
+        .then((response) => {
+            console.log(response);
+            this.setState({packedItems: response.data.packedItems});
+            let temp = JSON.parse(JSON.stringify(this.state.results));
+            response.data.packedItems.map((item) => {
+                temp[item].color = 0.3;
+            });
+            this.setState({packedItems: temp});
+        },
+        (error) => {
+            console.log("error");
+        });
 
+    }
+
+    saveExperiment() {
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack", date: new Date(), data: JSON.stringify(this.state.results)}, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+
+        },
+        (error) => {
+            console.log("error");
+        });
     }
 
     render() {
@@ -75,6 +89,7 @@ export class Knapsack extends Component {
                                             second={<CustomGraph data={this.state.results}/>}
                                             third={<CustomTable rows={this.state.results} />}
                                             fourth={<CustomGraph data={this.state.packedItems}/>}
+                                            finish={this.saveExperiment}
                         />
                     </Grid>
                 </Container>

@@ -6,7 +6,6 @@ export class IndexPage extends Component {
         return(
             <div>
                 <NavBar/>
-                <Knapsack/>
             </div>
         );
     }

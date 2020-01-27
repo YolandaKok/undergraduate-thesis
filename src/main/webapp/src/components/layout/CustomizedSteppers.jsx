@@ -206,6 +206,10 @@ export default function CustomizedSteppers(props) {
         setActiveStep(0);
     };
 
+    const save = () => {
+        props.finish();
+    };
+
     return (
         <div className={classes.root}>
             <Stepper
@@ -227,6 +231,9 @@ export default function CustomizedSteppers(props) {
                         </Typography>
                         <Button onClick={handleReset} className={classes.button}>
                             Reset
+                        </Button>
+                        <Button onClick={save} className={classes.button}>
+                            Save Experiment
                         </Button>
                     </div>
                 ) : (
