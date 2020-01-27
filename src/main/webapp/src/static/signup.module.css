@@ -27,3 +27,7 @@
 .MuiFormControl-root {
   min-width: 120px;
 }
+
+body {
+  padding-bottom: 100px;
+}

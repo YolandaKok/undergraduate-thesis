@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -10,11 +10,8 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import StepConnector from "@material-ui/core/StepConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import TSP from "../algorithms/TSP";
 import Grid from "@material-ui/core/Grid";
-import Knapsack from "../algorithms/Knapsack";
-import DragAndDrop from "../drag-and-drop/DragAndDrop";
-import CustomGraph from "../graphs/CustomGraph";
+import Container from "@material-ui/core/Container";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -178,14 +175,14 @@ function getSteps() {
     return ["Upload File", "Show Initial Data", "Show Results"];
 }
 
-function getStepContent(step, first, second) {
+function getStepContent(step, first, second, third, fourth) {
     switch (step) {
         case 0:
-            return first;
+            return <Fragment><Container><Grid container  spacing={2}><Grid item xs={6}>{first}</Grid><Grid item xs={6}>{third}</Grid></Grid></Container></Fragment>;
         case 1:
-            return second;
+            return <Fragment><Container><Grid container spacing={2}><Grid item xs={6}>{second}</Grid><Grid item xs={6}>{third}</Grid></Grid></Container></Fragment>;
         case 2:
-            return "This is the bit I really care about!";
+            return <div>{fourth}</div>;
         default:
             return "Unknown step";
     }
@@ -235,7 +232,7 @@ export default function CustomizedSteppers(props) {
                 ) : (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth)}
                         </Typography>
                         <div>
                             <Button

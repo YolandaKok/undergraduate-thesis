@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import styles from "../../static/signup.module.css";
 import styles1 from "../../static/dropzone.module.css";
 import Dropzone from "./Dropzone";
-import Button from "@material-ui/core/Button";
 
 export default class DragAndDrop extends Component {
     constructor(props) {
@@ -18,13 +17,20 @@ export default class DragAndDrop extends Component {
             let formData = new FormData();
             formData.append("file", file);
             this.setState({"formData": formData});
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                let content = reader.result;
+
+                alert(content);
+            }
         });
         this.props.passedFunction(this.state.formData);
     }
 
     render() {
         return(
-            <div>
+            <Fragment>
                 <h5>Upload Document</h5>
                 <hr className={styles.marginHr}></hr>
                 <main className={styles1.App}>
@@ -33,7 +39,7 @@ export default class DragAndDrop extends Component {
                     <h6>Accepted file types: .csv</h6>
                 </main>
                 {/*<Button onClick={this.getResult} variant="contained" color="secondary">Show Result</Button>*/}
-            </div>
+            </Fragment>
         )
     }
 

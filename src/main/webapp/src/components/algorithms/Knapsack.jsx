@@ -7,6 +7,7 @@ import styles from "../../static/signup.module.css";
 import CustomizedSteppers from "../layout/CustomizedSteppers";
 import DragAndDrop from "../drag-and-drop/DragAndDrop";
 import CustomGraph from "../graphs/CustomGraph";
+import CustomTable from "../layout/CustomTable";
 const axios = require('axios');
 
 export class Knapsack extends Component {
@@ -14,7 +15,8 @@ export class Knapsack extends Component {
         super(props);
         this.state = {
             results: [],
-            formData: null
+            formData: null,
+            packedItems: []
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -24,15 +26,36 @@ export class Knapsack extends Component {
     passedForDragAndDrop(formData) {
         console.log("Passed !");
         this.setState({"formData": formData});
+        this.getInitialData();
         this.getResult();
     }
 
-    getResult() {
-        axios.post(SERVICE_URL + '/test/knapsack' , this.state.formData, {
+    getInitialData() {
+        axios.post(SERVICE_URL + '/knapsack/data' , this.state.formData, {
             headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
         })
             .then((response) => {
                     console.log(response);
+                    this.setState({results: response.data.value0});
+                },
+                (error) => {
+                    console.log("error");
+                });
+
+    }
+
+    getResult() {
+        axios.post(SERVICE_URL + '/knapsack/result' , this.state.formData, {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+            .then((response) => {
+                    console.log(response);
+                    this.setState({packedItems: response.data.packedItems});
+                    let temp = JSON.parse(JSON.stringify(this.state.results));
+                    response.data.packedItems.map((item) => {
+                        temp[item].color = 0.3;
+                    });
+                    this.setState({packedItems: temp});
                 },
                 (error) => {
                     console.log("error");
@@ -44,13 +67,15 @@ export class Knapsack extends Component {
         return (
             <Fragment>
                 <Container fixed>
-                    <Grid container spacing={2} className={styles.gridPadding} justify="center">
+                    <Grid container spacing={2} className={styles.gridPadding}>
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,OR Tools,Knapsack" title="Knapsack" />
                         </Grid>
-                        <Grid item xs={12} md={12} lg={9} xl={9}>
-                            <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>} second={<CustomGraph/>}/>
-                        </Grid>
+                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>}
+                                            second={<CustomGraph data={this.state.results}/>}
+                                            third={<CustomTable rows={this.state.results} />}
+                                            fourth={<CustomGraph data={this.state.packedItems}/>}
+                        />
                     </Grid>
                 </Container>
             </Fragment>

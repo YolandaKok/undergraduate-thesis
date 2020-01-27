@@ -33,8 +33,10 @@ public class IOUtils {
 				String[] rows = data.split("\n");
 				log.info("Number of rows: {}", rows.length);
 				totalRows = rows.length;
-				values = new long[totalRows];
-				weights = new long[1][totalRows];
+				values = new long[totalRows - 2];
+				weights = new long[1][totalRows - 2];
+
+				int num = 0;
 
 				for (String row : rows) {
 					if (numOfRows != 0 && numOfRows != (totalRows - 1)) {
@@ -44,14 +46,15 @@ public class IOUtils {
 						for (String column : columns) {
 							if (attributes == 0) {
 								// value
-								values[numOfRows] = Long.parseLong(column);
+								values[num] = Long.parseLong(column);
 							} else if (attributes == 1) {
 								// weight
-								weights[0][numOfRows] = Long.parseLong(column);
+								weights[0][num] = Long.parseLong(column);
 							}
 							attributes++;
 							log.info("Attribute: {}", column);
 						}
+						num++;
 					}
 					if (numOfRows == totalRows - 1) {
 						log.info("New Row: ");

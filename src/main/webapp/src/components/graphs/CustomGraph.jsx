@@ -37,9 +37,9 @@ export default class CustomGraph extends Component {
     }
 
     render() {
-        let results = this.state.results;
+        let results = this.props.data;
         return(
-            <Grid item xs={12} md={6} lg={6} xl={6}>
+            <Grid item xs={12}>
                 <h5>Graph</h5>
                 <hr className={styles.marginHr}></hr>
                 <XYPlot width={400} height={400}>
