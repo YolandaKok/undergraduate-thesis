@@ -76,4 +76,8 @@ public class ExperimentDTO {
 		this.algorithm = algorithm;
 	}
 
+	public AlgorithmDTO getAlgorithmDTO() {
+		return this.algorithm;
+	}
+
 }

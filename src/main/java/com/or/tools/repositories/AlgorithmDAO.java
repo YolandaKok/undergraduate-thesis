@@ -7,5 +7,5 @@ import com.or.tools.entities.AlgorithmDTO;
 
 @Repository
 public interface AlgorithmDAO extends JpaRepository<AlgorithmDTO, Long> {
-
+	AlgorithmDTO findByName(String username);
 }
