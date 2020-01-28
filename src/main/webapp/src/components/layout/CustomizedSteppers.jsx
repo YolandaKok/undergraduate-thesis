@@ -12,6 +12,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
+import ResultCompleted from "./ResultCompleted";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -35,6 +37,15 @@ const QontoConnector = withStyles({
         borderRadius: 1
     }
 })(StepConnector);
+
+const styles = {
+
+    largeIcon: {
+        width: 60,
+        height: 60,
+    },
+
+};
 
 const useQontoStepIconStyles = makeStyles({
     root: {
@@ -175,13 +186,13 @@ function getSteps() {
     return ["Upload File", "Show Initial Data", "Show Results"];
 }
 
-function getStepContent(step, first, second, third, fourth, fifth) {
+function getStepContent(step, first, second, third, fourth, fifth, completed) {
     switch (step) {
         case 0:
             return (
                 <Fragment>
                     <Container>
-                        <Grid container  spacing={2}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12} md={12} lg={6} xl={6}>{first}</Grid>
                             <Grid item xs={12} md={12} lg={6} xl={6}>{fifth}</Grid>
                             <Grid item xs={12}>{third}</Grid>
@@ -200,6 +211,8 @@ function getStepContent(step, first, second, third, fourth, fifth) {
                 </Fragment>);
         case 2:
             return <div>{fourth}</div>;
+        case 3:
+            return <div>{completed}</div>
         default:
             return "Unknown step";
     }
@@ -212,9 +225,6 @@ export default function CustomizedSteppers(props) {
     const steps = getSteps();
 
     const handleNext = () => {
-        if(activeStep == 2) {
-
-        }
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
 
@@ -247,7 +257,7 @@ export default function CustomizedSteppers(props) {
                 {activeStep === steps.length ? (
                     <div>
                         <Typography className={classes.instructions}>
-                            All steps completed - you&apos;re finished
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.completed)}
                         </Typography>
                         <Button onClick={handleReset} className={classes.button}>
                             Reset
@@ -259,7 +269,7 @@ export default function CustomizedSteppers(props) {
                 ) : (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.completed)}
                         </Typography>
                         <div>
                             <Button

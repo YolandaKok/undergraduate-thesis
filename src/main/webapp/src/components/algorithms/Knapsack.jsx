@@ -9,6 +9,7 @@ import DragAndDrop from "../drag-and-drop/DragAndDrop";
 import CustomGraph from "../graphs/CustomGraph";
 import CustomTable from "../layout/CustomTable";
 import InstructionsPanel from "../layout/InstructionsPanel";
+import ResultCompleted from "../layout/ResultCompleted";
 const axios = require('axios');
 
 export class Knapsack extends Component {
@@ -19,7 +20,9 @@ export class Knapsack extends Component {
             formData: null,
             packedItems: [],
             uploadError: null,
-            message: null
+            message: null,
+            saveMessage: null,
+            value: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -72,17 +75,18 @@ export class Knapsack extends Component {
     }
 
     saveExperiment() {
-        this.setState({"uploadError": 'success'});
-        this.setState({"message": 'You have completed the experiment.'});
         axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack", date: new Date(), data: JSON.stringify(this.state.results)}, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
         .then((response) => {
             console.log(response);
-
+            this.setState({saveMessage: "You have saved the experiment successfully."});
+            this.setState({value: "success"});
         },
         (error) => {
             console.log("error");
+            this.setState({saveMessage: "Oops, something went wrong."});
+            this.setState({value: "danger"});
         });
     }
 
@@ -99,11 +103,10 @@ export class Knapsack extends Component {
                                                                 passedFunction={this.passedForDragAndDrop}/>}
                                             second={<CustomGraph data={this.state.results}/>}
                                             third={<CustomTable rows={this.state.results} />}
-                                            fourth={<CustomGraph data={this.state.packedItems}
-                                                                 uploadError={'success'}
-                                                                 message={"You have completed the experiment."}/>}
+                                            fourth={<CustomGraph data={this.state.packedItems}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
+                                            completed={<ResultCompleted message={this.state.saveMessage} value={this.state.value}/>}
                         />
                     </Grid>
                 </Container>

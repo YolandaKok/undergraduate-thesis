@@ -60,8 +60,6 @@ export default class CustomGraph extends Component {
                         data={results}
                     />
                 </XYPlot>
-                <CustomizedAlert value={this.props.uploadError}
-                                 message={this.props.message}></CustomizedAlert>
             </Grid>
         )
     }
