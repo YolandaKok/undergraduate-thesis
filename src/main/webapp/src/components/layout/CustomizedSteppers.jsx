@@ -175,12 +175,29 @@ function getSteps() {
     return ["Upload File", "Show Initial Data", "Show Results"];
 }
 
-function getStepContent(step, first, second, third, fourth) {
+function getStepContent(step, first, second, third, fourth, fifth) {
     switch (step) {
         case 0:
-            return <Fragment><Container><Grid container  spacing={2}><Grid item xs={6}>{first}</Grid><Grid item xs={6}>{third}</Grid></Grid></Container></Fragment>;
+            return (
+                <Fragment>
+                    <Container>
+                        <Grid container  spacing={2}>
+                            <Grid item xs={12} md={12} lg={6} xl={6}>{first}</Grid>
+                            <Grid item xs={12} md={12} lg={6} xl={6}>{fifth}</Grid>
+                            <Grid item xs={12}>{third}</Grid>
+                        </Grid>
+                    </Container>
+                </Fragment>);
         case 1:
-            return <Fragment><Container><Grid container spacing={2}><Grid item xs={6}>{second}</Grid><Grid item xs={6}>{third}</Grid></Grid></Container></Fragment>;
+            return (
+                <Fragment>
+                    <Container>
+                        <Grid container spacing={2}>
+                            <Grid xs={12} md={12} lg={6} xl={6}>{second}</Grid>
+                            <Grid xs={12} md={12} lg={6} xl={6}>{third}</Grid>
+                        </Grid>
+                    </Container>
+                </Fragment>);
         case 2:
             return <div>{fourth}</div>;
         default:
@@ -195,6 +212,9 @@ export default function CustomizedSteppers(props) {
     const steps = getSteps();
 
     const handleNext = () => {
+        if(activeStep == 2) {
+
+        }
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
 
@@ -232,14 +252,14 @@ export default function CustomizedSteppers(props) {
                         <Button onClick={handleReset} className={classes.button}>
                             Reset
                         </Button>
-                        <Button onClick={save} className={classes.button}>
+                        <Button onClick={save} className={classes.button} color="primary" className="float-right" variant="contained">
                             Save Experiment
                         </Button>
                     </div>
                 ) : (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth)}
                         </Typography>
                         <div>
                             <Button

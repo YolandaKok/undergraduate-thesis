@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add react-dropzone --dev
+  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add @material-ui/lab
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/code-frame/LICENSE'
+  Error: EACCES: permission denied, mkdir '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@material-ui/lab'
 
 npm manifest: 
   {

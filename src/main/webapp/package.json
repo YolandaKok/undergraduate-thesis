@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.40",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "clsx": "latest",

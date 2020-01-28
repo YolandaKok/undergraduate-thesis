@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Grid from "@material-ui/core/Grid";
 import styles from "../../static/signup.module.css";
 import {HorizontalGridLines, MarkSeries, VerticalGridLines, XAxis, XYPlot, YAxis} from "react-vis";
+import {CustomizedAlert} from "../errors/CustomizedAlert";
+import TableContainer from "@material-ui/core/TableContainer";
 
 export default class CustomGraph extends Component {
     constructor(props) {
@@ -58,6 +60,8 @@ export default class CustomGraph extends Component {
                         data={results}
                     />
                 </XYPlot>
+                <CustomizedAlert value={this.props.uploadError}
+                                 message={this.props.message}></CustomizedAlert>
             </Grid>
         )
     }

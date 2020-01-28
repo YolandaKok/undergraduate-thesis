@@ -22,10 +22,10 @@ export default function CustomTable(props) {
     let rows = props.rows;
   return (
        <div>
-        <h5>Upload Document</h5>
+        <h5>Uploaded Values</h5>
          <hr className={styles.marginHr}></hr>
          <main className={styles1.App}>
-             <h6>Attach Document</h6>
+             <h6>Document Values</h6>
          </main>
          <TableContainer component={Paper}>
            <Table className={classes.table} size="small" aria-label="a dense table">

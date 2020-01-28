@@ -8,6 +8,7 @@ import CustomizedSteppers from "../layout/CustomizedSteppers";
 import DragAndDrop from "../drag-and-drop/DragAndDrop";
 import CustomGraph from "../graphs/CustomGraph";
 import CustomTable from "../layout/CustomTable";
+import InstructionsPanel from "../layout/InstructionsPanel";
 const axios = require('axios');
 
 export class Knapsack extends Component {
@@ -16,7 +17,9 @@ export class Knapsack extends Component {
         this.state = {
             results: [],
             formData: null,
-            packedItems: []
+            packedItems: [],
+            uploadError: null,
+            message: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -36,11 +39,15 @@ export class Knapsack extends Component {
         })
         .then((response) => {
             console.log(response);
+            this.setState({uploadError: 'success'});
+            this.setState({message: 'You have uploaded the file successfully !'});
             this.setState({results: response.data.value0});
             this.getResult();
         },
         (error) => {
-            console.log("error");
+            console.log("error with data upload");
+            this.setState({uploadError: 'danger'});
+            this.setState({message: 'Error while uploading file !'});
         });
 
     }
@@ -65,6 +72,8 @@ export class Knapsack extends Component {
     }
 
     saveExperiment() {
+        this.setState({"uploadError": 'success'});
+        this.setState({"message": 'You have completed the experiment.'});
         axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack", date: new Date(), data: JSON.stringify(this.state.results)}, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
@@ -85,11 +94,16 @@ export class Knapsack extends Component {
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,OR Tools,Knapsack" title="Knapsack" />
                         </Grid>
-                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>}
+                        <CustomizedSteppers first={<DragAndDrop uploadError={this.state.uploadError}
+                                                                message={this.state.message}
+                                                                passedFunction={this.passedForDragAndDrop}/>}
                                             second={<CustomGraph data={this.state.results}/>}
                                             third={<CustomTable rows={this.state.results} />}
-                                            fourth={<CustomGraph data={this.state.packedItems}/>}
+                                            fourth={<CustomGraph data={this.state.packedItems}
+                                                                 uploadError={'success'}
+                                                                 message={"You have completed the experiment."}/>}
                                             finish={this.saveExperiment}
+                                            fifth={<InstructionsPanel/>}
                         />
                     </Grid>
                 </Container>
