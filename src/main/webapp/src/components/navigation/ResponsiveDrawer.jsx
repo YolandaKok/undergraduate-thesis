@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,7 +23,6 @@ import Menu from "@material-ui/core/Menu";
 import Badge from "@material-ui/core/Badge";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import styles from '../../static/modal.module.css';
-import {Redirect} from "react-router";
 import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -91,7 +90,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(0, 1),
         justifyContent: "flex-end"},
     avatarStyle: {
-        cursor: "pointer"
+        cursor: "pointer",
     }
 }));
 
@@ -168,12 +167,14 @@ function ResponsiveDrawer(props) {
             <Divider />
             <List>
                 {['Overview', 'My Experiments'].map((text) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
+                    <Fragment>
+                        <ListItem button key={text}>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                        <Divider />
+                    </Fragment>
                 ))}
             </List>
-            <Divider />
             <List>
                 <ListItem button  onClick={handleClick}>
                     <ListItemText primary={"Libraries"} />
@@ -259,7 +260,9 @@ function ResponsiveDrawer(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar         position="fixed"
+            <AppBar
+                style={{backgroundColor: '#9f8761', color: 'white'}}
+                position="fixed"
                             className={clsx(classes.appBar, {
                                 [classes.appBarShift]: openDrawer
                             })}>
@@ -274,7 +277,7 @@ function ResponsiveDrawer(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Visualize Zone
+                        <a className={styles.logoStyle} href={'/'}>Visualize Zone</a>
                     </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>

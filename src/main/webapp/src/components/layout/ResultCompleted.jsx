@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
 import {withRouter} from "react-router-dom";
+import {Paper} from "@material-ui/core";
 
 export class ResultCompleted extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export class ResultCompleted extends Component {
         return(
             <Container>
                 <Grid container>
-                    <Grid item xs={12} style={{textAlign: "center"}}>
+                    <Grid item xs={12} md={12} lg={12} xl={12} style={{textAlign: "center"}}>
                         <CheckCircleRoundedIcon style={{fontSize: "200px", color: 'green'}}/>
                         <h3>You have completed the experiment.</h3>
                         <CustomizedAlert value={this.state.value}

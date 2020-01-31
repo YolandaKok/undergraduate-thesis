@@ -21,3 +21,11 @@
     border-radius: 20%;
     border-color: black;
 }
+
+a.logoStyle {
+    color: white;
+}
+
+a.logoStyle:hover {
+    text-decoration: none;
+}
