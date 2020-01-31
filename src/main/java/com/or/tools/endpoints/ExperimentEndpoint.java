@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.or.tools.entities.ExperimentDTO;
 import com.or.tools.requests.ExperimentRequest;
+import com.or.tools.response.ExperimentPage;
 import com.or.tools.response.ExperimentResponse;
 import com.or.tools.services.ExperimentService;
 
@@ -29,16 +32,24 @@ public class ExperimentEndpoint {
 	}
 
 	@GetMapping("/{username}")
-	public List<ExperimentResponse> getExperiments(@PathVariable("username") String username) {
-
-		List<ExperimentDTO> response = service.getAllExperiments(username);
-		List<ExperimentResponse> finalResponse = new ArrayList<>();
-		for (ExperimentDTO item : response) {
-			ExperimentResponse experiment = new ExperimentResponse();
-			experiment.setAlgorithmName(item.getAlgorithm());
-			experiment.setDescription(item.getAlgorithmDTO().getDescription());
-			finalResponse.add(experiment);
+	public ExperimentPage getExperiments(@PathVariable("username") String username, Pageable page) {
+		Page<ExperimentDTO> response = service.getAllExperiments(username, page);
+		System.out.println(response.getContent());
+		List<ExperimentDTO> responses = response.getContent();
+		List<ExperimentResponse> exResponses = new ArrayList<>();
+		for (ExperimentDTO item : responses) {
+			ExperimentResponse itemResponse = new ExperimentResponse();
+			itemResponse.setAlgorithmName(item.getAlgorithm());
+			itemResponse.setDescription(item.getAlgorithmDTO().getDescription());
+			exResponses.add(itemResponse);
 		}
-		return finalResponse;
+		ExperimentPage pageResponse = new ExperimentPage();
+		pageResponse.setResponse(exResponses);
+		pageResponse.setNumOfElements(response.getNumberOfElements());
+		pageResponse.setNumOfPage(response.getNumber());
+		pageResponse.setSizeOfPage(response.getSize());
+		pageResponse.setTotalElements(response.getTotalElements());
+		pageResponse.setTotalPages(response.getTotalPages());
+		return pageResponse;
 	}
 }

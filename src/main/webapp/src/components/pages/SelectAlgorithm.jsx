@@ -28,35 +28,35 @@ export default class SelectAlgorithm extends Component {
         axios.get(SERVICE_URL + '/algorithms/findAll' , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
-                    console.log(response);
-                    if(this.state.order === 'Ascending')
-                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
-                    else
-                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
-                },
-                (error) => {
-                    console.log("error");
-                });
+            console.log(response);
+            if(this.state.order === 'Ascending')
+                this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+            else
+                this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
+        },
+        (error) => {
+            console.log("error");
+        });
 
         axios.get(SERVICE_URL + '/library/findAllNames' , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
-                console.log(response);
-                this.setState({"librariesNames": response.data.libraryNames});
-            },
-            (error) => {
-                console.log("error");
-            });
+            console.log(response);
+            this.setState({"librariesNames": response.data.libraryNames});
+        },
+        (error) => {
+            console.log("error");
+        });
 
         axios.get(SERVICE_URL + '/algorithms/categories' , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
-                console.log(response);
-                this.setState({"categoriesNames": response.data.libraryNames});
-            },
-            (error) => {
-                console.log("error");
-            });
+            console.log(response);
+            this.setState({"categoriesNames": response.data.libraryNames});
+        },
+        (error) => {
+            console.log("error");
+        });
 
     }
 
@@ -71,17 +71,16 @@ export default class SelectAlgorithm extends Component {
                 },
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
-                    console.log(response);
-                    if(this.state.order === 'Ascending')
-                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
-                    else
-                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
-                },
-                (error) => {
-                    console.log("error");
-                });
+                console.log(response);
+                if(this.state.order === 'Ascending')
+                    this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                else
+                    this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
+            },
+            (error) => {
+                console.log("error");
+            });
         } else {
-
             axios.get(SERVICE_URL + '/algorithms/filter/both',{
                 params: {
                     library: event.target.value,
@@ -89,18 +88,16 @@ export default class SelectAlgorithm extends Component {
                 },
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
-                    console.log(response);
-                    if(this.state.order === 'Ascending')
-                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
-                    else
-                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
-                },
-                (error) => {
-                    console.log("error");
-                });
+                console.log(response);
+                if(this.state.order === 'Ascending')
+                    this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                else
+                    this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
+            },
+            (error) => {
+                console.log("error");
+            });
         }
-
-
     }
 
     categoryPassedFunction(event) {
@@ -114,15 +111,15 @@ export default class SelectAlgorithm extends Component {
                 },
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
-                    console.log(response);
-                    if(this.state.order === 'Ascending')
-                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
-                    else
-                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
-                },
-                (error) => {
-                    console.log("error");
-                });
+                console.log(response);
+                if(this.state.order === 'Ascending')
+                    this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                else
+                    this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
+            },
+            (error) => {
+                console.log("error");
+            });
         } else {
             axios.get(SERVICE_URL + '/algorithms/filter/both',{
                 params: {
@@ -131,15 +128,15 @@ export default class SelectAlgorithm extends Component {
                 },
                 headers: {"Authorization": localStorage.getItem('authorization')}
             }).then((response) => {
-                    console.log(response);
-                    if(this.state.order === 'Ascending')
-                        this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
-                    else
-                        this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
-                },
-                (error) => {
-                    console.log("error");
-                });
+                console.log(response);
+                if(this.state.order === 'Ascending')
+                    this.setState({"results": response.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))});
+                else
+                    this.setState({"results": response.data.sort((a,b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))});
+            },
+            (error) => {
+                console.log("error");
+            });
         }
     }
 
