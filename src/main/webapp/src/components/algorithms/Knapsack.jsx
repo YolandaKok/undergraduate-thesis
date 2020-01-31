@@ -11,6 +11,7 @@ import CustomTable from "../layout/CustomTable";
 import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
 const axios = require('axios');
+import { withRouter } from 'react-router-dom';
 
 export class Knapsack extends Component {
     constructor(props) {
@@ -22,7 +23,9 @@ export class Knapsack extends Component {
             uploadError: null,
             message: null,
             saveMessage: null,
-            value: null
+            value: null,
+            path: null,
+            componentName: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -71,7 +74,6 @@ export class Knapsack extends Component {
         (error) => {
             console.log("error");
         });
-
     }
 
     saveExperiment() {
@@ -80,13 +82,18 @@ export class Knapsack extends Component {
         })
         .then((response) => {
             console.log(response);
-            this.setState({saveMessage: "You have saved the experiment successfully."});
+            let message = "You have saved the experiment successfully. Go to ";
+            this.setState({saveMessage: message});
             this.setState({value: "success"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
         },
         (error) => {
             console.log("error");
             this.setState({saveMessage: "Oops, something went wrong."});
             this.setState({value: "danger"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
         });
     }
 
@@ -101,12 +108,15 @@ export class Knapsack extends Component {
                         <CustomizedSteppers first={<DragAndDrop uploadError={this.state.uploadError}
                                                                 message={this.state.message}
                                                                 passedFunction={this.passedForDragAndDrop}/>}
-                                            second={<CustomGraph data={this.state.results}/>}
+                                            second={<CustomGraph data={this.state.results} />}
                                             third={<CustomTable rows={this.state.results} />}
                                             fourth={<CustomGraph data={this.state.packedItems}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
-                                            completed={<ResultCompleted message={this.state.saveMessage} value={this.state.value}/>}
+                                            completed={<ResultCompleted message={this.state.saveMessage}
+                                                                        value={this.state.value}
+                                                                        path={this.state.path}
+                                                                        componentName={this.state.componentName} />}
                         />
                     </Grid>
                 </Container>
@@ -115,4 +125,4 @@ export class Knapsack extends Component {
     }
 }
 
-export default Knapsack;
+export default withRouter(Knapsack);

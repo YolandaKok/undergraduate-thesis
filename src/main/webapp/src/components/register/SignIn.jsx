@@ -1,13 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import NavBar from "../navigation/NavBar";
-import Knapsack from "../algorithms/Knapsack";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import {Redirect} from "react-router";
 import {FormError} from "../errors/FormError";
-import {Homepage} from "../pages/Homepage";
-import {IndexPage} from "./IndexPage";
 const axios = require('axios');
 
 export class SignIn extends Component {
