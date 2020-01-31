@@ -20,6 +20,12 @@ const useStyles = makeStyles({
     },
 });
 
+const style = {
+    pointerEvents: 'none',
+    paddingLeft: '88px'
+};
+
+
 export function CustomCard(props) {
     /* Get props for custom cards */
     let title = props.title;
@@ -50,7 +56,7 @@ export function CustomCard(props) {
                 <Button size="small" color="primary">
                     Learn More
                 </Button>
-                <Button>
+                <Button style={style}>
                     {date}
                 </Button>
             </CardActions>
