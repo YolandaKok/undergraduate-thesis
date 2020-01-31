@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { Route , withRouter} from 'react-router-dom';
+import Moment from "react-moment";
+import styles from '../../static/modal.module.css';
 
 const useStyles = makeStyles({
     card: {
@@ -23,6 +25,7 @@ export function CustomCard(props) {
     let title = props.title;
     let content = props.content;
     let href = props.href;
+    let date = props.date;
 
     const classes = useStyles();
 
@@ -47,9 +50,16 @@ export function CustomCard(props) {
                 <Button size="small" color="primary">
                     Learn More
                 </Button>
+                <Button>
+                    {date}
+                </Button>
             </CardActions>
         </Card>
     );
+}
+
+CustomCard.defaultProps = {
+    date: ''
 }
 
 export default withRouter(CustomCard);

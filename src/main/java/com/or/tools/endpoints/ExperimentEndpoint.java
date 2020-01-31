@@ -41,6 +41,7 @@ public class ExperimentEndpoint {
 			ExperimentResponse itemResponse = new ExperimentResponse();
 			itemResponse.setAlgorithmName(item.getAlgorithm());
 			itemResponse.setDescription(item.getAlgorithmDTO().getDescription());
+			itemResponse.setModificationDate(item.getModificationDate());
 			exResponses.add(itemResponse);
 		}
 		ExperimentPage pageResponse = new ExperimentPage();

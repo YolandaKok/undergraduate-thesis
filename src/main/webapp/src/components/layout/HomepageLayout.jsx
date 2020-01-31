@@ -28,7 +28,7 @@ export default class HomepageLayout extends Component {
     }
 
     loadExperiments() {
-        axios.get(SERVICE_URL + '/experiments/' + localStorage.getItem('username_info') + '?size=' + this.state.perPage + '&page=' + this.state.offset , {
+        axios.get(SERVICE_URL + '/experiments/' + localStorage.getItem('username_info') + '?size=' + this.state.perPage + '&page=' + this.state.offset + '&sort=modificationDate,desc' , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
             console.log(response);
@@ -76,7 +76,7 @@ export default class HomepageLayout extends Component {
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={6} md={6} lg={4} xl={4}>
-                                <CustomCard title={item.algorithmName} content={item.description} href="/"/>
+                                <CustomCard title={item.algorithmName} content={item.description} href="/" date={item.modificationDate}/>
                             </Grid>
                         ))
                     }
