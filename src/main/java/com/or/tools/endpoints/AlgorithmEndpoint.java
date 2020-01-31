@@ -1,15 +1,20 @@
 package com.or.tools.endpoints;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.or.tools.entities.AlgorithmDTO;
 import com.or.tools.response.AlgorithmResponse;
+import com.or.tools.response.CustomPage;
 import com.or.tools.response.LibraryNamesResponse;
 import com.or.tools.services.AlgorithmService;
 
@@ -19,6 +24,30 @@ public class AlgorithmEndpoint {
 
 	@Autowired
 	private AlgorithmService algorithmService;
+
+	@GetMapping("/recent")
+	public CustomPage<AlgorithmResponse> findRecentAlgorithms(Pageable page) {
+		Page<AlgorithmDTO> response = algorithmService.findAll(page);
+		List<AlgorithmDTO> responses = response.getContent();
+		List<AlgorithmResponse> exResponses = new ArrayList<>();
+		for (AlgorithmDTO item : responses) {
+			AlgorithmResponse itemResponse = new AlgorithmResponse();
+			itemResponse.setId(item.getId());
+			itemResponse.setCategory(item.getCategory());
+			itemResponse.setDescription(item.getDescription());
+			itemResponse.setLibrary(item.getLibrary().getName());
+			itemResponse.setName(item.getName());
+			exResponses.add(itemResponse);
+		}
+		CustomPage<AlgorithmResponse> pageResponse = new CustomPage<>();
+		pageResponse.setResponse(exResponses);
+		pageResponse.setNumOfElements(response.getNumberOfElements());
+		pageResponse.setNumOfPage(response.getNumber());
+		pageResponse.setSizeOfPage(response.getSize());
+		pageResponse.setTotalElements(response.getTotalElements());
+		pageResponse.setTotalPages(response.getTotalPages());
+		return pageResponse;
+	}
 
 	@GetMapping("/categories")
 	public LibraryNamesResponse findAllCategories() {

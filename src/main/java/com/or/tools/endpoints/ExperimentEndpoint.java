@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.or.tools.entities.ExperimentDTO;
 import com.or.tools.requests.ExperimentRequest;
-import com.or.tools.response.ExperimentPage;
+import com.or.tools.response.CustomPage;
 import com.or.tools.response.ExperimentResponse;
 import com.or.tools.services.ExperimentService;
 
@@ -32,7 +32,7 @@ public class ExperimentEndpoint {
 	}
 
 	@GetMapping("/{username}")
-	public ExperimentPage getExperiments(@PathVariable("username") String username, Pageable page) {
+	public CustomPage<ExperimentResponse> getExperiments(@PathVariable("username") String username, Pageable page) {
 		Page<ExperimentDTO> response = service.getAllExperiments(username, page);
 		System.out.println(response.getContent());
 		List<ExperimentDTO> responses = response.getContent();
@@ -44,7 +44,7 @@ public class ExperimentEndpoint {
 			itemResponse.setModificationDate(item.getModificationDate());
 			exResponses.add(itemResponse);
 		}
-		ExperimentPage pageResponse = new ExperimentPage();
+		CustomPage<ExperimentResponse> pageResponse = new CustomPage<>();
 		pageResponse.setResponse(exResponses);
 		pageResponse.setNumOfElements(response.getNumberOfElements());
 		pageResponse.setNumOfPage(response.getNumber());

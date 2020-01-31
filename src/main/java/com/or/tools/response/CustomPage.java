@@ -2,20 +2,19 @@ package com.or.tools.response;
 
 import java.util.List;
 
-public class ExperimentPage {
-
-	private List<ExperimentResponse> response;
+public class CustomPage<T> {
+	private List<T> response;
 	private int numOfPage;
 	private int numOfElements;
 	private int totalPages;
 	private long totalElements;
 	private int sizeOfPage;
 
-	public List<ExperimentResponse> getResponse() {
+	public List<T> getResponse() {
 		return response;
 	}
 
-	public void setResponse(List<ExperimentResponse> response) {
+	public void setResponse(List<T> response) {
 		this.response = response;
 	}
 

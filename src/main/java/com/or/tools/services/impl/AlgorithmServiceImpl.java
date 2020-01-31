@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,11 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 	public List<String> findAllCategories() {
 		return algorithmDAO.findAll().stream().filter(distinctByKey(x -> x.getCategory())).map(p -> p.getCategory())
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Page<AlgorithmDTO> findAll(Pageable page) {
+		return algorithmDAO.findAll(page);
 	}
 
 }
