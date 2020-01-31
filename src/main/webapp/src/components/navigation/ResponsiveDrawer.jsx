@@ -16,7 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {AccountCircle, ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
+import {AccountCircle, Archive, ExpandLess, ExpandMore, LocalLibrary, StarBorder} from "@material-ui/icons";
 import Collapse from "@material-ui/core/Collapse";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -28,6 +28,9 @@ import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from "@material-ui/core/Avatar";
+import HomeIcon from '@material-ui/icons/Home';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 const drawerWidth = 240;
 
@@ -166,17 +169,30 @@ function ResponsiveDrawer(props) {
             </div>
             <Divider />
             <List>
-                {['Overview', 'My Experiments'].map((text) => (
-                    <Fragment>
-                        <ListItem button key={text}>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                        <Divider />
-                    </Fragment>
-                ))}
+                <Fragment>
+                    <ListItem button key={'Overview'} href='/' component="a">
+                        <ListItemIcon>
+                            <HomeIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Overview'} />
+                    </ListItem>
+                    <Divider />
+                </Fragment>
+                <Fragment>
+                    <ListItem button key={'My Experiments'} href='/myexperiments' component="a">
+                        <ListItemIcon>
+                            <Archive/>
+                        </ListItemIcon>
+                        <ListItemText primary={'My Experiments'} />
+                    </ListItem>
+                    <Divider />
+                </Fragment>
             </List>
             <List>
                 <ListItem button  onClick={handleClick}>
+                    <ListItemIcon>
+                        <LibraryBooksIcon/>
+                    </ListItemIcon>
                     <ListItemText primary={"Libraries"} />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
@@ -184,7 +200,7 @@ function ResponsiveDrawer(props) {
                     <List component="div" disablePadding>
                         <ListItem button className={classes.nested} onClick={handleLibraryClick}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <LocalLibrary />
                             </ListItemIcon>
                             <ListItemText primary="Google OR Tools" />
                             {openLibrary ? <ExpandLess /> : <ExpandMore />}
@@ -194,7 +210,7 @@ function ResponsiveDrawer(props) {
                                 {['Linear Optimization', 'Knapsack', 'Multiple Knapsacks', 'Travelling Salesman'].map((text) => (
                                     <ListItem button className={classes.nested} key={text}>
                                         <ListItemIcon>
-                                            <StarBorder />
+                                            <ChevronRightIcon/>
                                         </ListItemIcon>
                                         <ListItemText primary={text} />
                                     </ListItem>
