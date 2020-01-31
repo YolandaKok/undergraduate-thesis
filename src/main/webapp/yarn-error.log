@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add @material-ui/lab
+  /usr/local/bin/node /usr/local/bin/yarn add react-paginate
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.21.0
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@material-ui/lab'
+  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/code-frame/LICENSE'
 
 npm manifest: 
   {
@@ -45,6 +45,7 @@ npm manifest:
       "webpack-dev-server": "^3.9.0"
     },
     "dependencies": {
+      "@material-ui/lab": "^4.0.0-alpha.40",
       "axios": "^0.19.0",
       "bootstrap": "^4.4.1",
       "clsx": "latest",
@@ -1275,6 +1276,17 @@ Lockfile:
     integrity sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
     dependencies:
       "@babel/runtime" "^7.4.4"
+  
+  "@material-ui/lab@^4.0.0-alpha.40":
+    version "4.0.0-alpha.40"
+    resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.40.tgz#8d78dc80d32c27c05def7eda8a36e0d0a0748e7f"
+    integrity sha512-VwXCNFJKfctu9Ot9XP5u2SSzXpm2Fn7F/o08bUfrJDkMCuRc8MCGVnNhT+guZRZa35rR97uWKc3SGQ/LAv8yEg==
+    dependencies:
+      "@babel/runtime" "^7.4.4"
+      "@material-ui/utils" "^4.7.1"
+      clsx "^1.0.4"
+      prop-types "^15.7.2"
+      react-is "^16.8.0"
   
   "@material-ui/styles@^4.8.2":
     version "4.8.2"
@@ -3437,7 +3449,7 @@ Lockfile:
       kind-of "^6.0.2"
       shallow-clone "^3.0.0"
   
-  clsx@^1.0.2, clsx@latest:
+  clsx@^1.0.2, clsx@^1.0.4, clsx@latest:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
     integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
