@@ -71,7 +71,7 @@ export default class HomepageLayout extends Component {
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,Overview" title="Recent Experiments" />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6} md={6} lg={4} xl={4}>
                         <CustomCard title="New Experiment" content="Create a new experiment using an algorithm" href="/select/algorithm"/>
                     </Grid>
                     {

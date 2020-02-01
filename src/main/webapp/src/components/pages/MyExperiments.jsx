@@ -106,7 +106,7 @@ export class MyExperiments extends Component {
                     }
                 </Grid>
                 <Grid item xs={12}>
-                    <Pagination>
+                    <Pagination style={{paddingTop: '10px'}}>
                         {this.state.items}
                     </Pagination>
                 </Grid>

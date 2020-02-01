@@ -16,19 +16,18 @@ import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 345,
+        maxWidth: 300,
     },
     media: {
         height: 120,
     },
     menuButton: {
-        color: "red"
+        color: "red",
     }
 });
 
 const style = {
     pointerEvents: 'none',
-    paddingLeft: '88px'
 };
 
 const style1 = {
@@ -47,10 +46,10 @@ export function CustomCard(props) {
     return (
         <Card className={classes.card}>
             <CardActionArea onClick={(event) => {props.history.push(href);}}>
-                <CardMedia className={classes.media}
-                                           title={title}
-                                           src="c">
-                </CardMedia>
+                {/*<CardMedia className={classes.media}*/}
+                {/*                           title={title}*/}
+                {/*                           src="c">*/}
+                {/*</CardMedia>*/}
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {props.title}
@@ -62,9 +61,9 @@ export function CustomCard(props) {
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary">
-                    Learn More
+                    Read More
                 </Button>
-                <Button style={style}>
+                <Button size="small" color="primary">
                     {date}
                 </Button>
                 {props.removeIcon ? <IconButton className={classes.menuButton} aria-label="delete">
