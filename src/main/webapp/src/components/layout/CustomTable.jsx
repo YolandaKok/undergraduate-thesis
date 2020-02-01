@@ -25,7 +25,6 @@ export default function CustomTable(props) {
         <h5>Uploaded Values</h5>
          <hr className={styles.marginHr}></hr>
          <main className={styles1.App}>
-             <h6>Document Values</h6>
          </main>
          <TableContainer component={Paper}>
            <Table className={classes.table} size="small" aria-label="a dense table">
@@ -33,6 +32,7 @@ export default function CustomTable(props) {
                <TableRow>
                  <TableCell>Values</TableCell>
                  <TableCell>Weights</TableCell>
+                 {props.checkResult ? <TableCell>Result</TableCell> : ''}
                </TableRow>
              </TableHead>
              <TableBody>
@@ -40,8 +40,12 @@ export default function CustomTable(props) {
                  <TableRow key={row.x}>
                    <TableCell>{row.x}</TableCell>
                    <TableCell>{row.y}</TableCell>
+                   {props.checkResult ? (row.color==0.3 ? <TableCell>{String.fromCharCode(10003)}</TableCell> : <TableCell>no</TableCell>) : ''}
                  </TableRow>
                ))}
+               {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''}
+               {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''}
+               {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>}
              </TableBody>
            </Table>
          </TableContainer>

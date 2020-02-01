@@ -25,7 +25,10 @@ export class Knapsack extends Component {
             saveMessage: null,
             value: null,
             path: null,
-            componentName: null
+            componentName: null,
+            totalValue: null,
+            totalWeight: null,
+            capacities: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -48,6 +51,7 @@ export class Knapsack extends Component {
             this.setState({uploadError: 'success'});
             this.setState({message: 'You have uploaded the file successfully !'});
             this.setState({results: response.data.value0});
+            this.setState({capacities: response.data.value1});
             this.getResult();
         },
         (error) => {
@@ -64,6 +68,9 @@ export class Knapsack extends Component {
         })
         .then((response) => {
             console.log(response);
+            this.setState({totalValue: response.data.totalValue});
+            this.setState({totalWeight: response.data.totalWeight});
+            this.setState({});
             this.setState({packedItems: response.data.packedItems});
             let temp = JSON.parse(JSON.stringify(this.state.results));
             response.data.packedItems.map((item) => {
@@ -109,10 +116,13 @@ export class Knapsack extends Component {
                                                                 message={this.state.message}
                                                                 passedFunction={this.passedForDragAndDrop}/>}
                                             second={<CustomGraph data={this.state.results} />}
-                                            third={<CustomTable rows={this.state.results} />}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
                                             fourth={<CustomGraph data={this.state.packedItems}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
+                                            sixth={<CustomTable rows={this.state.packedItems} checkResult={true}
+                                                                totalValue={this.state.totalValue}
+                                                                totalWeight={this.state.totalWeight}/>}
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}
                                                                         path={this.state.path}

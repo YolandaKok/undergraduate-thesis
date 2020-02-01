@@ -14,6 +14,8 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import ResultCompleted from "./ResultCompleted";
+import Paper from "@material-ui/core/Paper";
+import { withRouter} from 'react-router-dom';
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -186,7 +188,7 @@ function getSteps() {
     return ["Upload File", "Show Initial Data", "Show Results"];
 }
 
-function getStepContent(step, first, second, third, fourth, fifth, completed) {
+function getStepContent(step, first, second, third, fourth, fifth, sixth, completed) {
     switch (step) {
         case 0:
             return (
@@ -210,7 +212,15 @@ function getStepContent(step, first, second, third, fourth, fifth, completed) {
                     </Container>
                 </Fragment>);
         case 2:
-            return <div>{fourth}</div>;
+            return (
+                <Fragment>
+                    <Container>
+                        <Grid container spacing={2}>
+                            <Grid xs={12} md={12} lg={6} xl={6}>{fourth}</Grid>
+                            <Grid xs={12} md={12} lg={6} xl={6}>{sixth}</Grid>
+                        </Grid>
+                    </Container>
+                </Fragment>);
         case 3:
             return <div>{completed}</div>
         default:
@@ -218,7 +228,7 @@ function getStepContent(step, first, second, third, fourth, fifth, completed) {
     }
 }
 
-export default function CustomizedSteppers(props) {
+export function CustomizedSteppers(props) {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -233,7 +243,7 @@ export default function CustomizedSteppers(props) {
     };
 
     const handleReset = () => {
-        setActiveStep(0);
+        window.location.reload();
     };
 
     const save = () => {
@@ -241,7 +251,7 @@ export default function CustomizedSteppers(props) {
     };
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} component={Paper}>
             <Stepper
                 alternativeLabel
                 activeStep={activeStep}
@@ -257,7 +267,7 @@ export default function CustomizedSteppers(props) {
                 {activeStep === steps.length ? (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.completed)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.completed)}
                         </Typography>
                         <Button onClick={handleReset} className={classes.button}>
                             Reset
@@ -269,7 +279,7 @@ export default function CustomizedSteppers(props) {
                 ) : (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.completed)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.completed)}
                         </Typography>
                         <div>
                             <Button
@@ -295,3 +305,5 @@ export default function CustomizedSteppers(props) {
         </div>
     );
 }
+
+export default withRouter(CustomizedSteppers);
