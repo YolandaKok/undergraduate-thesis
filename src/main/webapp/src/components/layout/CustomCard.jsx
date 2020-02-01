@@ -11,6 +11,8 @@ import { Route , withRouter} from 'react-router-dom';
 import Moment from "react-moment";
 import styles from '../../static/modal.module.css';
 import {red} from "@material-ui/core/colors";
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
     card: {
@@ -19,6 +21,9 @@ const useStyles = makeStyles({
     media: {
         height: 120,
     },
+    menuButton: {
+        color: "red"
+    }
 });
 
 const style = {
@@ -26,6 +31,9 @@ const style = {
     paddingLeft: '88px'
 };
 
+const style1 = {
+    pointerEvents: 'pointer',
+};
 
 export function CustomCard(props) {
     /* Get props for custom cards */
@@ -39,11 +47,10 @@ export function CustomCard(props) {
     return (
         <Card className={classes.card}>
             <CardActionArea onClick={(event) => {props.history.push(href);}}>
-                <CardMedia
-                    className={classes.media}
-                    title={title}
-                    src="c"
-                />
+                <CardMedia className={classes.media}
+                                           title={title}
+                                           src="c">
+                </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {props.title}
@@ -60,6 +67,9 @@ export function CustomCard(props) {
                 <Button style={style}>
                     {date}
                 </Button>
+                {props.removeIcon ? <IconButton className={classes.menuButton} aria-label="delete">
+                    <DeleteIcon />
+                </IconButton> : ''}
             </CardActions>
         </Card>
     );

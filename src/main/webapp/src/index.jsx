@@ -10,6 +10,7 @@ import HomepageLayout from "./components/layout/HomepageLayout";
 import SelectAlgorithm from "./components/pages/SelectAlgorithm";
 import Knapsack from "./components/algorithms/Knapsack";
 import MultipleKnapsacks from "./components/algorithms/MultipleKnapsacks";
+import MyExperiments from "./components/pages/MyExperiments";
 
 const routing = (
     <BrowserRouter>
@@ -34,6 +35,10 @@ const routing = (
             <Route exact path="/algorithms/multipleknapsacks" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MultipleKnapsacks/></Homepage> : <IndexPage/>}></Route>
+
+            <Route exact path="/myexperiments" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><MyExperiments/></Homepage> : <IndexPage/>}></Route>
         </div>
     </BrowserRouter>
 );

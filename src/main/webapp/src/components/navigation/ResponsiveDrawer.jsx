@@ -160,6 +160,10 @@ function ResponsiveDrawer(props) {
         setOpenDrawer(false);
     };
 
+    const goToExperiments = () => {
+        history.push('/myexperiments');
+    }
+
     const drawer = (
         <div>
             <div className={classes.drawerHeader}>
@@ -242,7 +246,7 @@ function ResponsiveDrawer(props) {
             <hr></hr>
             <MenuItem className={styles.buttonStyle} onClick={handleMenuClose}>Manage your Profile</MenuItem>
             <hr></hr>
-            <MenuItem onClick={handleMenuClose}>Saved Experiments</MenuItem>
+            <MenuItem onClick={goToExperiments}>Saved Experiments</MenuItem>
             <hr></hr>
             <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
         </Menu>
