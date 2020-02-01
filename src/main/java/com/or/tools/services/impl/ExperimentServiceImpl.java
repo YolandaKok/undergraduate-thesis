@@ -1,6 +1,7 @@
 package com.or.tools.services.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,6 +52,11 @@ public class ExperimentServiceImpl implements ExperimentService {
 	@Override
 	public void deleteExperiment(Long id) {
 		experimentDAO.deleteById(id);
+	}
+
+	@Override
+	public List<String> getAllAlgorithmNames(String username) {
+		return experimentDAO.findAllAlgorithmNames(username);
 	}
 
 }

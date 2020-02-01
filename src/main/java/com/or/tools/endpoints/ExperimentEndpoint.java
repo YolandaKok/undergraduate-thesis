@@ -18,6 +18,7 @@ import com.or.tools.entities.ExperimentDTO;
 import com.or.tools.requests.ExperimentRequest;
 import com.or.tools.response.CustomPage;
 import com.or.tools.response.ExperimentResponse;
+import com.or.tools.response.ListResponse;
 import com.or.tools.services.ExperimentService;
 
 @RestController
@@ -59,5 +60,12 @@ public class ExperimentEndpoint {
 	@DeleteMapping("/{id}")
 	public void deleteExperiment(@PathVariable("id") Long id) {
 		service.deleteExperiment(id);
+	}
+
+	@GetMapping("/findAllAlgorithms/{username}")
+	public ListResponse<String> getAllAlgorithmNames(@PathVariable("username") String username) {
+		ListResponse<String> response = new ListResponse<>();
+		response.setList(service.getAllAlgorithmNames(username));
+		return response;
 	}
 }

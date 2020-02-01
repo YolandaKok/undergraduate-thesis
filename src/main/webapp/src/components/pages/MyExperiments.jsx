@@ -7,6 +7,7 @@ import SelectItemList from "../layout/SelectItemList";
 import CustomCard from "../layout/CustomCard";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
+import Alert from "react-bootstrap/Alert";
 
 export class MyExperiments extends Component {
     constructor(props) {
@@ -15,28 +16,29 @@ export class MyExperiments extends Component {
             results: [],
             perPage: 9,
             offset: 0,
-            librariesNames: [],
+            algorithmNames: [],
             dateOrder: 'desc',
-            "library": '',
-            "orderNames": ['asc', 'desc']
+            "algorithm": '',
+            "orderNames": ['asc', 'desc'],
+            "deleteAlert": false
         }
         this.loadExperiments = this.loadExperiments.bind(this);
-        this.loadLibraries = this.loadLibraries.bind(this);
+        this.loadAlgorithms = this.loadAlgorithms.bind(this);
         this.passedFunction = this.passedFunction.bind(this);
         this.dateOrderFunction = this.dateOrderFunction.bind(this);
     }
 
     componentDidMount() {
-        this.loadLibraries();
+        this.loadAlgorithms();
         this.loadExperiments();
     }
 
-    loadLibraries() {
-        axios.get(SERVICE_URL + '/library/findAllNames' , {
+    loadAlgorithms() {
+        axios.get(SERVICE_URL + '/experiments/findAllAlgorithms/' + localStorage.getItem('username_info')  , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
             console.log(response);
-            this.setState({"librariesNames": response.data.libraryNames});
+            this.setState({"algorithmNames": response.data.list});
         },
         (error) => {
             console.log("error");
@@ -67,7 +69,7 @@ export class MyExperiments extends Component {
 
     passedFunction(event) {
         console.log("Value: " + event.target.value);
-        this.setState({"library": event.target.value});
+        this.setState({"algorithm": event.target.value});
     }
 
     dateOrderFunction(event) {
@@ -86,12 +88,13 @@ export class MyExperiments extends Component {
         });
     };
 
-    deleteItem(id, functionToCall) {
+    deleteItem(id, functionToCall, passThis) {
         axios.delete(SERVICE_URL + '/experiments/' + id , {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
             console.log("Item deleted.");
             functionToCall();
+            passThis.setState({"deleteAlert": true});
         },
         (error) => {
             console.log("error");
@@ -104,15 +107,18 @@ export class MyExperiments extends Component {
                 <Grid container spacing={2} className={styles.gridPadding}>
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,My Experiments" title="Saved Experiments" />
+                        {this.state.deleteAlert ? <Alert variant={'success'}>
+                            {'You have successfully deleted an item.'}
+                        </Alert> : ''}
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} xl={12}>
-                        <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data={this.state.librariesNames} label="Library"></SelectItemList>
-                        <SelectItemList passedFunction={this.dateOrderFunction} library={this.state.dateOrder} data={this.state.orderNames} label="Order By"></SelectItemList>
+                        <SelectItemList passedFunction={this.passedFunction} library={this.state.algorithm} data={this.state.algorithmNames} label="Algorithm"></SelectItemList>
+                        <SelectItemList passedFunction={this.dateOrderFunction} library={this.state.dateOrder} data={this.state.orderNames} label="Date"></SelectItemList>
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={6} md={6} lg={4} xl={4}>
-                                <CustomCard deleteFunction={this.deleteItem} functionToCall={this.loadExperiments} id={item.id} title={item.algorithmName} content={item.description} href="/" date={item.modificationDate} removeIcon={true}/>
+                                <CustomCard deleteFunction={this.deleteItem} functionToCall={this.loadExperiments} passThis={this} id={item.id} title={item.algorithmName} content={item.description} href="/" date={item.modificationDate} removeIcon={true}/>
                             </Grid>
                         ))
                     }

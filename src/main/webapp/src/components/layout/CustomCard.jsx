@@ -67,7 +67,7 @@ export function CustomCard(props) {
                 <Button size="small" color="primary">
                     {date}
                 </Button>
-                {props.removeIcon ? <IconButton onClick={() => props.deleteFunction(props.id, props.functionToCall)} className={classes.menuButton} aria-label="delete">
+                {props.removeIcon ? <IconButton onClick={() => props.deleteFunction(props.id, props.functionToCall, props.passThis)} className={classes.menuButton} aria-label="delete">
                     <DeleteIcon />
                 </IconButton> : ''}
             </CardActions>
