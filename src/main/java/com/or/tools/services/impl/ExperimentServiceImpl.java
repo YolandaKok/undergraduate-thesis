@@ -48,4 +48,9 @@ public class ExperimentServiceImpl implements ExperimentService {
 		return experimentDAO.findByUser(userDTO, page);
 	}
 
+	@Override
+	public void deleteExperiment(Long id) {
+		experimentDAO.deleteById(id);
+	}
+
 }

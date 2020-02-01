@@ -5,7 +5,6 @@ import styles from "../../static/signup.module.css";
 import CustomBreadCrumb from "./CustomBreadCrumb";
 import CustomCard from "./CustomCard";
 import axios from "axios";
-import ReactPaginate from 'react-paginate';
 import Pagination from "react-bootstrap/Pagination";
 import RecentAlgorithms from "./RecentAlgorithms";
 
@@ -77,7 +76,7 @@ export default class HomepageLayout extends Component {
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={6} md={6} lg={4} xl={4}>
-                                <CustomCard title={item.algorithmName} content={item.description} href="/" date={item.modificationDate}/>
+                                <CustomCard id={item.id} title={item.algorithmName} content={item.description} href="/" date={item.modificationDate}/>
                             </Grid>
                         ))
                     }

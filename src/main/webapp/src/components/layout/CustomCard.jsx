@@ -13,6 +13,8 @@ import styles from '../../static/modal.module.css';
 import {red} from "@material-ui/core/colors";
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from "@material-ui/core/IconButton";
+import axios from "axios";
+import Pagination from "react-bootstrap/Pagination";
 
 const useStyles = makeStyles({
     card: {
@@ -40,7 +42,6 @@ export function CustomCard(props) {
     let content = props.content;
     let href = props.href;
     let date = props.date;
-
     const classes = useStyles();
 
     return (
@@ -66,7 +67,7 @@ export function CustomCard(props) {
                 <Button size="small" color="primary">
                     {date}
                 </Button>
-                {props.removeIcon ? <IconButton className={classes.menuButton} aria-label="delete">
+                {props.removeIcon ? <IconButton onClick={() => props.deleteFunction(props.id, props.functionToCall)} className={classes.menuButton} aria-label="delete">
                     <DeleteIcon />
                 </IconButton> : ''}
             </CardActions>

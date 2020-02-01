@@ -10,5 +10,7 @@ import com.or.tools.entities.ExperimentDTO;
 public interface ExperimentService {
 	void saveExperiment(String username, String algorithmName, String Data, Date date);
 
+	void deleteExperiment(Long id);
+
 	Page<ExperimentDTO> getAllExperiments(String username, Pageable page);
 }

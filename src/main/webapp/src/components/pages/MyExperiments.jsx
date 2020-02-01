@@ -86,6 +86,18 @@ export class MyExperiments extends Component {
         });
     };
 
+    deleteItem(id, functionToCall) {
+        axios.delete(SERVICE_URL + '/experiments/' + id , {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        }).then((response) => {
+            console.log("Item deleted.");
+            functionToCall();
+        },
+        (error) => {
+            console.log("error");
+        });
+    };
+
     render() {
         return(
             <Container fixed>
@@ -100,7 +112,7 @@ export class MyExperiments extends Component {
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={6} md={6} lg={4} xl={4}>
-                                <CustomCard title={item.algorithmName} content={item.description} href="/" date={item.modificationDate} removeIcon={true}/>
+                                <CustomCard deleteFunction={this.deleteItem} functionToCall={this.loadExperiments} id={item.id} title={item.algorithmName} content={item.description} href="/" date={item.modificationDate} removeIcon={true}/>
                             </Grid>
                         ))
                     }
