@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import styles from "../../static/signup.module.css";
 import styles1 from "../../static/dropzone.module.css";
-
+import TablePagination from '@material-ui/core/TablePagination';
 
 const useStyles = makeStyles({
   table: {
@@ -17,9 +17,30 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomTable(props) {
+function stableSort(array) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  return stabilizedThis.map(el => el[0]);
+}
+
+function getSorting(order, orderBy) {
+  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+}
+
+function CustomTable(props) {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const classes = useStyles();
-    let rows = props.rows;
+  let rows = props.rows;
   return (
        <div>
         <h5>Uploaded Values</h5>
@@ -36,19 +57,37 @@ export default function CustomTable(props) {
                </TableRow>
              </TableHead>
              <TableBody>
-               {rows.map(row => (
-                 <TableRow key={row.x}>
+               {stableSort(rows)
+                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                 .map((row, index) => {
+                   return (
+                 <TableRow key={index}>
                    <TableCell>{row.x}</TableCell>
                    <TableCell>{row.y}</TableCell>
                    {props.checkResult ? (row.color==0.3 ? <TableCell>{String.fromCharCode(10003)}</TableCell> : <TableCell>no</TableCell>) : ''}
                  </TableRow>
-               ))}
-               {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''}
-               {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''}
-               {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>}
+
+                   );
+                 })}
+                {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''}
+                {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''}
+                {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>}
+
              </TableBody>
+
            </Table>
          </TableContainer>
+         <TablePagination
+           rowsPerPageOptions={[5, 10, 25]}
+           component="div"
+           count={rows.length}
+           rowsPerPage={rowsPerPage}
+           page={page}
+           onChangePage={handleChangePage}
+           onChangeRowsPerPage={handleChangeRowsPerPage}
+         />
         </div>
   );
 }
+
+export default CustomTable;
