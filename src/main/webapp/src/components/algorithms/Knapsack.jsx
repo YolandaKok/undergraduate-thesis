@@ -12,6 +12,8 @@ import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
 const axios = require('axios');
 import { withRouter } from 'react-router-dom';
+import {CustomizedAlert} from "../errors/CustomizedAlert";
+import TableContainer from "@material-ui/core/TableContainer";
 
 export class Knapsack extends Component {
     constructor(props) {
@@ -111,10 +113,10 @@ export class Knapsack extends Component {
                     <Grid container spacing={2} className={styles.gridPadding}>
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,OR Tools,Knapsack" title="Knapsack" />
+                            <CustomizedAlert value={this.state.uploadError}
+                                             message={this.state.message}></CustomizedAlert>
                         </Grid>
-                        <CustomizedSteppers first={<DragAndDrop uploadError={this.state.uploadError}
-                                                                message={this.state.message}
-                                                                passedFunction={this.passedForDragAndDrop}/>}
+                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>}
                                             second={<CustomGraph data={this.state.results} />}
                                             third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
                                             fourth={<CustomGraph data={this.state.packedItems}/>}

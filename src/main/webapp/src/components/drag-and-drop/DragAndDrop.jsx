@@ -15,12 +15,7 @@ export default class DragAndDrop extends Component {
             message: null
         }
     }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({ uploadError: nextProps.uploadError });
-        this.setState({ message: nextProps.message });
-    }
-
+    
     printFile(acceptedFiles) {
         console.log(acceptedFiles);
         acceptedFiles.map(file => {
@@ -49,8 +44,6 @@ export default class DragAndDrop extends Component {
                     <Dropzone onDrop={acceptedFiles => this.printFile(acceptedFiles)} accept={".csv"} />
                     <h6>Accepted file types: .csv</h6>
                 </main>
-                <CustomizedAlert value={this.state.uploadError}
-                                 message={this.state.message}></CustomizedAlert>
                 </TableContainer>
             </Fragment>
         )
