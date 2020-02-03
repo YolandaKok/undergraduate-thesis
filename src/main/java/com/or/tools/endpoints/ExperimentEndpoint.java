@@ -68,4 +68,28 @@ public class ExperimentEndpoint {
 		response.setList(service.getAllAlgorithmNames(username));
 		return response;
 	}
+
+	@GetMapping("/{username}/{algorithmName}")
+	public CustomPage<ExperimentResponse> getExperimentsByAlgorithm(@PathVariable("username") String username,
+			@PathVariable("algorithmName") String algorithmName, Pageable page) {
+		Page<ExperimentDTO> response = service.getAllExperimentsByAlgorithm(username, algorithmName, page);
+		List<ExperimentDTO> responses = response.getContent();
+		List<ExperimentResponse> exResponses = new ArrayList<>();
+		for (ExperimentDTO item : responses) {
+			ExperimentResponse itemResponse = new ExperimentResponse();
+			itemResponse.setAlgorithmName(item.getAlgorithm());
+			itemResponse.setDescription(item.getAlgorithmDTO().getDescription());
+			itemResponse.setModificationDate(item.getModificationDate());
+			itemResponse.setId(item.getId());
+			exResponses.add(itemResponse);
+		}
+		CustomPage<ExperimentResponse> pageResponse = new CustomPage<>();
+		pageResponse.setResponse(exResponses);
+		pageResponse.setNumOfElements(response.getNumberOfElements());
+		pageResponse.setNumOfPage(response.getNumber());
+		pageResponse.setSizeOfPage(response.getSize());
+		pageResponse.setTotalElements(response.getTotalElements());
+		pageResponse.setTotalPages(response.getTotalPages());
+		return pageResponse;
+	}
 }

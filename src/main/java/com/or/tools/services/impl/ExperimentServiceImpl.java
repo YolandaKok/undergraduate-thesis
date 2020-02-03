@@ -59,4 +59,12 @@ public class ExperimentServiceImpl implements ExperimentService {
 		return experimentDAO.findAllAlgorithmNames(username);
 	}
 
+	@Override
+	@Transactional
+	public Page<ExperimentDTO> getAllExperimentsByAlgorithm(String username, String algorithmName, Pageable page) {
+		UserDTO user = userDAO.findByUsername(username);
+		AlgorithmDTO algorithm = algorithmDAO.findByName(algorithmName);
+		return experimentDAO.findByUserAndAlgorithm(user, algorithm, page);
+	}
+
 }

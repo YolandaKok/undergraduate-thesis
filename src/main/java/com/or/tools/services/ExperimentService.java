@@ -16,4 +16,6 @@ public interface ExperimentService {
 	List<String> getAllAlgorithmNames(String username);
 
 	Page<ExperimentDTO> getAllExperiments(String username, Pageable page);
+
+	Page<ExperimentDTO> getAllExperimentsByAlgorithm(String username, String algorithmName, Pageable page);
 }

@@ -46,7 +46,12 @@ export class MyExperiments extends Component {
     }
 
     loadExperiments() {
-        axios.get(SERVICE_URL + '/experiments/' + localStorage.getItem('username_info') + '?size=' + this.state.perPage + '&page=' + this.state.offset + '&sort=modificationDate,' + this.state.dateOrder , {
+        let url;
+        if(this.state.algorithm == '')
+            url = SERVICE_URL + '/experiments/' + localStorage.getItem('username_info') + '?size=' + this.state.perPage + '&page=' + this.state.offset + '&sort=modificationDate,' + this.state.dateOrder;
+        else
+            url = SERVICE_URL + '/experiments/' + localStorage.getItem('username_info') + "/" + this.state.algorithm + '?size=' + this.state.perPage + '&page=' + this.state.offset + '&sort=modificationDate,' + this.state.dateOrder;
+        axios.get(url, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         }).then((response) => {
                 console.log(response);
@@ -69,7 +74,9 @@ export class MyExperiments extends Component {
 
     passedFunction(event) {
         console.log("Value: " + event.target.value);
-        this.setState({"algorithm": event.target.value});
+        this.setState({"algorithm": event.target.value}, () => {
+            this.loadExperiments();
+        });
     }
 
     dateOrderFunction(event) {
