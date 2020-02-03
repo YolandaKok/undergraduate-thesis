@@ -321,6 +321,14 @@ function ResponsiveDrawer(props) {
                         </IconButton>
                     </div>
                 </Toolbar>
+                {/*<Toolbar>*/}
+                {/*    <Typography variant="h6" noWrap>*/}
+                {/*        <a className={styles.logoStyle} href={'/'}>Visualize Zone</a>*/}
+                {/*    </Typography>*/}
+                {/*    <div className={classes.grow} />*/}
+                {/*    <div className={classes.sectionDesktop}>*/}
+                {/*    </div>*/}
+                {/*</Toolbar>*/}
             </AppBar>
             {renderMenu}
             {renderMobileMenu}

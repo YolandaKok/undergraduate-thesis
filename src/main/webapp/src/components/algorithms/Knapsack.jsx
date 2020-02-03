@@ -117,9 +117,9 @@ export class Knapsack extends Component {
                                              message={this.state.message}></CustomizedAlert>
                         </Grid>
                         <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>}
-                                            second={<CustomGraph data={this.state.results} />}
+                                            second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
                                             third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
-                                            fourth={<CustomGraph data={this.state.packedItems}/>}
+                                            fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
                                             sixth={<CustomTable rows={this.state.packedItems} checkResult={true}

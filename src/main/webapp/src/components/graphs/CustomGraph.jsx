@@ -25,6 +25,8 @@ export default class CustomGraph extends Component {
 
     render() {
         let results = this.props.data;
+        let titleX = this.props.titleX;
+        let titleY = this.props.titleY;
         return(
             <Grid item xs={12}>
                 <h5>Graph</h5>
@@ -32,8 +34,8 @@ export default class CustomGraph extends Component {
                 <XYPlot width={400} height={400}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
-                    <XAxis />
-                    <YAxis />
+                    <XAxis title={titleX} />
+                    <YAxis title={titleY} />
                     <MarkSeries
                         className="mark-series-example"
                         strokeWidth={2}
@@ -48,4 +50,9 @@ export default class CustomGraph extends Component {
             </Grid>
         )
     }
+}
+
+CustomGraph.defaultProps = {
+    titleX: '',
+    titleY: ''
 }
