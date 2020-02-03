@@ -15,7 +15,7 @@ export default class DragAndDrop extends Component {
             message: null
         }
     }
-    
+
     printFile(acceptedFiles) {
         console.log(acceptedFiles);
         acceptedFiles.map(file => {
@@ -38,7 +38,6 @@ export default class DragAndDrop extends Component {
             <Fragment>
                 <h5>Upload Document</h5>
                 <hr className={styles.marginHr}></hr>
-                <h6>Attach Document</h6>
                 <TableContainer component={Paper}>
                 <main className={styles1.App}>
                     <Dropzone onDrop={acceptedFiles => this.printFile(acceptedFiles)} accept={".csv"} />

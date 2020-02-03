@@ -28,7 +28,6 @@ export default function CustomTable(props) {
         <Fragment>
             <h5>Document Layout</h5>
             <hr className={styles1.marginHr}></hr>
-            <h6>Example Data</h6>
             <TableContainer component={Paper}>
                 <p style={{padding: 16, fontWeight: "bold"}}>Document should have the following layout: <br></br>
                 The fields are semicolon separated.

@@ -63,7 +63,6 @@ export default class HomepageLayout extends Component {
 
 
     render() {
-
         return (
             <Container fixed>
                 <Grid container spacing={3} className={styles.gridPadding}>

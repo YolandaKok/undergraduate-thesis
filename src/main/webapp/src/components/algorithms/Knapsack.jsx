@@ -128,7 +128,8 @@ export class Knapsack extends Component {
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}
                                                                         path={this.state.path}
-                                                                        componentName={this.state.componentName} />}
+                                                                        componentName={this.state.componentName}
+                                            uploadMessage={this.state.message}/>}
                         />
                     </Grid>
                 </Container>
