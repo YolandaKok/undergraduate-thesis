@@ -4,13 +4,15 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import styles from "../../static/signup.module.css";
 import {withRouter} from "react-router-dom";
+import CustomBreadCrumb from "./CustomBreadCrumb";
+import CustomGraph from "../graphs/CustomGraph";
 const axios = require('axios');
 
 class ShowResult extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            results: []
         }
     }
     componentDidMount() {
@@ -20,6 +22,8 @@ class ShowResult extends Component {
         })
         .then((response) => {
             console.log(response);
+            let resultObj = JSON.parse(response.data.resultData);
+            this.setState({"results": resultObj.points});
         },
         (error) => {
             console.log("error");
@@ -30,7 +34,14 @@ class ShowResult extends Component {
         return(
             <Container fixed>
                 <Grid container spacing={3} className={styles.gridPadding}>
-                    <p>Hello</p>
+                    <Grid item xs={12} direction="column"
+                          alignItems="center"
+                          justify="center">
+                        <CustomBreadCrumb name="Home,Saved Experiments,Show Experiment" title="Show Experiment" />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={6} xl={6}>
+                        <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
+                    </Grid>
                 </Grid>
             </Container>
         );

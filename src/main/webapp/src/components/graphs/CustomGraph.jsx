@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Grid from "@material-ui/core/Grid";
 import styles from "../../static/signup.module.css";
 import {HorizontalGridLines, MarkSeries, VerticalGridLines, XAxis, XYPlot, YAxis} from "react-vis";
-import {CustomizedAlert} from "../errors/CustomizedAlert";
-import TableContainer from "@material-ui/core/TableContainer";
 
 export default class CustomGraph extends Component {
     constructor(props) {
@@ -28,7 +26,7 @@ export default class CustomGraph extends Component {
         let titleX = this.props.titleX;
         let titleY = this.props.titleY;
         return(
-            <Grid item xs={12}>
+            <Fragment>
                 <h5>Graph</h5>
                 <hr className={styles.marginHr}></hr>
                 <XYPlot width={400} height={400}>
@@ -47,7 +45,7 @@ export default class CustomGraph extends Component {
                         data={results}
                     />
                 </XYPlot>
-            </Grid>
+            </Fragment>
         )
     }
 }
