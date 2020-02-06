@@ -31,3 +31,19 @@
 body {
   padding-bottom: 100px;
 }
+
+.styleInputError {
+  border-color: red;
+}
+
+.styleInputSuccess {
+  border-color: green;
+}
+
+.textError {
+  color: red;
+}
+
+.textSuccess {
+  color: green;
+}

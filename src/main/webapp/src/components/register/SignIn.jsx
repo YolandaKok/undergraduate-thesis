@@ -4,6 +4,7 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {FormError} from "../errors/FormError";
+import {CustomizedAlert} from "../errors/CustomizedAlert";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -63,6 +64,8 @@ export class SignIn extends Component {
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
                                 <Form>
+                                    {this.state.formError ? <CustomizedAlert value={'danger'} message={'Wrong username or password.'}/> : ''}
+
                                     <h1 className="text-center">Sign In</h1>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
@@ -71,7 +74,6 @@ export class SignIn extends Component {
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Password</Form.Label>
                                         <Form.Control placeholder="Enter password" onChange={this.handlePostChange} name="password" type="password"></Form.Control>
-                                        <FormError formError={this.state.formError == true ? "Wrong username or password." : ""}/>
                                     </Form.Group>
                                     <Button onClick={this.handleSubmit} variant="secondary" type="submit" block>
                                         Sign In

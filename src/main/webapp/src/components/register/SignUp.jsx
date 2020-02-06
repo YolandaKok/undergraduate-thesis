@@ -22,10 +22,12 @@ export class SignUp extends Component {
             email: '',
             reRender: false,
             redirect: false,
-            usernameFound: false,
+            usernameFound: null,
             validated: false,
             repeatPassword: '',
-            passwordMatches: false
+            passwordMatches: null,
+            passwordRegularExpression: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            checkRegular: null
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePostChange = this.handlePostChange.bind(this);
@@ -46,13 +48,13 @@ export class SignUp extends Component {
             this.setState({"validated": false});
 
         if(this.state.password === this.state.repeatPassword) {
-            console.log("Password Matches.");
             this.setState({"passwordMatches": false});
         } else {
-            console.log("Password does not match.");
             this.setState({"passwordMatches": true});
         }
 
+        // Password test regular expression.
+        this.setState({"checkRegular": this.state.passwordRegularExpression.test(this.state.password)});
     }
 
     handleSubmit(event) {
@@ -85,7 +87,6 @@ export class SignUp extends Component {
         let val = event.target.value;
         if(nam === 'username') {
             axios.get(SERVICE_URL + '/users/exists/' + val).then((response) => {
-                console.log(response.data.result);
                 this.setState({"usernameFound": response.data.result});
             }, (error) => {
 
@@ -109,13 +110,13 @@ export class SignUp extends Component {
                         <Col xs={0} sm={0} md={2} lg={3}></Col>
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
-                                <Form onMouseEnter={this.checkNullOrUndefined}>
+                                <Form onChange={this.checkNullOrUndefined}>
                                     <h1 className="text-center">Sign Up</h1>
                                     <h6 className="text-center">Sign up to visualize and experiment with
                                         various <br></br> algorithms.</h6>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
-                                        <Form.Control placeholder="Enter username" onChange={this.handlePostChange} name="username" required></Form.Control>
+                                        <Form.Control className={this.state.usernameFound != null ? (this.state.usernameFound == true ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter username" onChange={this.handlePostChange} name="username" required></Form.Control>
                                         <FormError formError={this.state.usernameFound == true ? "Username already used" : ""}/>
                                     </Form.Group>
                                     <Form.Group>
@@ -136,14 +137,16 @@ export class SignUp extends Component {
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Password</Form.Label>
-                                        <Form.Control placeholder="Enter password" onChange={this.handlePostChange} name="password" type="password" required></Form.Control>
+                                        <Form.Text>Password must contain at least one uppercase, one lowercase and one special character. At least 8 characters long.</Form.Text>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter password" onChange={this.handlePostChange} name="password" type="password" required></Form.Control>
+                                        <FormError formError={this.state.checkRegular != null ? (!this.state.checkRegular ? "Check password validity." : "") : ""}/>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Repeat Password</Form.Label>
-                                        <Form.Control required placeholder="Repeat Password" onChange={this.handlePostChange} name="repeatPassword" type="password" onMouseOut={this.checkNullOrUndefined}></Form.Control>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onChange={this.handlePostChange} name="repeatPassword" type="password" onMouseOut={this.checkNullOrUndefined}></Form.Control>
                                         <FormError formError={this.state.passwordMatches == true ? "Password does not match." : ""}/>
                                     </Form.Group>
-                                    <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches} onClick={this.handleSubmit} onMouseEnter={this.checkNullOrUndefined} variant="secondary" type="submit" block>
+                                    <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} onMouseEnter={this.checkNullOrUndefined} variant="secondary" type="submit" block>
                                         Sign Up
                                     </Button>
                                 </Form>
