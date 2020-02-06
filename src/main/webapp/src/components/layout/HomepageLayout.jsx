@@ -69,12 +69,12 @@ export default class HomepageLayout extends Component {
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,Overview" title="Recent Experiments" />
                     </Grid>
-                    <Grid item xs={6} md={6} lg={4} xl={4}>
-                        <CustomCard title="New Experiment" content="Create a new experiment using an algorithm" href="/select/algorithm"/>
+                    <Grid item xs={6} md={6} lg={3} xl={3}>
+                        <CustomCard title="New Experiment" content="Create a new experiment" href="/select/algorithm"/>
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
-                            <Grid item xs={6} md={6} lg={4} xl={4}>
+                            <Grid item xs={6} md={6} lg={3} xl={3}>
                                 <CustomCard id={item.id} title={item.algorithmName} content={item.description} href={'/show/result/' + item.id} date={item.modificationDate}/>
                             </Grid>
                         ))

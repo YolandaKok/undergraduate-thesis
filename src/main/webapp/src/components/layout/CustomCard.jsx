@@ -17,9 +17,6 @@ import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 
 const useStyles = makeStyles({
-    card: {
-        maxWidth: 300,
-    },
     media: {
         height: 120,
     },

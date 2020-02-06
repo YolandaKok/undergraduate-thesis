@@ -14,6 +14,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 const useStyles = makeStyles({
   table: {
     minWidth: 350,
+    minHeight: 200
   },
 });
 

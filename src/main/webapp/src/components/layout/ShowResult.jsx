@@ -6,6 +6,7 @@ import styles from "../../static/signup.module.css";
 import {withRouter} from "react-router-dom";
 import CustomBreadCrumb from "./CustomBreadCrumb";
 import CustomGraph from "../graphs/CustomGraph";
+import Button from "@material-ui/core/Button";
 const axios = require('axios');
 
 class ShowResult extends Component {
@@ -50,6 +51,7 @@ class ShowResult extends Component {
                         <CustomTable rows={this.state.results} checkResult={true}
                                      totalValue={this.state.totalValue}
                                      totalWeight={this.state.totalWeight}/>
+                                     <Button>Click me</Button>
                     </Grid>
                 </Grid>
             </Container>
