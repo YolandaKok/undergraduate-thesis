@@ -11,7 +11,9 @@ import SelectAlgorithm from "./components/pages/SelectAlgorithm";
 import Knapsack from "./components/algorithms/Knapsack";
 import MultipleKnapsacks from "./components/algorithms/MultipleKnapsacks";
 import MyExperiments from "./components/pages/MyExperiments";
+import ShowResult from "./components/layout/ShowResult";
 
+let routerProps;
 const routing = (
     <BrowserRouter>
         <div>
@@ -39,6 +41,10 @@ const routing = (
             <Route exact path="/myexperiments" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MyExperiments/></Homepage> : <IndexPage/>}></Route>
+
+            <Route exact path="/show/result/:id" component={() => ["null", '', undefined, null].every((text) => {
+    return localStorage.getItem('authorization') !== text;
+    }) ? <Homepage><ShowResult/></Homepage> : <IndexPage/>}/>
         </div>
     </BrowserRouter>
 );

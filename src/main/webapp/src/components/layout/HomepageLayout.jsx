@@ -75,7 +75,7 @@ export default class HomepageLayout extends Component {
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={6} md={6} lg={4} xl={4}>
-                                <CustomCard id={item.id} title={item.algorithmName} content={item.description} href="/" date={item.modificationDate}/>
+                                <CustomCard id={item.id} title={item.algorithmName} content={item.description} href={'/show/result/' + item.id} date={item.modificationDate}/>
                             </Grid>
                         ))
                     }

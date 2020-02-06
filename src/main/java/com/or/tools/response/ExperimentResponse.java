@@ -10,6 +10,8 @@ public class ExperimentResponse {
 	private String description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	private Date modificationDate;
+	private String initialData;
+	private String resultData;
 
 	public Long getId() {
 		return id;
@@ -41,6 +43,22 @@ public class ExperimentResponse {
 
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
+	}
+
+	public String getInitialData() {
+		return initialData;
+	}
+
+	public void setInitialData(String initialData) {
+		this.initialData = initialData;
+	}
+
+	public String getResultData() {
+		return resultData;
+	}
+
+	public void setResultData(String resultData) {
+		this.resultData = resultData;
 	}
 
 }

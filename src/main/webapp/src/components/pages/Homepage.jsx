@@ -25,13 +25,13 @@ export class Homepage extends Component {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
         .then((response) => {
-                console.log(response);
-                this.setState({"firstname": response.data.firstname,
-                                "lastname": response.data.lastname});
-                },
-            (error) => {
-                console.log("error");
-            });
+            console.log(response);
+            this.setState({"firstname": response.data.firstname,
+                            "lastname": response.data.lastname});
+            },
+        (error) => {
+            console.log("error");
+        });
     }
 
     componentDidMount() {

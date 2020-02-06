@@ -2,6 +2,7 @@ package com.or.tools.services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,6 +67,11 @@ public class ExperimentServiceImpl implements ExperimentService {
 		UserDTO user = userDAO.findByUsername(username);
 		AlgorithmDTO algorithm = algorithmDAO.findByName(algorithmName);
 		return experimentDAO.findByUserAndAlgorithm(user, algorithm, page);
+	}
+
+	@Override
+	public Optional<ExperimentDTO> getExperiment(Long id) {
+		return experimentDAO.findById(id);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.or.tools.endpoints;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,6 +57,19 @@ public class ExperimentEndpoint {
 		pageResponse.setTotalElements(response.getTotalElements());
 		pageResponse.setTotalPages(response.getTotalPages());
 		return pageResponse;
+	}
+
+	@GetMapping("/result/{id}")
+	public ExperimentResponse getExperiment(@PathVariable("id") Long id) {
+		Optional<ExperimentDTO> experiment = service.getExperiment(id);
+		ExperimentResponse response = new ExperimentResponse();
+		response.setId(experiment.get().getId());
+		response.setAlgorithmName(experiment.get().getAlgorithm());
+		response.setDescription(experiment.get().getAlgorithmDTO().getDescription());
+		response.setInitialData(experiment.get().getData());
+		response.setResultData(experiment.get().getResultData());
+		response.setModificationDate(experiment.get().getModificationDate());
+		return response;
 	}
 
 	@DeleteMapping("/{id}")
