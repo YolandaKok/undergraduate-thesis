@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.or.tools.entities.ExperimentDTO;
 
 public interface ExperimentService {
-	void saveExperiment(String username, String algorithmName, String Data, Date date);
+	void saveExperiment(String username, String algorithmName, String Data, String result, Date date);
 
 	void deleteExperiment(Long id);
 

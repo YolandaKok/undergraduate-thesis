@@ -25,6 +25,8 @@ public class ExperimentDTO {
 	@Column(name = "DATA")
 	@Type(type = "text")
 	private String Data;
+	@Type(type = "text")
+	private String resultData;
 	@Column(name = "MODIFICATION_DATE")
 	private Date modificationDate;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -78,6 +80,14 @@ public class ExperimentDTO {
 
 	public AlgorithmDTO getAlgorithmDTO() {
 		return this.algorithm;
+	}
+
+	public String getResultData() {
+		return resultData;
+	}
+
+	public void setResultData(String resultData) {
+		this.resultData = resultData;
 	}
 
 }

@@ -13,7 +13,6 @@ import ResultCompleted from "../layout/ResultCompleted";
 const axios = require('axios');
 import { withRouter } from 'react-router-dom';
 import {CustomizedAlert} from "../errors/CustomizedAlert";
-import TableContainer from "@material-ui/core/TableContainer";
 
 export class Knapsack extends Component {
     constructor(props) {
@@ -86,7 +85,19 @@ export class Knapsack extends Component {
     }
 
     saveExperiment() {
-        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack", date: new Date(), data: JSON.stringify(this.state.results)}, {
+        // Create JSON Object for initial data
+        let initialData = {
+            "points": this.state.results,
+            "capacities": this.state.capacities
+        }
+        // Json object for result data
+        let resultData = {
+            "points": this.state.packedItems,
+            "totalWeight": this.state.totalWeight,
+            "totalValue": this.state.totalValue
+        }
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack",
+            date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
         .then((response) => {

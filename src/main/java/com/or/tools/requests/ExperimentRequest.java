@@ -8,6 +8,7 @@ public class ExperimentRequest {
 	private String algorithmName;
 	private Date date;
 	private String data;
+	private String result;
 
 	public String getUsername() {
 		return username;
@@ -39,6 +40,14 @@ public class ExperimentRequest {
 
 	public void setData(String data) {
 		this.data = data;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 	@Override
