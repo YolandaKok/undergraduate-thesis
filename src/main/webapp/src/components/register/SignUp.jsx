@@ -34,11 +34,6 @@ export class SignUp extends Component {
         this.checkNullOrUndefined = this.checkNullOrUndefined.bind(this);
     }
 
-    componentDidMount() {
-        document.body.style.background = "#E5E9F2";
-        console.log(SERVICE_URL);
-    }
-
     checkNullOrUndefined(event) {
         console.log("hello");
         event.preventDefault();

@@ -20,10 +20,6 @@ export class SignIn extends Component {
         this.handlePostChange = this.handlePostChange.bind(this);
     }
 
-    componentDidMount() {
-        document.body.style.background = "#E5E9F2";
-    }
-
     handleSubmit (event) {
         event.preventDefault();
         axios.post(SERVICE_URL + '/login', {
