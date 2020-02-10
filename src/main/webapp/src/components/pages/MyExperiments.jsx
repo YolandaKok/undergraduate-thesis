@@ -124,7 +124,7 @@ export class MyExperiments extends Component {
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
-                            <Grid item xs={6} md={6} lg={3} xl={3}>
+                            <Grid item xs={6} md={4} lg={3} xl={3}>
                                 <CustomCard deleteFunction={this.deleteItem} functionToCall={this.loadExperiments} passThis={this} id={item.id} title={item.algorithmName} content={item.description} href={"/show/result/" + item.id} date={item.modificationDate} removeIcon={true}/>
                             </Grid>
                         ))

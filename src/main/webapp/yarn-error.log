@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add react-paginate
+  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add react-csv --dev
 
 PATH: 
-  /home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
   1.21.0
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/code-frame/LICENSE'
+  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/generator/node_modules/jsesc/LICENSE-MIT.txt'
 
 npm manifest: 
   {
@@ -56,12 +56,16 @@ npm manifest:
       "externals": "^0.0.1",
       "file-loader": "^5.0.2",
       "jquery": "^3.4.1",
+      "moment": "^2.24.0",
       "popper.js": "^1.16.0",
       "prop-types": "latest",
       "react": "^16.12.0",
       "react-bootstrap": "^1.0.0-beta.16",
+      "react-csv": "^1.1.2",
       "react-dom": "^16.12.0",
       "react-dropzone": "^10.2.1",
+      "react-moment": "^0.9.7",
+      "react-paginate": "^6.3.2",
       "react-router": "^5.1.2",
       "react-router-dom": "^5.1.2",
       "react-scripts": "^3.3.0",
@@ -8038,6 +8042,11 @@ Lockfile:
     dependencies:
       minimist "0.0.8"
   
+  moment@^2.24.0:
+    version "2.24.0"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+    integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+  
   move-concurrently@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -9769,7 +9778,7 @@ Lockfile:
       react-is "^16.3.2"
       warning "^3.0.0"
   
-  prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@latest:
+  prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@latest:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9976,6 +9985,11 @@ Lockfile:
       uncontrollable "^7.0.0"
       warning "^4.0.3"
   
+  react-csv@^1.1.2:
+    version "1.1.2"
+    resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-1.1.2.tgz#6cb47e625f51878d24bb68a120efb45a30ad243a"
+    integrity sha512-pTOTYntW+gQWzCxyEGfS5ZeOfQw4Mu3B+DJd4jrJKNuAWFQ+EEyF2Earfg0+FVEkPwMr62OLtbYCHmc6vQWj2w==
+  
   react-dev-utils@^10.0.0:
     version "10.0.0"
     resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.0.0.tgz#bd2d16426c7e4cbfed1b46fb9e2ac98ec06fcdfa"
@@ -10040,6 +10054,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
     integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
   
+  react-moment@^0.9.7:
+    version "0.9.7"
+    resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.7.tgz#ca570466595b1aa4f7619e62da18b3bb2de8b6f3"
+    integrity sha512-ifzUrUGF6KRsUN2pRG5k56kO0mJBr8kRkWb0wNvtFIsBIxOuPxhUpL1YlXwpbQCbHq23hUu6A0VEk64HsFxk9g==
+  
   react-motion@^0.5.2:
     version "0.5.2"
     resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
@@ -10061,6 +10080,13 @@ Lockfile:
       prop-types "^15.7.2"
       uncontrollable "^7.0.0"
       warning "^4.0.3"
+  
+  react-paginate@^6.3.2:
+    version "6.3.2"
+    resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-6.3.2.tgz#4e18cbdb2654d308566775fa14df11e820188391"
+    integrity sha512-Ch++Njfv8UHpLtIMiQouAPeJQA5Ki86kIYfCer6c1B96Rvn3UF27se+goCilCP8oHNXNsA2R2kxvzanY1YIkyg==
+    dependencies:
+      prop-types "^15.6.1"
   
   react-router-dom@^5.1.2:
     version "5.1.2"

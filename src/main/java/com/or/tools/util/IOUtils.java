@@ -44,6 +44,9 @@ public class IOUtils {
 						String[] columns = row.split(";");
 						int attributes = 0;
 						for (String column : columns) {
+							if (column.charAt(0) == '"') {
+								column = column.substring(1, column.length() - 1);
+							}
 							if (attributes == 0) {
 								// value
 								values[num] = Long.parseLong(column);
@@ -61,6 +64,9 @@ public class IOUtils {
 						String[] columns = row.split(";");
 						int attributes = 0;
 						for (String column : columns) {
+							if (column.charAt(0) == '"') {
+								column = column.substring(1, column.length() - 1);
+							}
 							if (attributes == 0) {
 							} else if (attributes == 1) {
 								capacities[0] = Long.parseLong(column);

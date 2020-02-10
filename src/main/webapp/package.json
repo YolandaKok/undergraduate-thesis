@@ -42,6 +42,7 @@
     "prop-types": "latest",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
+    "react-csv": "^1.1.2",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
     "react-moment": "^0.9.7",

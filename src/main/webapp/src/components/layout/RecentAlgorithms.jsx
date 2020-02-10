@@ -13,7 +13,7 @@ export class RecentAlgorithms extends Component {
         this.state = {
             "results": [],
             offset: 0,
-            perPage: 3,
+            perPage: 4,
             totalPages: 2,
             items: []
         }
@@ -63,7 +63,7 @@ export class RecentAlgorithms extends Component {
                 </Grid>
                 {
                     this.state.results.map((item, index) => (
-                        <Grid item xs={6} md={6} lg={3} xl={3}>
+                        <Grid item xs={6} md={4} lg={3} xl={3}>
                             <CustomCard title={item.name} content={item.description} href="/"/>
                         </Grid>
                     ))
