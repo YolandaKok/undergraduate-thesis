@@ -30,7 +30,7 @@ const routing = (
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><SelectAlgorithm/></Homepage> : <IndexPage/>}/>
 
-            <Route exact path="/algorithms/knapsack" component={() => ["null", '', undefined, null].every((text) => {
+            <Route exact path="/algorithms/knapsack/:id" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><Knapsack/></Homepage> : <IndexPage/>}></Route>
 

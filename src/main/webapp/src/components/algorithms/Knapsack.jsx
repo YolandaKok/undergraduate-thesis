@@ -29,11 +29,31 @@ export class Knapsack extends Component {
             componentName: null,
             totalValue: null,
             totalWeight: null,
-            capacities: null
+            capacities: null,
+            samples: []
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
+        this.getDataSamples = this.getDataSamples.bind(this);
+    }
+
+    componentWillMount() {
+        console.log(this.props.match.params.id);
+        this.getDataSamples(this.props.match.params.id);
+    }
+
+    getDataSamples(id) {
+        axios.get(SERVICE_URL + '/samples/' + id , {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({"samples": response.data});
+        },
+        (error) => {
+
+        });
     }
 
     /* Pass Function to Drag And Drop to get Data */
@@ -126,7 +146,7 @@ export class Knapsack extends Component {
                             <CustomizedAlert value={this.state.uploadError}
                                              message={this.state.message}></CustomizedAlert>
                         </Grid>
-                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop}/>}
+                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
                                             third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}

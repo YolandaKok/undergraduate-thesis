@@ -5,6 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {forEach} from "react-bootstrap/cjs/ElementChildren";
 
 export default class DragAndDrop extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ export default class DragAndDrop extends Component {
             age: '',
             setAge: '',
             open: false,
-            setOpen: false
+            setOpen: false,
+            values: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -53,6 +55,9 @@ export default class DragAndDrop extends Component {
     }
 
     render() {
+        let data = this.props.data;
+        let array = [];
+
         return(
             <Fragment>
                 <h5>Upload Document</h5>
@@ -69,12 +74,14 @@ export default class DragAndDrop extends Component {
                         value={this.state.age}
                         onChange={this.handleChange}
                     >
-                        <MenuItem value="">
-                            <em>None</em>
+                        <MenuItem value="Select Sample">
+                            <em>Select Sample</em>
                         </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {
+                            data.map((value, index) => (
+                                <MenuItem value={value.id}>{'Sample ' + value.id}</MenuItem>
+                            ))
+                        }
                     </Select>
                 </FormControl>
             </Fragment>
