@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import styles from "../../static/signup.module.css";
-import styles1 from "../../static/dropzone.module.css";
 import Dropzone from "./Dropzone";
-import {CustomizedAlert} from "../errors/CustomizedAlert";
-import TableContainer from "@material-ui/core/TableContainer";
-import Paper from "@material-ui/core/Paper";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 export default class DragAndDrop extends Component {
     constructor(props) {
@@ -12,8 +12,27 @@ export default class DragAndDrop extends Component {
         this.state = {
             formData: null,
             uploadError: null,
-            message: null
+            message: null,
+            age: '',
+            setAge: '',
+            open: false,
+            setOpen: false
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({"age": event.target.value});
+    }
+
+    handleClose() {
+        this.setState({"open": false});
+    }
+
+    handleOpen() {
+        this.setState({"open": true});
     }
 
     printFile(acceptedFiles) {
@@ -38,12 +57,26 @@ export default class DragAndDrop extends Component {
             <Fragment>
                 <h5>Upload Document</h5>
                 <hr className={styles.marginHr}></hr>
-                <TableContainer component={Paper}>
-                <main className={styles1.App}>
-                    <Dropzone onDrop={acceptedFiles => this.printFile(acceptedFiles)} accept={".csv"} />
-                    <h6>Accepted file types: .csv</h6>
-                </main>
-                </TableContainer>
+                <Dropzone onDrop={acceptedFiles => this.printFile(acceptedFiles)} accept={".csv"} />
+                <FormControl style={{paddingTop: 50}} fullWidth>
+                    <p style={{fontSize: 24, alignSelf: 'center'}}>Select Data Sample</p>
+                    <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        onOpen={this.handleOpen}
+                        value={this.state.age}
+                        onChange={this.handleChange}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>Ten</MenuItem>
+                        <MenuItem value={20}>Twenty</MenuItem>
+                        <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                </FormControl>
             </Fragment>
         )
     }

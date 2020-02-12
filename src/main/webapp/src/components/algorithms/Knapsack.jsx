@@ -12,7 +12,7 @@ import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
 const axios = require('axios');
 import { withRouter } from 'react-router-dom';
-import {CustomizedAlert} from "../errors/CustomizedAlert";
+import { CustomizedAlert } from "../errors/CustomizedAlert";
 
 export class Knapsack extends Component {
     constructor(props) {
@@ -38,7 +38,6 @@ export class Knapsack extends Component {
 
     /* Pass Function to Drag And Drop to get Data */
     passedForDragAndDrop(formData) {
-        console.log("Passed !");
         this.setState({"formData": formData});
         this.getInitialData();
     }

@@ -14,9 +14,9 @@
 /* Dropzone */
 .dropzone {
     padding: 30px;
-    height: 30vh;
     outline: none;
     cursor: pointer;
+    border: 2px dashed darkgray;
 }
 .dropzoneActive {
     background-color: #f1e2ff;
@@ -26,7 +26,6 @@
     align-self: center;
     font-size: 24px;
 }
-
 
 /* Tablets */
 @media (max-width: 1000px) {
