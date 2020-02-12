@@ -1,14 +1,9 @@
 import React, {Component, Fragment} from 'react';
-import Knapsack from "../algorithms/Knapsack";
 import {Container, Col, Row, Form, Button} from 'react-bootstrap';
 import NavBar from "../navigation/NavBar";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
-import {Redirect} from "react-router";
 import {FormError} from "../errors/FormError";
-import {Homepage} from "../pages/Homepage";
-import {IndexPage} from "./IndexPage";
-import Link from "@material-ui/core/Link";
 const axios = require('axios');
 
 export class SignUp extends Component {
