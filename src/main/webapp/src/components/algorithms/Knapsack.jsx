@@ -100,7 +100,6 @@ export class Knapsack extends Component {
             this.setState({uploadError: 'danger'});
             this.setState({message: 'Error while uploading file !'});
         });
-
     }
 
     getResult() {
@@ -109,7 +108,6 @@ export class Knapsack extends Component {
         })
         .then((response) => {
             console.log(response);
-c
             this.setState({});
             this.setState({packedItems: response.data.packedItems});
             let temp = JSON.parse(JSON.stringify(this.state.results));

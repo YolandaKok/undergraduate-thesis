@@ -14,9 +14,11 @@ import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
+import com.or.tools.model.BinWrapper;
 import com.or.tools.model.MultipleKnapsackDataRead;
 import com.or.tools.model.MultipleKnapsackDisplayResponse;
 import com.or.tools.model.MultipleKnapsackModel;
+import com.or.tools.model.MultipleKnapsackResponse;
 import com.or.tools.util.IOUtils;
 
 @RestController
@@ -65,9 +67,9 @@ public class MultipleKnapsacksEndpoint {
 	}
 
 	@PostMapping(value = "/result")
-	public void resultData(@RequestParam("file") MultipartFile file) {
-		utils.readMultipleKnapsacksData(file);
-		final MultipleKnapsackModel data = new MultipleKnapsackModel();
+	public MultipleKnapsackResponse resultData(@RequestParam("file") MultipartFile file) {
+		MultipleKnapsackModel data = new MultipleKnapsackModel();
+		data = utils.readMultipleKnapsacksData(file);
 		// Create the linear solver with the CBC backend.
 		MPSolver solver = new MPSolver("SimpleMipProgram",
 				MPSolver.OptimizationProblemType.CBC_MIXED_INTEGER_PROGRAMMING);
@@ -105,31 +107,57 @@ public class MultipleKnapsacksEndpoint {
 		}
 		objective.setMaximization();
 
+		// MultipleKnapsackResult
+		MultipleKnapsackResponse res = new MultipleKnapsackResponse();
+
 		final MPSolver.ResultStatus resultStatus = solver.solve();
+
+		double startColor = 0.4;
 
 		// Check that the problem has an optimal solution.
 		if (resultStatus == MPSolver.ResultStatus.OPTIMAL) {
+			List<BinWrapper> bins = new ArrayList<>();
 			System.out.println("Total packed value: " + objective.value() + "\n");
+			res.setTotalPackedValue(objective.value());
 			double totalWeight = 0;
 			for (int j = 0; j < data.getNumBins(); ++j) {
 				double binWeight = 0;
 				double binValue = 0;
+				List<MultipleKnapsackDisplayResponse> points = new ArrayList<>();
 				System.out.println("Bin " + j + "\n");
 				for (int i = 0; i < data.getNumItems(); ++i) {
 					if (x[i][j].solutionValue() == 1) {
 						System.out.println("Item " + i + " - weight: " + weights[i] + "  value: " + values[i]);
+						MultipleKnapsackDisplayResponse item = new MultipleKnapsackDisplayResponse();
+						item.setColor(startColor);
+						item.setSize(2);
+						item.setX(values[i]);
+						item.setY(weights[i]);
+						item.setBin(j);
 						binWeight += weights[i];
 						binValue += values[i];
+						points.add(item);
 					}
+
 				}
+				BinWrapper bin = new BinWrapper();
+				bin.setPoints(points);
+				bin.setPackedWeight(binWeight);
+				bin.setPackedValue(binValue);
+				bins.add(bin);
 				System.out.println("Packed bin weight: " + binWeight);
 				System.out.println("Packed bin value: " + binValue + "\n");
 				totalWeight += binWeight;
+				startColor += 0.3;
 			}
 			System.out.println("Total packed weight: " + totalWeight);
+			res.setTotalPackedWeight(totalWeight);
+			res.setBins(bins);
+
 		} else {
 			System.err.println("The problem does not have an optimal solution.");
 		}
+		return res;
 	}
 
 }

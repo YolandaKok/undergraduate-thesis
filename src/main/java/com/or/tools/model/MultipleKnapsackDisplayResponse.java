@@ -5,6 +5,7 @@ public class MultipleKnapsackDisplayResponse {
 	private double y;
 	private long size;
 	private double color;
+	private int bin;
 
 	public double getX() {
 		return x;
@@ -36,6 +37,14 @@ public class MultipleKnapsackDisplayResponse {
 
 	public void setColor(double color) {
 		this.color = color;
+	}
+
+	public int getBin() {
+		return bin;
+	}
+
+	public void setBin(int bin) {
+		this.bin = bin;
 	}
 
 }

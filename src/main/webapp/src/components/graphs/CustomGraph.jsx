@@ -44,7 +44,7 @@ export default class CustomGraph extends Component {
             stokeWidth: 2,
             opacity: 0.8,
             colorType: 'linear',
-            colorDomain: [0, 1, 2],
+            colorDomain: [0, 1, 2, 3, 4, 5],
             colorRange: ['blue', 'red', 'yellow'],
             onNearestXY: value => this.setState({value})
         };

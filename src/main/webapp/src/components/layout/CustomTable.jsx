@@ -73,9 +73,7 @@ function CustomTable(props) {
                 {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''}
                 {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''}
                 {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>}
-
              </TableBody>
-
            </Table>
          </TableContainer>
          <TablePagination

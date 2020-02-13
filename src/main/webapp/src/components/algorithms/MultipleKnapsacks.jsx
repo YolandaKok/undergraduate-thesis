@@ -1,93 +1,110 @@
 import React, {Component, Fragment} from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
 
-import {
-    XYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    HorizontalGridLines,
-    MarkSeries
-} from 'react-vis';
-import * as PropTypes from "prop-types";
-
-class ChildComponent extends Component {
-
-    constructor(props) {
-        super(props);
-        console.log('ChildComponent: state');
-    }
-
-    render() {
-        console.log('ChildComponent: render');
-        return (
-            <div>
-                Name: {this.props.name}
-            </div>
-        );
-    }
-}
-
-ChildComponent.defaultProps = {
-    name: "Nelly"
-};
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import styles from "../../static/signup.module.css";
+import CustomBreadCrumb from "../layout/CustomBreadCrumb";
+import {CustomizedAlert} from "../errors/CustomizedAlert";
+import CustomizedSteppers from "../layout/CustomizedSteppers";
+import DragAndDrop from "../drag-and-drop/DragAndDrop";
+import CustomGraph from "../graphs/CustomGraph";
+import CustomTable from "../layout/CustomTable";
+import InstructionsPanel from "../layout/InstructionsPanel";
+import ResultCompleted from "../layout/ResultCompleted";
+const axios = require('axios');
 
 export class MultipleKnapsacks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: [
-                {x: 360, y: 7, size: 2, color: 0.3},
-                {x: 83, y: 0, size: 2, color: 0.3},
-                {x: 59, y: 30, size: 2, color: 0.3},
-                {x: 130, y: 22, size: 2, color: 0.3},
-                {x: 431, y: 80, size: 2, color: 0.3},
-                {x: 67, y: 94, size: 2, color: 0.3},
-                {x: 230, y: 11, size: 2, color: 0.3},
-                {x: 52, y: 81, size: 2, color: 0.3},
-            ]
+            results: [],
+            formData: null,
+            uploadError: null,
+            message: null,
+            saveMessage: null,
+            value: null,
+            path: null,
+            componentName: null,
+            samples: [],
+            packedItems: []
         };
-        this.onButtonClick = this.onButtonClick.bind(this);
+
+        this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
+
     }
 
-    onButtonClick() {
-        this.setState({
-            results: [
-                {x: 360, y: 7, size: 2, color: 1.3},
-                {x: 83, y: 0, size: 2, color: 1.3},
-                {x: 59, y: 30, size: 2, color: 0.3},
-                {x: 130, y: 22, size: 2, color: 1.3},
-                {x: 431, y: 80, size: 2, color: 1.3},
-                {x: 67, y: 94, size: 2, color: 0.3},
-                {x: 230, y: 11, size: 2, color: 1.3},
-                {x: 52, y: 81, size: 2, color: 0.3},
-            ]
+    passedForDragAndDrop(formData) {
+        this.setState({"formData": formData});
+        this.getInitialData();
+    }
+
+    getInitialData() {
+        axios.post(SERVICE_URL + '/multiple/knapsacks/data' , this.state.formData, {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({uploadError: 'success'});
+            this.setState({message: 'You have uploaded the file successfully !'});
+            this.setState({results: response.data.initialData});
+            this.getResult();
+        },
+        (error) => {
+            console.log("error with data upload");
+            this.setState({uploadError: 'danger'});
+            this.setState({message: 'Error while uploading file !'});
+        });
+    }
+
+    getResult() {
+        axios.post(SERVICE_URL + '/multiple/knapsacks/result' , this.state.formData, {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            console.log(response.data.bins);
+            let items = [];
+            for(let i = 0; i < response.data.bins.length; i++) {
+                for(let j = 0; j < response.data.bins[i].points.length; j++) {
+                    items.push(response.data.bins[i].points[j]);
+                }
+            }
+            console.log(items);
+            this.setState({"packedItems": items});
+        },
+        (error) => {
+            console.log("error");
         });
     }
 
     render() {
-        let results = this.state.results;
-        console.log('ParentComponent: render');
         return (
             <Fragment>
-                <XYPlot width={500} height={500}>
-                    <VerticalGridLines />
-                    <HorizontalGridLines />
-                    <XAxis />
-                    <YAxis />
-                    <MarkSeries
-                        className="mark-series-example"
-                        strokeWidth={2}
-                        opacity="0.8"
-                        sizeRange={[3, 8]}
-                        colorType="linear"
-                        colorDomain={[0, 1, 2]}
-                        colorRange={['blue', 'red', 'yellow']}
-                        data={results}
-                    />
-                </XYPlot>
-                <button onClick={this.onButtonClick}>Click me</button>
-                <ChildComponent></ChildComponent>
+                <Container fixed>
+                    <Grid container spacing={2} className={styles.gridPadding}>
+                        <Grid item xs={12}>
+                            <CustomBreadCrumb name="Home,OR Tools,Multiple Knapsacks" title="Multiple Knapsacks" />
+                            <CustomizedAlert value={this.state.uploadError}
+                                             message={this.state.message}></CustomizedAlert>
+                        </Grid>
+                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
+                                            second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} />}
+                                            fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
+                                            finish={this.saveExperiment}
+                                            fifth={<InstructionsPanel/>}
+                                            sixth={<CustomTable rows={this.state.packedItems} checkResult={true}
+                                                                totalValue={this.state.totalValue}
+                                                                totalWeight={this.state.totalWeight}/>}
+                                            completed={<ResultCompleted message={this.state.saveMessage}
+                                                                        value={this.state.value}
+                                                                        path={this.state.path}
+                                                                        componentName={this.state.componentName}
+                                                                        uploadMessage={this.state.message}/>}
+                        />
+                    </Grid>
+                </Container>
             </Fragment>
         );
     }
