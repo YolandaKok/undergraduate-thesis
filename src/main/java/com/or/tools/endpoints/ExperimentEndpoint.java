@@ -31,8 +31,8 @@ public class ExperimentEndpoint {
 
 	@PostMapping
 	public void addExperiment(@RequestBody ExperimentRequest request) {
-		service.saveExperiment(request.getUsername(), request.getAlgorithmName(), request.getData(),
-				request.getResult(), request.getDate());
+		service.saveExperiment(request.getUsername(), request.getAlgorithmId(), request.getData(), request.getResult(),
+				request.getDate());
 	}
 
 	@GetMapping("/{username}")

@@ -5,7 +5,7 @@ import java.util.Date;
 public class ExperimentRequest {
 
 	private String username;
-	private String algorithmName;
+	private Long algorithmId;
 	private Date date;
 	private String data;
 	private String result;
@@ -16,14 +16,6 @@ public class ExperimentRequest {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getAlgorithmName() {
-		return algorithmName;
-	}
-
-	public void setAlgorithmName(String algorithmName) {
-		this.algorithmName = algorithmName;
 	}
 
 	public Date getDate() {
@@ -50,10 +42,12 @@ public class ExperimentRequest {
 		this.result = result;
 	}
 
-	@Override
-	public String toString() {
-		return "ExperimentRequest [username=" + username + ", algorithmName=" + algorithmName + ", date=" + date
-				+ ", data=" + data + "]";
+	public Long getAlgorithmId() {
+		return algorithmId;
+	}
+
+	public void setAlgorithmId(Long algorithmId) {
+		this.algorithmId = algorithmId;
 	}
 
 }

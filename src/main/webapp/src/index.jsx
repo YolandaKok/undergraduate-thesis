@@ -12,6 +12,7 @@ import Knapsack from "./components/algorithms/Knapsack";
 import MultipleKnapsacks from "./components/algorithms/MultipleKnapsacks";
 import MyExperiments from "./components/pages/MyExperiments";
 import ShowResult from "./components/layout/ShowResult";
+import ShowResultMultiple from "./components/layout/ShowResultMultiple";
 
 let routerProps;
 const routing = (
@@ -42,9 +43,13 @@ const routing = (
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MyExperiments/></Homepage> : <IndexPage/>}></Route>
 
-            <Route exact path="/show/result/:id" component={() => ["null", '', undefined, null].every((text) => {
+            <Route exact path="/show/result/knapsack/:id" component={() => ["null", '', undefined, null].every((text) => {
     return localStorage.getItem('authorization') !== text;
     }) ? <Homepage><ShowResult/></Homepage> : <IndexPage/>}/>
+
+            <Route exact path="/show/result/multipleknapsacks/:id" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><ShowResultMultiple/></Homepage> : <IndexPage/>}/>
         </div>
     </BrowserRouter>
 );

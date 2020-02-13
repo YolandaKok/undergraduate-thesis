@@ -32,9 +32,9 @@ public class ExperimentServiceImpl implements ExperimentService {
 
 	@Override
 	@Transactional
-	public void saveExperiment(String username, String algorithmName, String data, String result, Date date) {
+	public void saveExperiment(String username, Long algorithmId, String data, String result, Date date) {
 		UserDTO user = userDAO.findByUsername(username);
-		AlgorithmDTO algorithm = algorithmDAO.findByName(algorithmName);
+		AlgorithmDTO algorithm = algorithmDAO.findById(algorithmId).get();
 		ExperimentDTO experiment = new ExperimentDTO();
 		experiment.setUser(user);
 		experiment.setAlgorithm(algorithm.getName());

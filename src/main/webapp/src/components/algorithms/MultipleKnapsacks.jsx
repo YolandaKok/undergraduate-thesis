@@ -12,6 +12,7 @@ import CustomGraph from "../graphs/CustomGraph";
 import CustomTable from "../layout/CustomTable";
 import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
+import { withRouter } from 'react-router-dom';
 const axios = require('axios');
 
 export class MultipleKnapsacks extends Component {
@@ -19,6 +20,8 @@ export class MultipleKnapsacks extends Component {
         super(props);
         this.state = {
             results: [],
+            initial: [],
+            final: [],
             formData: null,
             uploadError: null,
             message: null,
@@ -27,11 +30,11 @@ export class MultipleKnapsacks extends Component {
             path: null,
             componentName: null,
             samples: [],
-            packedItems: []
+            packedItems: [],
+            algorithmId: ''
         };
-
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
-
+        this.saveExperiment = this.saveExperiment.bind(this);
     }
 
     passedForDragAndDrop(formData) {
@@ -47,6 +50,7 @@ export class MultipleKnapsacks extends Component {
             console.log(response);
             this.setState({uploadError: 'success'});
             this.setState({message: 'You have uploaded the file successfully !'});
+            this.setState({initial: response.data});
             this.setState({results: response.data.initialData});
             this.getResult();
         },
@@ -64,6 +68,7 @@ export class MultipleKnapsacks extends Component {
         .then((response) => {
             console.log(response);
             console.log(response.data.bins);
+            this.setState({"final": response.data});
             let items = [];
             for(let i = 0; i < response.data.bins.length; i++) {
                 for(let j = 0; j < response.data.bins[i].points.length; j++) {
@@ -75,6 +80,40 @@ export class MultipleKnapsacks extends Component {
         },
         (error) => {
             console.log("error");
+        });
+    }
+
+    componentDidMount() {
+        this.setState({"algorithmId": this.props.match.params.id});
+    }
+
+    saveExperiment() {
+        // Create JSON Object for initial data
+        let initialData = {
+            "initial": this.state.initial
+        }
+        // Json object for result data
+        let resultData = {
+            "result": this.state.final,
+        }
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
+            date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+            let message = "You have saved the experiment successfully. Go to ";
+            this.setState({saveMessage: message});
+            this.setState({value: "success"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
+        },
+        (error) => {
+            console.log("error");
+            this.setState({saveMessage: "Oops, something went wrong."});
+            this.setState({value: "danger"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
         });
     }
 
@@ -110,4 +149,4 @@ export class MultipleKnapsacks extends Component {
     }
 }
 
-export default MultipleKnapsacks;
+export default withRouter(MultipleKnapsacks);

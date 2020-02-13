@@ -31,7 +31,8 @@ export class Knapsack extends Component {
             totalWeight: null,
             capacities: null,
             samples: [],
-            sampleId: null
+            sampleId: null,
+            algorithmId: ''
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -61,6 +62,7 @@ export class Knapsack extends Component {
 
     componentWillMount() {
         console.log(this.props.match.params.id);
+        this.setState({"algorithmId": this.props.match.params.id});
         this.getDataSamples(this.props.match.params.id);
     }
 
@@ -133,7 +135,7 @@ export class Knapsack extends Component {
             "totalWeight": this.state.totalWeight,
             "totalValue": this.state.totalValue
         }
-        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmName: "Knapsack",
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
             date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
