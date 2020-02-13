@@ -20,6 +20,9 @@ public class DataSampleDTO {
 	@Column(name = "DATA")
 	@Type(type = "text")
 	private String DataSample;
+	@Column(name = "DATA_RESULT")
+	@Type(type = "text")
+	private String DataSampleResult;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private AlgorithmDTO algorithm;
 
@@ -45,6 +48,14 @@ public class DataSampleDTO {
 
 	public void setAlgorithm(AlgorithmDTO algorithm) {
 		this.algorithm = algorithm;
+	}
+
+	public String getDataSampleResult() {
+		return DataSampleResult;
+	}
+
+	public void setDataSampleResult(String dataSampleResult) {
+		DataSampleResult = dataSampleResult;
 	}
 
 }

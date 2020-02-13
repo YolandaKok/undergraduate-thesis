@@ -35,6 +35,7 @@ public class DataSampleEndpoint {
 			DataSampleResponse response = new DataSampleResponse();
 			response.setSample(item.getDataSample());
 			response.setId(item.getId());
+			response.setDataResult(item.getDataSampleResult());
 			responses.add(response);
 		}
 		return responses;

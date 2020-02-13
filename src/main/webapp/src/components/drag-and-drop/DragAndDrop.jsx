@@ -18,15 +18,12 @@ export default class DragAndDrop extends Component {
             setAge: '',
             open: false,
             setOpen: false,
-            values: []
+            values: [],
+            sample: null
         }
-        this.handleChange = this.handleChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({"age": event.target.value});
+        this.handle = this.handle.bind(this);
     }
 
     handleClose() {
@@ -37,6 +34,10 @@ export default class DragAndDrop extends Component {
         this.setState({"open": true});
     }
 
+    handle(event) {
+        this.setState({"sample": event.target.value});
+    }
+
     printFile(acceptedFiles) {
         console.log(acceptedFiles);
         acceptedFiles.map(file => {
@@ -45,9 +46,10 @@ export default class DragAndDrop extends Component {
             this.setState({"formData": formData});
             let reader = new FileReader();
 
+            console.log(file);
+
             reader.onload = function(e) {
                 let content = reader.result;
-
                 alert(content);
             }
         });
@@ -71,8 +73,8 @@ export default class DragAndDrop extends Component {
                         open={this.state.open}
                         onClose={this.handleClose}
                         onOpen={this.handleOpen}
-                        value={this.state.age}
-                        onChange={this.handleChange}
+                        value={this.state.sample}
+                        onChange={this.props.handleChange}
                     >
                         <MenuItem value="Select Sample">
                             <em>Select Sample</em>

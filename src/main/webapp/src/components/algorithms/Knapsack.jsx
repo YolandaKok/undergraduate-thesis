@@ -30,12 +30,33 @@ export class Knapsack extends Component {
             totalValue: null,
             totalWeight: null,
             capacities: null,
-            samples: []
+            samples: [],
+            sampleId: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
         this.getDataSamples = this.getDataSamples.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({"sampleId": event.target.value});
+        console.log("Id: " + event.target.value);
+        for(let i = 0; i < this.state.samples.length; i++) {
+            if(this.state.samples[i].id == event.target.value) {
+                console.log(this.state.samples);
+                let result = this.state.samples[i].sample;
+                let data = this.state.samples[i].dataResult;
+                let data2 = JSON.parse(data);
+                let result2 = JSON.parse(result);
+                this.setState({results: result2.points});
+                this.setState({capacities: result2.capacities});
+                this.setState({packedItems: data2.points});
+                this.setState({totalValue: data2.totalValue});
+                this.setState({totalWeight: data2.totalWeight});
+            }
+        }
     }
 
     componentWillMount() {
@@ -88,8 +109,7 @@ export class Knapsack extends Component {
         })
         .then((response) => {
             console.log(response);
-            this.setState({totalValue: response.data.totalValue});
-            this.setState({totalWeight: response.data.totalWeight});
+c
             this.setState({});
             this.setState({packedItems: response.data.packedItems});
             let temp = JSON.parse(JSON.stringify(this.state.results));
@@ -146,7 +166,7 @@ export class Knapsack extends Component {
                             <CustomizedAlert value={this.state.uploadError}
                                              message={this.state.message}></CustomizedAlert>
                         </Grid>
-                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} data={this.state.samples}/>}
+                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
                                             third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
