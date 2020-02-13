@@ -32,7 +32,9 @@ export class Knapsack extends Component {
             capacities: null,
             samples: [],
             sampleId: null,
-            algorithmId: ''
+            algorithmId: '',
+            extraColumns: [],
+            extraColumnValues: []
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -117,7 +119,12 @@ export class Knapsack extends Component {
                 temp[item].color = 0.3;
             });
             this.setState({packedItems: temp});
-        },
+            let extra = [];
+            this.state.packedItems.forEach(element =>
+                element.color == 0.3 ? extra.push(String.fromCharCode(10003)) : extra.push('no')
+            );
+            this.setState({"extraColumnValues": extra});
+            },
         (error) => {
             console.log("error");
         });
@@ -168,13 +175,16 @@ export class Knapsack extends Component {
                         </Grid>
                         <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
-                                            third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} />}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} extraColumns={[]} extraColumnValues={[]}/>}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
                                             sixth={<CustomTable rows={this.state.packedItems} checkResult={true}
+                                                                extraColumns={['Result']}
                                                                 totalValue={this.state.totalValue}
-                                                                totalWeight={this.state.totalWeight}/>}
+                                                                totalWeight={this.state.totalWeight}
+                                                                extraColumnValues={this.state.extraColumnValues}
+                                            />}
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}
                                                                         path={this.state.path}

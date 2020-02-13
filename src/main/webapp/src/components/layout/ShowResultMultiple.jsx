@@ -19,6 +19,8 @@ class ShowResultMultiple extends Component {
             initialData: [],
             totalValue: '',
             totalWeight: '',
+            extraColumns: ['Bin'],
+            extraColumnValues: [],
             headers: [
                 { label: "values", key: "x" },
                 { label: "weights", key: "y" },
@@ -31,28 +33,30 @@ class ShowResultMultiple extends Component {
         axios.get(SERVICE_URL + '/experiments/result/' + this.props.match.params.id, {
             headers: {"Authorization": localStorage.getItem('authorization')}
         })
-            .then((response) => {
-                    console.log(response);
-                    let resultObj = JSON.parse(response.data.resultData);
-                    let items = [];
-                    for(let i = 0; i < resultObj.result.bins.length; i++) {
-                        for(let j = 0; j < resultObj.result.bins[i].points.length; j++) {
-                            items.push(resultObj.result.bins[i].points[j]);
-                        }
-                    }
-                    this.setState({"results": items});
-
-                    let initialObj = JSON.parse(response.data.initialData);
-                    // let dataInit = {
-                    //     x: 'capacities',
-                    //     y: initialObj.capacities
-                    // }
-                    // initialObj.points.push(dataInit);
-                    // this.setState({"initialData": initialObj.points});
-                },
-                (error) => {
-                    console.log("error");
-                });
+        .then((response) => {
+            console.log(response);
+            let resultObj = JSON.parse(response.data.resultData);
+            let extra = [];
+            let items = [];
+            for(let i = 0; i < resultObj.result.bins.length; i++) {
+                for(let j = 0; j < resultObj.result.bins[i].points.length; j++) {
+                    items.push(resultObj.result.bins[i].points[j]);
+                    extra.push(resultObj.result.bins[i].points[j].bin);
+                }
+            }
+            this.setState({"results": items});
+            this.setState({"extraColumnValues": extra});
+            let initialObj = JSON.parse(response.data.initialData);
+            // let dataInit = {
+            //     x: 'capacities',
+            //     y: initialObj.capacities
+            // }
+            // initialObj.points.push(dataInit);
+            // this.setState({"initialData": initialObj.points});
+        },
+        (error) => {
+            console.log("error");
+        });
     }
 
     render() {
@@ -66,7 +70,7 @@ class ShowResultMultiple extends Component {
                         <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight}/>
+                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues}/>
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>

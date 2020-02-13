@@ -19,6 +19,8 @@ class ShowResult extends Component {
             initialData: [],
             totalValue: '',
             totalWeight: '',
+            extraColumns: ['Result'],
+            extraColumnValues: [],
             headers: [
                 { label: "values", key: "x" },
                 { label: "weights", key: "y" },
@@ -35,6 +37,11 @@ class ShowResult extends Component {
             console.log(response);
             let resultObj = JSON.parse(response.data.resultData);
             this.setState({"results": resultObj.points});
+            let extra = [];
+            this.state.results.forEach(element =>
+                element.color == 0.3 ? extra.push(String.fromCharCode(10003)) : extra.push('no')
+            );
+            this.setState({"extraColumnValues": extra});
             this.setState({"totalValue": resultObj.totalValue});
             this.setState({"totalWeight": resultObj.totalWeight});
 
@@ -62,7 +69,7 @@ class ShowResult extends Component {
                         <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight}/>
+                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues}/>
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>

@@ -31,7 +31,9 @@ export class MultipleKnapsacks extends Component {
             componentName: null,
             samples: [],
             packedItems: [],
-            algorithmId: ''
+            algorithmId: '',
+            extraColumns: ['Bin'],
+            extraColumnValues: []
         };
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
@@ -69,14 +71,18 @@ export class MultipleKnapsacks extends Component {
             console.log(response);
             console.log(response.data.bins);
             this.setState({"final": response.data});
+            // For extra columns for bins
+            let extra = [];
             let items = [];
             for(let i = 0; i < response.data.bins.length; i++) {
                 for(let j = 0; j < response.data.bins[i].points.length; j++) {
                     items.push(response.data.bins[i].points[j]);
+                    extra.push(response.data.bins[i].points[j].bin);
                 }
             }
             console.log(items);
             this.setState({"packedItems": items});
+            this.setState({"extraColumnValues": extra});
         },
         (error) => {
             console.log("error");
@@ -129,13 +135,16 @@ export class MultipleKnapsacks extends Component {
                         </Grid>
                         <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
-                                            third={<CustomTable rows={this.state.results} checkResult={false} />}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} extraColumns={[]} extraColumnValues={[]} />}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
                                             sixth={<CustomTable rows={this.state.packedItems} checkResult={true}
                                                                 totalValue={this.state.totalValue}
-                                                                totalWeight={this.state.totalWeight}/>}
+                                                                totalWeight={this.state.totalWeight}
+                                                                extraColumns={this.state.extraColumns}
+                                                                extraColumnValues={this.state.extraColumnValues}
+                                            />}
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}
                                                                         path={this.state.path}

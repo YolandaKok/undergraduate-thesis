@@ -42,6 +42,15 @@ function CustomTable(props) {
 
   const classes = useStyles();
   let rows = props.rows;
+  let columns = props.extraColumns;
+  let extraColumnValues = props.extraColumnValues;
+  let extraRows = props.extraRows;
+  let extraRowsValues = props.extraRowsValues;
+  for(let i = 0; i < rows.length; i++) {
+    rows[i].extraValue = extraColumnValues[i];
+  }
+  console.log("TotalValue: " + props.totalValue);
+  console.log("TotalValue: " + props.totalWeight);
   return (
        <div>
         <h5>Uploaded Values</h5>
@@ -54,7 +63,11 @@ function CustomTable(props) {
                <TableRow>
                  <TableCell>Values</TableCell>
                  <TableCell>Weights</TableCell>
-                 {props.checkResult ? <TableCell>Result</TableCell> : ''}
+                 {
+                    columns.map((item, index) => (
+                        <TableCell>{item}</TableCell>
+                    ))
+                 }
                </TableRow>
              </TableHead>
              <TableBody>
@@ -65,7 +78,7 @@ function CustomTable(props) {
                  <TableRow key={index}>
                    <TableCell>{row.x}</TableCell>
                    <TableCell>{row.y}</TableCell>
-                   {props.checkResult ? (row.color==0.3 ? <TableCell>{String.fromCharCode(10003)}</TableCell> : <TableCell>no</TableCell>) : ''}
+                   <TableCell>{row.extraValue}</TableCell>
                  </TableRow>
 
                    );
