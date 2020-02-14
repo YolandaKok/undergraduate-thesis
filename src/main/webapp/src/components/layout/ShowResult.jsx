@@ -21,6 +21,7 @@ class ShowResult extends Component {
             totalWeight: '',
             extraColumns: ['Result'],
             extraColumnValues: [],
+            extraRows: undefined,
             headers: [
                 { label: "values", key: "x" },
                 { label: "weights", key: "y" },
@@ -44,6 +45,22 @@ class ShowResult extends Component {
             this.setState({"extraColumnValues": extra});
             this.setState({"totalValue": resultObj.totalValue});
             this.setState({"totalWeight": resultObj.totalWeight});
+
+            // extraRows
+            let extraRows = [];
+            let obj = {};
+            obj.x = 'Total Value';
+            obj.y = resultObj.totalValue;
+            obj.z = '';
+            extraRows.push(obj);
+
+            let obj1 = {};
+            obj1.x = 'Total Weight';
+            obj1.y = resultObj.totalWeight;
+            obj.z = '';
+            extraRows.push(obj1);
+
+            this.setState({"extraRows": extraRows});
 
             let initialObj = JSON.parse(response.data.initialData);
             let dataInit = {
@@ -69,7 +86,7 @@ class ShowResult extends Component {
                         <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues}/>
+                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues} extraRows={this.state.extraRows}/>
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>

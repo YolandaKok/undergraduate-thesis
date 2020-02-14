@@ -34,7 +34,9 @@ export class Knapsack extends Component {
             sampleId: null,
             algorithmId: '',
             extraColumns: [],
-            extraColumnValues: []
+            extraColumnValues: [],
+            extraRowsInitial: undefined,
+            extraRowsFinal: undefined
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getResult = this.getResult.bind(this);
@@ -58,6 +60,35 @@ export class Knapsack extends Component {
                 this.setState({packedItems: data2.points});
                 this.setState({totalValue: data2.totalValue});
                 this.setState({totalWeight: data2.totalWeight});
+                let extra = [];
+                let obj = {
+                    x: 'Capacities',
+                    y: result2.capacities
+                };
+                extra.push(obj);
+                this.setState({"extraRowsInitial": extra});
+
+                // Extra Rows
+                let extraRows = [];
+                let obj1 = {
+                    x: 'Total Value',
+                    y: data2.totalValue,
+                    z: ''
+                }
+                let obj2 = {
+                    x: 'Total Weight',
+                    y: data2.totalWeight,
+                    z: ''
+                }
+                extraRows.push(obj1);
+                extraRows.push(obj2);
+                this.setState({"extraRowsFinal": extraRows});
+
+                let extraColumn = [];
+                data2.points.forEach(element =>
+                    element.color == 0.3 ? extraColumn.push(String.fromCharCode(10003)) : extraColumn.push('no')
+                );
+                this.setState({"extraColumnValues": extraColumn});
             }
         }
     }
@@ -97,6 +128,13 @@ export class Knapsack extends Component {
             this.setState({message: 'You have uploaded the file successfully !'});
             this.setState({results: response.data.value0});
             this.setState({capacities: response.data.value1});
+            let extra = [];
+            let obj = {
+                x: 'Capacities',
+                y: response.data.value1
+            };
+            extra.push(obj);
+            this.setState({"extraRowsInitial": extra});
             this.getResult();
         },
         (error) => {
@@ -114,6 +152,21 @@ export class Knapsack extends Component {
             console.log(response);
             this.setState({});
             this.setState({packedItems: response.data.packedItems});
+            // Extra Rows
+            let extraRows = [];
+            let obj = {
+                x: 'Total Value',
+                y: response.data.totalValue,
+                z: ''
+            }
+            let obj1 = {
+                x: 'Total Weight',
+                y: response.data.totalWeight,
+                z: ''
+            }
+            extraRows.push(obj);
+            extraRows.push(obj1);
+            this.setState({"extraRowsFinal": extraRows});
             let temp = JSON.parse(JSON.stringify(this.state.results));
             response.data.packedItems.map((item) => {
                 temp[item].color = 0.3;
@@ -175,7 +228,7 @@ export class Knapsack extends Component {
                         </Grid>
                         <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
-                                            third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} extraColumns={[]} extraColumnValues={[]}/>}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} extraColumns={[]} extraColumnValues={[]} extraRows={this.state.extraRowsInitial}/>}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
@@ -184,6 +237,7 @@ export class Knapsack extends Component {
                                                                 totalValue={this.state.totalValue}
                                                                 totalWeight={this.state.totalWeight}
                                                                 extraColumnValues={this.state.extraColumnValues}
+                                                                extraRows={this.state.extraRowsFinal}
                                             />}
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}

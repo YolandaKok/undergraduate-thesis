@@ -45,7 +45,7 @@ function CustomTable(props) {
   let columns = props.extraColumns;
   let extraColumnValues = props.extraColumnValues;
   let extraRows = props.extraRows;
-  let extraRowsValues = props.extraRowsValues;
+
   for(let i = 0; i < rows.length; i++) {
     rows[i].extraValue = extraColumnValues[i];
   }
@@ -63,11 +63,7 @@ function CustomTable(props) {
                <TableRow>
                  <TableCell>Values</TableCell>
                  <TableCell>Weights</TableCell>
-                 {
-                    columns.map((item, index) => (
-                        <TableCell>{item}</TableCell>
-                    ))
-                 }
+                 {columns != undefined ? columns.map((item, index) => ( <TableCell>{item}</TableCell>)) : ''}
                </TableRow>
              </TableHead>
              <TableBody>
@@ -78,14 +74,22 @@ function CustomTable(props) {
                  <TableRow key={index}>
                    <TableCell>{row.x}</TableCell>
                    <TableCell>{row.y}</TableCell>
-                   <TableCell>{row.extraValue}</TableCell>
+                   {row.extraValue != undefined ? <TableCell>{row.extraValue}</TableCell> : ''}
                  </TableRow>
 
                    );
                  })}
-                {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''}
-                {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''}
-                {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>}
+                 {  extraRows != undefined ? extraRows.map((item, index) => (
+                        <TableRow>
+                            {item.x != undefined ? <TableCell style={{fontWeight: 'bold'}}>{item.x}</TableCell> : ''}
+                            {item.y != undefined ? <TableCell style={{fontWeight: 'bold'}}>{item.y}</TableCell> : ''}
+                            {item.z != undefined ? <TableCell style={{fontWeight: 'bold'}}>{item.z}</TableCell> : ''}
+                        </TableRow>
+                    )) : ''
+                 }
+{/*                 {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Value</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalValue}</TableCell><TableCell></TableCell></TableRow> : ''} */}
+{/*                 {props.checkResult ? <TableRow><TableCell style={{fontWeight:'bold'}}>Total Weight</TableCell><TableCell style={{fontWeight:'bold'}}>{props.totalWeight}</TableCell><TableCell></TableCell></TableRow> : ''} */}
+{/*                 {props.checkResult ? '' : <TableRow><TableCell style={{fontWeight:'bold'}}>Capacities</TableCell><TableCell style={{fontWeight:'bold'}}>{props.capacities}</TableCell></TableRow>} */}
              </TableBody>
            </Table>
          </TableContainer>

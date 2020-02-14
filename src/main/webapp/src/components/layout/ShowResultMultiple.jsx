@@ -21,6 +21,7 @@ class ShowResultMultiple extends Component {
             totalWeight: '',
             extraColumns: ['Bin'],
             extraColumnValues: [],
+            extraRows: undefined,
             headers: [
                 { label: "values", key: "x" },
                 { label: "weights", key: "y" },
@@ -38,14 +39,36 @@ class ShowResultMultiple extends Component {
             let resultObj = JSON.parse(response.data.resultData);
             let extra = [];
             let items = [];
+            let extraRows = [];
+            let obj = {};
+            obj.x = '';
+            obj.y = 'Total Value';
+            obj.z = 'Total Weight';
+            extraRows.push(obj);
+
+            let obj1 = {};
+            obj1.x = 'All Bins';
+            obj1.y = resultObj.result.totalPackedValue;
+            obj1.z = resultObj.result.totalPackedWeight;
+            extraRows.push(obj1);
+
             for(let i = 0; i < resultObj.result.bins.length; i++) {
+                let obj = {};
                 for(let j = 0; j < resultObj.result.bins[i].points.length; j++) {
                     items.push(resultObj.result.bins[i].points[j]);
                     extra.push(resultObj.result.bins[i].points[j].bin);
+                    obj.x = 'Bin ' + resultObj.result.bins[i].points[j].bin;
                 }
+                obj.y = resultObj.result.bins[i].packedValue;
+                obj.z = resultObj.result.bins[i].packedWeight;
+                extraRows.push(obj);
             }
+            this.setState({"extraRows": extraRows});
             this.setState({"results": items});
             this.setState({"extraColumnValues": extra});
+
+
+
             let initialObj = JSON.parse(response.data.initialData);
             // let dataInit = {
             //     x: 'capacities',
@@ -70,7 +93,7 @@ class ShowResultMultiple extends Component {
                         <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <CustomTable rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues}/>
+                        <CustomTable extraRows={this.state.extraRows} rows={this.state.results} checkResult={true} totalValue={this.state.totalValue} totalWeight={this.state.totalWeight} extraColumns={this.state.extraColumns} extraColumnValues={this.state.extraColumnValues}/>
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
