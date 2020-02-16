@@ -67,15 +67,13 @@ class ShowResultMultiple extends Component {
             this.setState({"results": items});
             this.setState({"extraColumnValues": extra});
 
-
-
             let initialObj = JSON.parse(response.data.initialData);
-            // let dataInit = {
-            //     x: 'capacities',
-            //     y: initialObj.capacities
-            // }
-            // initialObj.points.push(dataInit);
-            // this.setState({"initialData": initialObj.points});
+            let dataInit = {
+                x: 'bins',
+                y: initialObj.initial.binCapacities
+            }
+            initialObj.initial.initialData.push(dataInit);
+            this.setState({"initialData": initialObj.initial.initialData});
         },
         (error) => {
             console.log("error");
