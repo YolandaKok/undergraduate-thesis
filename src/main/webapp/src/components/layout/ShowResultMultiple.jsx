@@ -64,6 +64,7 @@ class ShowResultMultiple extends Component {
                 extraRows.push(obj);
             }
             this.setState({"extraRows": extraRows});
+
             this.setState({"results": items});
             this.setState({"extraColumnValues": extra});
 

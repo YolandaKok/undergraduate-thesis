@@ -33,7 +33,9 @@ export class MultipleKnapsacks extends Component {
             packedItems: [],
             algorithmId: '',
             extraColumns: ['Bin'],
-            extraColumnValues: []
+            extraColumnValues: [],
+            extraRowsInitial: undefined,
+            extraRowsFinal: undefined
         };
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
@@ -54,6 +56,7 @@ export class MultipleKnapsacks extends Component {
             this.setState({message: 'You have uploaded the file successfully !'});
             this.setState({initial: response.data});
             this.setState({results: response.data.initialData});
+            this.setInitialExtraRows(response.data.binCapacities);
             this.getResult();
         },
         (error) => {
@@ -83,10 +86,39 @@ export class MultipleKnapsacks extends Component {
             console.log(items);
             this.setState({"packedItems": items});
             this.setState({"extraColumnValues": extra});
-        },
+            this.setResultExtraRows(response.data);
+            },
         (error) => {
             console.log("error");
         });
+    }
+
+    setInitialExtraRows(data) {
+        let extraRows = [];
+        data.forEach((item, index) => {
+            let obj = {};
+            obj.x = 'Bin' + index;
+            obj.y = item;
+            extraRows.push(obj);
+        });
+        this.setState({"extraRowsInitial": extraRows});
+    }
+
+    setResultExtraRows(data) {
+        let extraRows = [];
+        let header = {}, first = {};
+        header.x = ''; header.y = 'Total Value'; header.z = 'Total Weight';
+        extraRows.push(header);
+        first.x = 'All'; first.y = data.totalPackedValue; first.z = data.totalPackedWeight;
+        extraRows.push(first);
+        data.bins.forEach((item, index) => {
+            let obj = {};
+            obj.x = 'Bin' + index;
+            obj.y = item.packedValue;
+            obj.z = item.packedWeight;
+            extraRows.push(obj);
+        });
+        this.setState({"extraRowsFinal": extraRows});
     }
 
     componentDidMount() {
@@ -135,7 +167,7 @@ export class MultipleKnapsacks extends Component {
                         </Grid>
                         <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
-                                            third={<CustomTable rows={this.state.results} checkResult={false} extraColumns={[]} extraColumnValues={[]} />}
+                                            third={<CustomTable rows={this.state.results} checkResult={false} extraColumns={[]} extraColumnValues={[]} extraRows={this.state.extraRowsInitial} />}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
                                             fifth={<InstructionsPanel/>}
@@ -144,6 +176,7 @@ export class MultipleKnapsacks extends Component {
                                                                 totalWeight={this.state.totalWeight}
                                                                 extraColumns={this.state.extraColumns}
                                                                 extraColumnValues={this.state.extraColumnValues}
+                                                                extraRows={this.state.extraRowsFinal}
                                             />}
                                             completed={<ResultCompleted message={this.state.saveMessage}
                                                                         value={this.state.value}

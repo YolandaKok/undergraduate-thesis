@@ -14,7 +14,7 @@ export class MyExperiments extends Component {
         super(props);
         this.state = {
             results: [],
-            perPage: 9,
+            perPage: 12,
             offset: 0,
             algorithmNames: [],
             dateOrder: 'desc',

@@ -14,7 +14,7 @@ export default class HomepageLayout extends Component {
         this.state = {
             "results": [],
             offset: 0,
-            perPage: 5,
+            perPage: 7,
             totalPages: 2,
             items: []
         }
