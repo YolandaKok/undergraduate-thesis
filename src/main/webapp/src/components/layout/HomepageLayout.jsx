@@ -7,6 +7,7 @@ import CustomCard from "./CustomCard";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 import RecentAlgorithms from "./RecentAlgorithms";
+import TSP from "../algorithms/TSP";
 
 export default class HomepageLayout extends Component {
     constructor(props) {
@@ -86,6 +87,7 @@ export default class HomepageLayout extends Component {
                     </Grid>
                     <RecentAlgorithms/>
                 </Grid>
+                <TSP/>
             </Container>
         );
     }

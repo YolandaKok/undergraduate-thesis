@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add react-csv --dev
+  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add @bit/mui-org.material-ui.paper
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,17 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/generator/node_modules/jsesc/LICENSE-MIT.txt'
+  Error: https://registry.yarnpkg.com/@bit%2fmui-org.material-ui.paper: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66938:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140622:22)
+      at Request.emit (events.js:223:5)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141594:10)
+      at Request.emit (events.js:223:5)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141516:12)
+      at Object.onceWrapper (events.js:312:28)
+      at IncomingMessage.emit (events.js:228:7)
+      at endReadableNT (_stream_readable.js:1185:12)
+      at processTicksAndRejections (internal/process/task_queues.js:81:21)
 
 npm manifest: 
   {
@@ -69,7 +79,8 @@ npm manifest:
       "react-router": "^5.1.2",
       "react-router-dom": "^5.1.2",
       "react-scripts": "^3.3.0",
-      "react-vis": "^1.11.7"
+      "react-vis": "^1.11.7",
+      "@material-ui/system": "latest"
     }
   }
 

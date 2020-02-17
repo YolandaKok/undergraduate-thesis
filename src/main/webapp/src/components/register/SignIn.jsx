@@ -5,6 +5,7 @@ import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {FormError} from "../errors/FormError";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
+import TSP from "../algorithms/TSP";
 const axios = require('axios');
 
 export class SignIn extends Component {

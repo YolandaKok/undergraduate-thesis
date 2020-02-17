@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import {ForceGraph, ForceGraphNode, ForceGraphLink, ForceGraphArrowLink} from 'react-vis-force';
 import '../../../node_modules/react-vis/dist/style.css';
+const axios = require('axios');
 
 export class TSP extends Component {
 
     componentDidMount() {
         document.body.style.background = "white";
         console.log(SERVICE_URL);
+    }
+
+    componentWillMount() {
+        axios.get('distance.py' , {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+        },
+        (error) => {
+
+        });
     }
 
     render() {

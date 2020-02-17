@@ -193,13 +193,18 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
         case 0:
             return (
                 <Fragment>
-                    <Container>
+
                         <Grid container spacing={2}>
-                            <Grid component={Paper} item xs={12} md={12} lg={6} xl={6}>{first}</Grid>
-                            <Grid component={Paper}item xs={12} md={12} lg={6} xl={6}>{fifth}</Grid>
-                            <Grid item xs={12}>{third}</Grid>
+                            <Grid item xs={12}>
+                                <Grid container justify="center" spacing={6}>
+                                    <Grid component={Paper} item xs={12} md={12} lg={5} xl={5}>{first}</Grid>
+                                    <Grid item xs={0} md={0} lg={1} xl={1}></Grid>
+                                    <Grid component={Paper} item xs={12} md={12} lg={5} xl={5}>{fifth}</Grid>
+                                    <Grid item xs={12}>{third}</Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Container>
+
                 </Fragment>);
         case 1:
             return (
