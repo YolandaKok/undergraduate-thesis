@@ -35,10 +35,61 @@ export class MultipleKnapsacks extends Component {
             extraColumns: ['Bin'],
             extraColumnValues: [],
             extraRowsInitial: undefined,
-            extraRowsFinal: undefined
+            extraRowsFinal: undefined,
         };
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentWillMount() {
+
+        this.setState({"algorithmId": this.props.match.params.id});
+        this.getDataSamples(this.props.match.params.id);
+    }
+
+    getDataSamples(id) {
+        axios.get(SERVICE_URL + '/samples/' + id , {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({"samples": response.data});
+        },
+        (error) => {
+
+        });
+    }
+
+    handleChange(event) {
+        this.setState({"sampleId": event.target.value});
+        console.log("Id: " + event.target.value);
+        for(let i = 0; i < this.state.samples.length; i++) {
+            if(this.state.samples[i].id == event.target.value) {
+                console.log(this.state.samples);
+                let initialData = JSON.parse(this.state.samples[i].sample);
+                let finalData = JSON.parse(this.state.samples[i].dataResult);
+
+                this.setState({results: initialData.initial.initialData});
+                this.setInitialExtraRows(initialData.initial.binCapacities);
+
+                this.setState({"final": finalData.result});
+                // For extra columns for bins
+                let extra = [];
+                let items = [];
+                for(let i = 0; i < finalData.result.bins.length; i++) {
+                    for(let j = 0; j < finalData.result.bins[i].points.length; j++) {
+                        items.push(finalData.result.bins[i].points[j]);
+                        extra.push(finalData.result.bins[i].points[j].bin);
+                    }
+                }
+                console.log(items);
+                this.setState({"packedItems": items});
+                this.setState({"extraColumnValues": extra});
+                this.setResultExtraRows(finalData.result);
+
+            }
+        }
     }
 
     passedForDragAndDrop(formData) {

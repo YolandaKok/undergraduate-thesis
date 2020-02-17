@@ -94,7 +94,6 @@ export class Knapsack extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.match.params.id);
         this.setState({"algorithmId": this.props.match.params.id});
         this.getDataSamples(this.props.match.params.id);
     }
