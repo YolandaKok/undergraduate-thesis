@@ -46,8 +46,8 @@ public class TSPEndpoint {
 		dest_addresses = cities;
 
 		for (int i = 0; i < q; i++) {
-			for (int k = q * max_rows; k < q * max_rows + r; k++) {
-				origin_addresses.add(cities.get(i));
+			for (int k = i * max_rows; k < (i + 1) * max_rows; k++) {
+				origin_addresses.add(cities.get(k));
 				// response = send_request(origin_addresses, dest_addresses);
 			}
 		}
@@ -57,7 +57,7 @@ public class TSPEndpoint {
 				origin_addresses.add(cities.get(i));
 			}
 		}
-		build_address_str(cities);
+		build_address_str(origin_addresses);
 		send_request(origin_addresses, dest_addresses);
 	}
 
@@ -88,7 +88,7 @@ public class TSPEndpoint {
 		String address_str = "";
 		StringBuilder builder = new StringBuilder();
 		builder.append(address_str);
-		for (int i = 0; i < addresses.size() - 1; i++) {
+		for (int i = 0; i < addresses.size(); i++) {
 			builder.append(addresses.get(i));
 			builder.append("|");
 		}
