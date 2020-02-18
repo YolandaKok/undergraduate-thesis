@@ -189,7 +189,6 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
         case 0:
             return (
                 <Fragment>
-
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Grid container justify="center" spacing={6}>
@@ -200,15 +199,19 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
                                 </Grid>
                             </Grid>
                         </Grid>
-
                 </Fragment>);
         case 1:
             return (
                 <Fragment>
                     <Container>
-                        <Grid container spacing={2}>
-                            <Grid xs={12} md={12} lg={6} xl={6}>{second}</Grid>
-                            <Grid xs={12} md={12} lg={6} xl={6}>{third}</Grid>
+                        <Grid container spacing={8}>
+                            <Grid item xs={12}>
+                                <Grid container justify="center" spacing={6}>
+                                    <Grid xs={12} md={12} lg={5} xl={5}>{second}</Grid>
+                                    <Grid item xs={0} md={0} lg={1} xl={1}></Grid>
+                                    <Grid xs={12} md={12} lg={5} xl={5}>{third}</Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Container>
                 </Fragment>);
@@ -216,10 +219,13 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
             return (
                 <Fragment>
                     <Container>
-                        <Grid container spacing={2}>
-                            <Grid xs={12} md={12} lg={6} xl={6}>{fourth}</Grid>
-                            <Grid xs={12} md={12} lg={6} xl={6}>{sixth}</Grid>
-                        </Grid>
+                        {
+                            fourth != undefined ? <Grid container spacing={2}>
+                                <Grid xs={12} md={12} lg={6} xl={6}>{fourth}</Grid>
+                                <Grid xs={12} md={12} lg={6} xl={6}>{sixth}</Grid>
+                            </Grid> : <div>{completed}</div>
+                        }
+
                     </Container>
                 </Fragment>);
         case 3:

@@ -25,7 +25,11 @@ export class TSP extends Component {
             message: null,
             samples: [],
             distanceMatrix: [[]],
-            cities: []
+            cities: [],
+            saveMessage: null,
+            value: null,
+            path: null,
+            componentName: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
@@ -61,6 +65,13 @@ export class TSP extends Component {
             this.setState({message: 'You have uploaded the file successfully !'});
             this.setState({distanceMatrix: response.data.value0});
             this.setState({cities: response.data.value1});
+
+            let message = "You have saved the experiment successfully. Go to ";
+            this.setState({saveMessage: message});
+            this.setState({value: "success"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
+
             this.getResult();
         },
         (error) => {
@@ -99,6 +110,11 @@ export class TSP extends Component {
                                 third={<SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities}/>}
                                 second={<RouteGraph/>}
                                 fifth={<InstructionsPanel/>}
+                                completed={<ResultCompleted message={this.state.saveMessage}
+                                                            value={this.state.value}
+                                                            path={this.state.path}
+                                                            componentName={this.state.componentName}
+                                                            uploadMessage={this.state.message}/>}
                             />
                         </Grid>
 
