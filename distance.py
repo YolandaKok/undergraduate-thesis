@@ -7,15 +7,23 @@ def create_data():
   """Creates the data."""
   data = {}
   data['API_key'] = 'AIzaSyBT4mw-5ZlaiE8j_6GdNgHTgZi7PJrNa5s'
-  data['addresses'] = ['Athens', # depot
-                       'London',
-                       'Berlin',
-                       'Amsterdam',
-                       'Copenhaghen',
-                       'Paris',
-                       'Frankfurt',
-                       'Torino',
-                       'Rome']
+  data['addresses'] = ['3610+Hacks+Cross+Rd+Memphis+TN', # depot
+                     '1921+Elvis+Presley+Blvd+Memphis+TN',
+                     '149+Union+Avenue+Memphis+TN',
+                     '1034+Audubon+Drive+Memphis+TN',
+                     '1532+Madison+Ave+Memphis+TN',
+                     '706+Union+Ave+Memphis+TN',
+                     '3641+Central+Ave+Memphis+TN',
+                     '926+E+McLemore+Ave+Memphis+TN',
+                     '4339+Park+Ave+Memphis+TN',
+                     '600+Goodwyn+St+Memphis+TN',
+                     '2000+North+Pkwy+Memphis+TN',
+                     '262+Danny+Thomas+Pl+Memphis+TN',
+                     '125+N+Front+St+Memphis+TN',
+                     '5959+Park+Ave+Memphis+TN',
+                     '814+Scott+St+Memphis+TN',
+                     '1005+Tillman+St+Memphis+TN'
+                    ]
   return data
 
 def create_distance_matrix(data):
@@ -26,20 +34,25 @@ def create_distance_matrix(data):
   num_addresses = len(addresses) # 16 in this example.
   # Maximum number of rows that can be computed per request (6 in this example).
   max_rows = max_elements // num_addresses
+  print(max_rows)
   # num_addresses = q * max_rows + r (q = 2 and r = 4 in this example).
   ## div mod is x / y, x % y
   q, r = divmod(num_addresses, max_rows)
+  print(q)
+  print(r)
   dest_addresses = addresses
   distance_matrix = []
   # Send q requests, returning max_rows rows per request.
   for i in range(q):
     origin_addresses = addresses[i * max_rows: (i + 1) * max_rows]
+    print(origin_addresses)
     response = send_request(origin_addresses, dest_addresses, API_key)
     distance_matrix += build_distance_matrix(response)
 
   # Get the remaining remaining r rows, if necessary.
   if r > 0:
     origin_addresses = addresses[q * max_rows: q * max_rows + r]
+    print(origin_addresses)
     response = send_request(origin_addresses, dest_addresses, API_key)
     distance_matrix += build_distance_matrix(response)
   return distance_matrix

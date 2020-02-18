@@ -1,6 +1,7 @@
 package com.or.tools.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -169,6 +170,42 @@ public class IOUtils {
 
 				response.setValues(values);
 				response.setWeights(weights);
+
+			} catch (IOException e) {
+				log.error("Error during reading {} please fix and re upload the file", e.getMessage());
+				e.printStackTrace();
+			}
+		}
+
+		return response;
+	}
+
+	public ArrayList<String> readTspData(MultipartFile file) {
+		ArrayList<String> response = new ArrayList<>();
+
+		int numOfRows = 0;
+
+		if (!file.isEmpty()) {
+			// Read the file
+			try {
+				byte[] bytes = file.getBytes();
+				String data = new String(bytes);
+				String[] rows = data.split("\n");
+				log.info("Number of rows: {}", rows.length);
+
+				for (String row : rows) {
+					if (numOfRows != 0) {
+						log.info("New Row: ");
+						String[] columns = row.split(";");
+						for (String column : columns) {
+							if (column.charAt(0) == '"') {
+								column = column.substring(1, column.length() - 1);
+							}
+							response.add(column);
+						}
+					}
+					numOfRows++;
+				}
 
 			} catch (IOException e) {
 				log.error("Error during reading {} please fix and re upload the file", e.getMessage());

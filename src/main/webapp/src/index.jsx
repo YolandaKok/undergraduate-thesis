@@ -39,17 +39,22 @@ const routing = (
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MultipleKnapsacks/></Homepage> : <IndexPage/>}></Route>
 
+            <Route exact path="/algorithms/travellingsalesman/:id" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><TSP/></Homepage> : <IndexPage/>}></Route>
+
             <Route exact path="/myexperiments" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MyExperiments/></Homepage> : <IndexPage/>}></Route>
 
             <Route exact path="/show/result/knapsack/:id" component={() => ["null", '', undefined, null].every((text) => {
-    return localStorage.getItem('authorization') !== text;
-    }) ? <Homepage><ShowResult/></Homepage> : <IndexPage/>}/>
+            return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><ShowResult/></Homepage> : <IndexPage/>}/>
 
             <Route exact path="/show/result/multipleknapsacks/:id" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><ShowResultMultiple/></Homepage> : <IndexPage/>}/>
+
         </div>
     </BrowserRouter>
 );

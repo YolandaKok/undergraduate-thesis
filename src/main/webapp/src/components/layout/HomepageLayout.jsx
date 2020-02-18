@@ -87,7 +87,6 @@ export default class HomepageLayout extends Component {
                     </Grid>
                     <RecentAlgorithms/>
                 </Grid>
-                <TSP/>
             </Container>
         );
     }

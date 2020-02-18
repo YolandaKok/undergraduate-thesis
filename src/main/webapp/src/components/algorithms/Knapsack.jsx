@@ -225,7 +225,8 @@ export class Knapsack extends Component {
                             <CustomizedAlert value={this.state.uploadError}
                                              message={this.state.message}></CustomizedAlert>
                         </Grid>
-                        <CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
+                        <CustomizedSteppers steps={["Upload File", "Show Initial Data", "Show Results"]}
+                                            first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                             second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}
                                             third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} extraColumns={[]} extraColumnValues={[]} extraRows={this.state.extraRowsInitial}/>}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}

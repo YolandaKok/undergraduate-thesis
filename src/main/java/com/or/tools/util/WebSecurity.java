@@ -33,13 +33,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/tsp/distance/matrix").permitAll();
 
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/tsp/result").permitAll();
+
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/users/signup").permitAll();
 
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/users/exists/*").permitAll();
 
 		http.csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/", "/signin", "/signup", "/output/bundle.js", "/app/*", "/select/*",
-						"/algorithms/*/*", "/myexperiments", "/show/result/*/*", "/distance.py")
+						"/algorithms/*/*", "/myexperiments", "/show/result/*/*")
 				.permitAll().anyRequest().authenticated().and()
 				.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtSecretPassword))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtSecretPassword)).sessionManagement()

@@ -184,10 +184,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function getSteps() {
-    return ["Upload File", "Show Initial Data", "Show Results"];
-}
-
 function getStepContent(step, first, second, third, fourth, fifth, sixth, completed) {
     switch (step) {
         case 0:
@@ -237,7 +233,7 @@ export function CustomizedSteppers(props) {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
-    const steps = getSteps();
+    const steps = props.steps;
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
