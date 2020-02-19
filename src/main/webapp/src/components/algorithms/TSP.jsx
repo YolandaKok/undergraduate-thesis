@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import {ForceGraph, ForceGraphNode, ForceGraphLink, ForceGraphArrowLink} from 'react-vis-force';
 import '../../../node_modules/react-vis/dist/style.css';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -8,12 +7,11 @@ import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
 import CustomizedSteppers from "../layout/CustomizedSteppers";
 import DragAndDrop from "../drag-and-drop/DragAndDrop";
-import CustomGraph from "../graphs/CustomGraph";
-import CustomTable from "../layout/CustomTable";
 import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
 import SimpleTable from "../layout/SimpleTable";
 import RouteGraph from "../graphs/RouteGraph";
+import {withRouter} from "react-router-dom";
 const axios = require('axios');
 
 export class TSP extends Component {
@@ -31,19 +29,21 @@ export class TSP extends Component {
             path: null,
             componentName: null,
             routes: [],
-            routeDistance: null
+            routeDistance: null,
+            algorithmId: '',
+            data: []
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
+        this.saveExperiment = this.saveExperiment.bind(this);
+        this.createData = this.createData.bind(this);
     }
 
     componentDidMount() {
         document.body.style.background = "white";
         console.log(SERVICE_URL);
-    }
-
-    componentWillMount() {
-
+        console.log(this.props.match.params.id);
+        this.setState({"algorithmId": this.props.match.params.id});
     }
 
     passedForDragAndDrop(formData) {
@@ -73,7 +73,6 @@ export class TSP extends Component {
             this.setState({value: "success"});
             this.setState({path: "/"});
             this.setState({componentName: "Homepage"});
-
             this.getResult();
         },
         (error) => {
@@ -92,10 +91,64 @@ export class TSP extends Component {
             console.log(response);
             this.setState({"routes": response.data.routes});
             this.setState({"routeDistance": response.data.totalDistance});
+            this.createData(this.state.cities, this.state.routes, this.state.distanceMatrix)
         },
         (error) => {
             console.log("error");
         });
+    }
+
+    saveExperiment() {
+        // Create JSON Object for initial data
+        let initialData = {}
+        // Json object for result data
+        let resultData = {
+            "cities": this.state.cities,
+            "distanceMatrix": this.state.distanceMatrix,
+            "data": this.state.data
+        }
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
+            date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+            let message = "You have saved the experiment successfully. Go to ";
+            this.setState({saveMessage: message});
+            this.setState({value: "success"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
+        },
+        (error) => {
+            console.log("error");
+            this.setState({saveMessage: "Oops, something went wrong."});
+            this.setState({value: "danger"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
+        });
+    }
+
+    createData(nodes, routes, distanceMatrix) {
+        let data = [];
+        let i;
+        let currentDistance = 0;
+        for(i = 0; i < nodes.length-1; i++) {
+            let obj = {
+                x: currentDistance,
+                y: nodes[routes[i]]
+            };
+            data.push(obj);
+            currentDistance += distanceMatrix[routes[i]][routes[i+1]];
+        }
+        let obj = {
+            x: currentDistance,
+            y: nodes[routes[i]]
+        }
+        console.log('Current Distance' + currentDistance);
+        data.push(obj);
+        console.log(data);
+        this.setState({"data": data});
+        return data;
     }
 
     render() {
@@ -111,13 +164,14 @@ export class TSP extends Component {
                                 steps={["Upload Document", "Show Result"]}
                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                 third={<SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities}/>}
-                                second={<RouteGraph nodes={this.state.cities} routes={this.state.routes} distanceMatrix={this.state.distanceMatrix}/>}
+                                second={<RouteGraph data={this.state.data}/>}
                                 fifth={<InstructionsPanel/>}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}
                                                             path={this.state.path}
                                                             componentName={this.state.componentName}
                                                             uploadMessage={this.state.message}/>}
+                                finish={this.saveExperiment}
                             />
                         </Grid>
 
@@ -147,5 +201,5 @@ export class TSP extends Component {
     }
 }
 
-export default TSP;
+export default withRouter(TSP);
 

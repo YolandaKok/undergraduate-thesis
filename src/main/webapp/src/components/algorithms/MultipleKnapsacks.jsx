@@ -43,7 +43,6 @@ export class MultipleKnapsacks extends Component {
     }
 
     componentWillMount() {
-
         this.setState({"algorithmId": this.props.match.params.id});
         this.getDataSamples(this.props.match.params.id);
     }
