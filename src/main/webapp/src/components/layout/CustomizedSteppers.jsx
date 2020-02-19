@@ -204,7 +204,7 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
             return (
                 <Fragment>
                     <Container>
-                        <Grid container spacing={8}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Grid container justify="center" spacing={6}>
                                     <Grid xs={12} md={12} lg={5} xl={5}>{second}</Grid>

@@ -29,7 +29,9 @@ export class TSP extends Component {
             saveMessage: null,
             value: null,
             path: null,
-            componentName: null
+            componentName: null,
+            routes: [],
+            routeDistance: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
@@ -88,7 +90,8 @@ export class TSP extends Component {
         })
         .then((response) => {
             console.log(response);
-
+            this.setState({"routes": response.data.routes});
+            this.setState({"routeDistance": response.data.totalDistance});
         },
         (error) => {
             console.log("error");
@@ -108,7 +111,7 @@ export class TSP extends Component {
                                 steps={["Upload Document", "Show Result"]}
                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                 third={<SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities}/>}
-                                second={<RouteGraph/>}
+                                second={<RouteGraph nodes={this.state.cities} routes={this.state.routes} distanceMatrix={this.state.distanceMatrix}/>}
                                 fifth={<InstructionsPanel/>}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}

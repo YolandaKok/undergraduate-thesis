@@ -23,6 +23,7 @@ import com.google.ortools.constraintsolver.main;
 import com.or.tools.model.DistanceMatrixModel;
 import com.or.tools.model.Row;
 import com.or.tools.requests.DistanceRequest;
+import com.or.tools.response.RoutesResponse;
 import com.or.tools.util.IOUtils;
 
 @RestController
@@ -136,7 +137,7 @@ public class TSPEndpoint {
 		for (int i = 0; i < rows.size(); i++) {
 			ArrayList<Integer> row = new ArrayList<Integer>();
 			for (int j = 0; j < rows.get(i).getElements().size(); j++) {
-				row.add(rows.get(i).getElements().get(j).getDistance().getValue());
+				row.add(rows.get(i).getElements().get(j).getDistance().getValue() / 1000);
 				// distances[i][j] = (long) ((Integer
 				// .toUnsignedLong(rows.get(i).getElements().get(j).getDistance().getValue()) /
 				// 1000) * 1.609344);
@@ -159,7 +160,7 @@ public class TSPEndpoint {
 	}
 
 	@PostMapping("/result")
-	public void tspResult(@RequestBody DistanceRequest request) {
+	public RoutesResponse tspResult(@RequestBody DistanceRequest request) {
 		// Instantiate the data problem.
 
 		// Create Routing Index Manager
@@ -194,8 +195,10 @@ public class TSPEndpoint {
 		long routeDistance = 0;
 		String route = "";
 		long index = routing.start(0);
+		ArrayList<Integer> routes = new ArrayList<>();
 		while (!routing.isEnd(index)) {
 			route += manager.indexToNode(index) + " -> ";
+			routes.add(manager.indexToNode(index));
 			long previousIndex = index;
 			index = solution.value(routing.nextVar(index));
 			routeDistance += routing.getArcCostForVehicle(previousIndex, index, 0);
@@ -203,6 +206,12 @@ public class TSPEndpoint {
 		route += manager.indexToNode(routing.end(0));
 		System.out.println(route);
 		System.out.println("Route distance: " + routeDistance + "miles");
+		routes.forEach(r -> System.out.println("Route " + r));
+
+		RoutesResponse response = new RoutesResponse();
+		response.setRoutes(routes);
+		response.setTotalDistance(routeDistance);
+		return response;
 	}
 
 }
