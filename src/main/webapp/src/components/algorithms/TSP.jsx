@@ -37,24 +37,46 @@ export class TSP extends Component {
         this.getInitialData = this.getInitialData.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
         this.createData = this.createData.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-        document.body.style.background = "white";
-        console.log(SERVICE_URL);
-        console.log(this.props.match.params.id);
+    componentWillMount() {
         this.setState({"algorithmId": this.props.match.params.id});
+        this.getDataSamples(this.props.match.params.id);
     }
 
-    passedForDragAndDrop(formData) {
-        this.setState({"formData": formData});
-        this.getInitialData();
+    getDataSamples(id) {
+        axios.get(SERVICE_URL + '/samples/' + id , {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({"samples": response.data});
+        },
+        (error) => {
+
+        });
     }
 
     handleChange(event) {
         this.setState({"sampleId": event.target.value});
         console.log("Id: " + event.target.value);
+        console.log(this.state.samples.length);
+        for(let i = 0; i < this.state.samples.length; i++) {
+            if(this.state.samples[i].id == event.target.value) {
+                console.log(this.state.samples);
+                let finalData = JSON.parse(this.state.samples[i].dataResult);
+                console.log(finalData.cities);
+                this.setState({"cities": finalData.cities});
+                this.setState({"distanceMatrix": finalData.distanceMatrix});
+                this.setState({"data": finalData.data});
+            }
+        }
+    }
 
+    passedForDragAndDrop(formData) {
+        this.setState({"formData": formData});
+        this.getInitialData();
     }
 
     getInitialData() {

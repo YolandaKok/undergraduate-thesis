@@ -86,7 +86,6 @@ export class MultipleKnapsacks extends Component {
                 this.setState({"packedItems": items});
                 this.setState({"extraColumnValues": extra});
                 this.setResultExtraRows(finalData.result);
-
             }
         }
     }
