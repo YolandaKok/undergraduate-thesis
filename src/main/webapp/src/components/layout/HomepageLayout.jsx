@@ -8,6 +8,7 @@ import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 import RecentAlgorithms from "./RecentAlgorithms";
 import TSP from "../algorithms/TSP";
+import Card from "@material-ui/core/Card";
 
 export default class HomepageLayout extends Component {
     constructor(props) {
@@ -66,16 +67,16 @@ export default class HomepageLayout extends Component {
     render() {
         return (
             <Container fixed>
-                <Grid container spacing={3} className={styles.gridPadding}>
+                <Grid container spacing={3} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,Overview" title="Recent Experiments" />
                     </Grid>
-                    <Grid item xs={6} md={4} lg={3} xl={3}>
+                    <Grid item xs={12} md={6} lg={3} xl={3}>
                         <CustomCard title="New Experiment" content="Create a new experiment" href="/select/algorithm"/>
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
-                            <Grid item xs={6} md={4} lg={3} xl={3}>
+                            <Grid item xs={12} md={6} lg={3} xl={3}>
                                 <CustomCard id={item.id} title={item.algorithmName} content={item.description} href={'/show/result/' + item.algorithmName.replace(/\s/g, "").toLowerCase() + "/"  + item.id} date={item.modificationDate}/>
                             </Grid>
                         ))

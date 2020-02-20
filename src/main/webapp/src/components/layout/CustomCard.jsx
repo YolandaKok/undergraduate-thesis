@@ -1,79 +1,78 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { Route , withRouter} from 'react-router-dom';
-import Moment from "react-moment";
-import styles from '../../static/modal.module.css';
-import {red} from "@material-ui/core/colors";
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from "@material-ui/core/IconButton";
-import axios from "axios";
-import Pagination from "react-bootstrap/Pagination";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-const useStyles = makeStyles({
+const styles = theme => ({
     media: {
         height: 120,
     },
     menuButton: {
         color: "red",
+    },
+    cardStyle: {
+        backgroundColor: "#d1b78f"
+    },
+    cardAction: {
+        backgroundColor: "#9f8761",
+        color: "black"
+    },
+    styleButton: {
+        backgroundColor: "#d1b78f",
+        color: 'black'
     }
-});
+})
 
-const style = {
-    pointerEvents: 'none',
-};
+export class CustomCard extends Component {
+    constructor(props) {
+        super(props);
 
-const style1 = {
-    pointerEvents: 'pointer',
-};
+    }
 
-export function CustomCard(props) {
-    /* Get props for custom cards */
-    let title = props.title;
-    let content = props.content;
-    let href = props.href;
-    let date = props.date;
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.card}>
-            <CardActionArea onClick={(event) => {props.history.push(href);}}>
-                {/*<CardMedia className={classes.media}*/}
-                {/*                           title={title}*/}
-                {/*                           src="c">*/}
-                {/*</CardMedia>*/}
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {props.title}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {props.content}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                    Read More
-                </Button>
-                <Button size="small" color="primary">
-                    {date}
-                </Button>
-                {props.removeIcon ? <IconButton onClick={() => props.deleteFunction(props.id, props.functionToCall, props.passThis)} className={classes.menuButton} aria-label="delete">
-                    <DeleteIcon />
-                </IconButton> : ''}
-            </CardActions>
-        </Card>
-    );
+    render() {
+        /* Get props for custom cards */
+        let title = this.props.title;
+        let content = this.props.content;
+        let href = this.props.href;
+        let date = this.props.date;
+        const {classes} = this.props;
+        return (
+            <Card className={classes.cardStyle}>
+                <CardActionArea className={classes.cardAction} onClick={(event) => {this.props.history.push(href);}}>
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {this.props.title}
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                            {this.props.content}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions className={classes.styleButton}>
+                    <Button size="small" color="black">
+                        Read More
+                    </Button>
+                    <Button size="small" color="black">
+                        {date}
+                    </Button>
+                    {this.props.removeIcon ? <IconButton onClick={() => this.props.deleteFunction(this.props.id, this.props.functionToCall, this.props.passThis)} className={classes.menuButton} aria-label="delete">
+                        <DeleteIcon />
+                    </IconButton> : ''}
+                </CardActions>
+            </Card>
+        );
+    }
 }
 
 CustomCard.defaultProps = {
     date: ''
 }
 
-export default withRouter(CustomCard);
+export default withRouter((withStyles(styles)(CustomCard)))

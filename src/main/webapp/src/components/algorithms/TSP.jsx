@@ -15,7 +15,6 @@ import {withRouter} from "react-router-dom";
 const axios = require('axios');
 
 export class TSP extends Component {
-
     constructor(props) {
         super(props);
         this.state = {

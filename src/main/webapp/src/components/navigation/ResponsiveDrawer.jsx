@@ -4,14 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +17,6 @@ import {AccountCircle, Archive, ExpandLess, ExpandMore, LocalLibrary, StarBorder
 import Collapse from "@material-ui/core/Collapse";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import Badge from "@material-ui/core/Badge";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import styles from '../../static/modal.module.css';
 import { withRouter } from 'react-router-dom';
@@ -30,7 +26,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from "@material-ui/core/Avatar";
 import HomeIcon from '@material-ui/icons/Home';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import ArchiveIcon from '@material-ui/icons/Archive';
 
 const drawerWidth = 240;
 
@@ -98,14 +93,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ResponsiveDrawer(props) {
-    const { container } = props;
     const { history } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [openLibrary, setLibraryOpen] = React.useState(false);
-    const [loggedIn] = React.useState(true);
 
     // menu
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -321,14 +313,6 @@ function ResponsiveDrawer(props) {
                         </IconButton>
                     </div>
                 </Toolbar>
-                {/*<Toolbar>*/}
-                {/*    <Typography variant="h6" noWrap>*/}
-                {/*        <a className={styles.logoStyle} href={'/'}>Visualize Zone</a>*/}
-                {/*    </Typography>*/}
-                {/*    <div className={classes.grow} />*/}
-                {/*    <div className={classes.sectionDesktop}>*/}
-                {/*    </div>*/}
-                {/*</Toolbar>*/}
             </AppBar>
             {renderMenu}
             {renderMobileMenu}

@@ -152,7 +152,7 @@ export default class SelectAlgorithm extends Component {
     render() {
         return(
             <Container fixed>
-                <Grid container spacing={2} className={styles.gridPadding}>
+                <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,Select Algorithm" title="Choose Algorithm" />
                     </Grid>
@@ -163,7 +163,7 @@ export default class SelectAlgorithm extends Component {
                     </Grid>
                     {
                         this.state.results.map((result, index) => (
-                            <Grid item xs={6} md={4} lg={4} xl={4} key={index}>
+                            <Grid item xs={12} md={4} lg={4} xl={4} key={index}>
                                 <CustomCard title={result.name} content={result.description} href={"/algorithms/" + result.name.replace(/\s/g, "").toLowerCase() + "/" + result.id}/>
                             </Grid>
                         ))

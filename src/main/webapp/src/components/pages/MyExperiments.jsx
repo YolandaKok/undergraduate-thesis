@@ -111,7 +111,7 @@ export class MyExperiments extends Component {
     render() {
         return(
             <Container fixed>
-                <Grid container spacing={2} className={styles.gridPadding}>
+                <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
                         <CustomBreadCrumb name="Home,My Experiments" title="Saved Experiments" />
                         {this.state.deleteAlert ? <Alert variant={'success'}>
@@ -124,7 +124,7 @@ export class MyExperiments extends Component {
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
-                            <Grid item xs={6} md={4} lg={3} xl={3}>
+                            <Grid item xs={12} md={4} lg={3} xl={3}>
                                 <CustomCard deleteFunction={this.deleteItem} functionToCall={this.loadExperiments} passThis={this} id={item.id} title={item.algorithmName} content={item.description} href={"/show/result/" + item.algorithmName.replace(/\s/g, "").toLowerCase() + "/" + item.id} date={item.modificationDate} removeIcon={true}/>
                             </Grid>
                         ))

@@ -14,17 +14,13 @@ import MyExperiments from "./components/pages/MyExperiments";
 import ShowResult from "./components/layout/ShowResult";
 import ShowResultMultiple from "./components/layout/ShowResultMultiple";
 import ShowResultRouting from "./components/layout/ShowResultRouting";
+import ManageProfile from "./components/pages/ManageProfile";
 
-let routerProps;
 const routing = (
     <BrowserRouter>
         <div>
             <Route exact path="/signin" component={SignIn}/>
             <Route exact path="/signup" component={SignUp}/>
-            <Route exact path="/app/tsp" component={TSP}/>
-            <Route exact path="/app/homepage" component={() => ["null", '', undefined, null].every((text) => {
-                return localStorage.getItem('authorization') !== text;
-            })? <Homepage><HomepageLayout/></Homepage> : <IndexPage/>} />
             <Route exact path="/" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><HomepageLayout/></Homepage> : <IndexPage/>}/>
@@ -47,6 +43,10 @@ const routing = (
             <Route exact path="/myexperiments" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><MyExperiments/></Homepage> : <IndexPage/>}></Route>
+
+            <Route exact path="/profile" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><ManageProfile/></Homepage> : <IndexPage/>}/>
 
             <Route exact path="/show/result/knapsack/:id" component={() => ["null", '', undefined, null].every((text) => {
             return localStorage.getItem('authorization') !== text;

@@ -51,6 +51,12 @@ class ShowResultRouting extends Component {
                 initial.push(obj);
             }
             this.setState({"initialData": initial});
+            let results2 = [];
+            results2.push([''].concat(resultObj.cities));
+            resultObj.distanceMatrix.forEach((item, index) => {
+                results2.push([resultObj.cities[index]].concat(item));
+            })
+                this.setState({"results": results2});
         },
         (error) => {
             console.log("error");
