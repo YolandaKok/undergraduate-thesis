@@ -41,9 +41,12 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
     },
+    indicator: {
+        backgroundColor: "#fff",
+    },
 }));
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -51,16 +54,20 @@ export default function SimpleTabs() {
         setValue(newValue);
     };
 
+    let firstTab = props.first;
+    let secondTab = props.second;
+
     return (
         <div className={classes.root}>
-            <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="General" {...a11yProps(0)} />
+            <AppBar style={{backgroundColor: "#6f5a36"}} position="static">
+                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" indicatorColor="primary"
+                      classes={{ indicator: classes.indicator }}>
+                    <Tab className={{tabStyle: classes.tabStyle}} label="General" {...a11yProps(0)} />
                     <Tab label="Security Settings" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                Item One
+                {firstTab}
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Item Two

@@ -7,8 +7,6 @@ import CustomCard from "./CustomCard";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 import RecentAlgorithms from "./RecentAlgorithms";
-import TSP from "../algorithms/TSP";
-import Card from "@material-ui/core/Card";
 
 export default class HomepageLayout extends Component {
     constructor(props) {

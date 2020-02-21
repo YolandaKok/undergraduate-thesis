@@ -47,3 +47,8 @@ body {
 .textSuccess {
   color: green;
 }
+
+.page-item.active .page-link {
+  color: white !important;
+  background-color: #6f5a36 !important;
+}
