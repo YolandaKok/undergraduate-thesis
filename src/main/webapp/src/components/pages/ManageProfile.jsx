@@ -5,14 +5,12 @@ import Container from "@material-ui/core/Container";
 import CustomTab from "../layout/CustomTab";
 import CustomBreadCrumb from "../layout/CustomBreadCrumb";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import {grey} from "@material-ui/core/colors";
-import dog from '../layout/corgi-and-terrier-running.jpg'
 import GeneralForm from "../forms/GeneralForm";
 import Paper from "@material-ui/core/Paper";
+const axios = require('axios');
 
 const styles = theme => ({
     list: {
@@ -40,8 +38,30 @@ export class ManageProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            "firstname": '',
+            "lastname": '',
+            "role": '',
+            "summary": ''
         }
+    }
+
+    componentDidMount() {
+        this.getUserInfo();
+    }
+
+    getUserInfo() {
+        axios.get(SERVICE_URL + '/users/' + localStorage.getItem("username_info"), {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.setState({"firstname": response.data.firstname});
+            this.setState({"lastname": response.data.lastname});
+            this.setState({"role": response.data.profession});
+            this.setState({"summary": response.data.summary});
+        }, (error) => {
+            console.log(error);
+        });
     }
 
     render() {
@@ -52,6 +72,8 @@ export class ManageProfile extends Component {
                     <Grid container spacing={2} className={styles1.gridPadding}>
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,Manage Profile" title="Profile" />
+                            {/*<CustomizedAlert value={this.state.requestValue}*/}
+                            {/*                 message={this.state.message}></CustomizedAlert>*/}
                         </Grid>
                         <Grid item xs={2}>
                             <List className={classes.list}>
@@ -62,13 +84,13 @@ export class ManageProfile extends Component {
                                 {/*<Divider/>*/}
                                 <Typography className={classes.listItem}>
                                     <Typography variant="h6" style={{fontWeight: 530}}>General</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>Firstname: Yolanda</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>Lastname: Kokkinou</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>Firstname: {this.state.firstname}</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>Lastname: {this.state.lastname}</Typography>
                                 </Typography>
                                 <Divider/>
                                 <Typography className={classes.listItem}>
                                     <Typography variant="h6">Summary</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>Software Engineer - Specialized in Building web applications</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>{this.state.role} - {this.state.summary}</Typography>
                                 </Typography>
                                 <Divider/>
                             </List>

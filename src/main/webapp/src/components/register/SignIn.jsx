@@ -3,16 +3,7 @@ import NavBar from "../navigation/NavBar";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import {FormError} from "../errors/FormError";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
-import TSP from "../algorithms/TSP";
-import XYPlot from "react-vis/es/plot/xy-plot";
-import LineSeries from "react-vis/es/plot/series/line-series";
-import HorizontalGridLines from "react-vis/es/plot/horizontal-grid-lines";
-import VerticalGridLines from "react-vis/es/plot/vertical-grid-lines";
-import XAxis from "react-vis/es/plot/axis/x-axis";
-import YAxis from "react-vis/es/plot/axis/y-axis";
-import ChartLabel from "react-vis/es/plot/chart-label";
 const axios = require('axios');
 
 export class SignIn extends Component {

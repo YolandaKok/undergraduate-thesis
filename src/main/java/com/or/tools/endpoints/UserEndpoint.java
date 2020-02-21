@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,12 +50,22 @@ public class UserEndpoint {
 		return response;
 	}
 
+	@PutMapping("/{id}")
+	public void userUpdate(@PathVariable Long id, @RequestBody UserResponse request) {
+		service.updateUser(id, request.getFirstname(), request.getLastname(), request.getEmail(), request.getCompany(),
+				request.getProfession(), request.getSummary());
+	}
+
 	@GetMapping("/{username}")
 	public UserResponse findUserByUsername(@PathVariable String username) {
 		UserDTO userDTO = service.findUserByUsername(username);
 		UserResponse response = new UserResponse();
 		response.setFirstname(userDTO.getFirstname());
 		response.setLastname(userDTO.getLastname());
+		response.setEmail(userDTO.getEmail());
+		response.setCompany(userDTO.getCompany());
+		response.setProfession(userDTO.getProfession());
+		response.setSummary(userDTO.getSummary());
 		response.setId(userDTO.getId());
 		return response;
 	}

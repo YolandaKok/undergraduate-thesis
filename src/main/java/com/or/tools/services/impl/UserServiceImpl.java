@@ -40,4 +40,17 @@ public class UserServiceImpl implements UserService {
 		return dao.findByUsername(username);
 	}
 
+	@Override
+	public void updateUser(Long id, String firstname, String lastname, String email, String company, String role,
+			String summary) {
+		UserDTO userToUpdate = dao.getOne(id);
+		userToUpdate.setFirstname(firstname);
+		userToUpdate.setLastname(lastname);
+		userToUpdate.setEmail(email);
+		userToUpdate.setCompany(company);
+		userToUpdate.setProfession(role);
+		userToUpdate.setSummary(summary);
+		dao.save(userToUpdate);
+	}
+
 }

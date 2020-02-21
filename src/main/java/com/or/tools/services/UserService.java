@@ -9,4 +9,7 @@ public interface UserService {
 	boolean findUser(String username);
 
 	UserDTO findUserByUsername(String username);
+
+	void updateUser(Long id, String firstname, String lastname, String email, String company, String role,
+			String summary);
 }
