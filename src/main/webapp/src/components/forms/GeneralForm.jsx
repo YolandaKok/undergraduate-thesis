@@ -22,54 +22,6 @@ const styles = theme => ({
 export class GeneralForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            item: {
-                id: '',
-                firstname: '',
-                lastname: '',
-                email: '',
-                company: '',
-                profession: '',
-                summary: ''
-            }
-        }
-        this.handlePostChange = this.handlePostChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        axios.get(SERVICE_URL + '/users/' + localStorage.getItem("username_info"), {
-            headers: {"Authorization": localStorage.getItem('authorization')}
-        })
-        .then((response) => {
-            console.log(response.data);
-            this.setState({"item": response.data});
-        }, (error) => {
-            console.log(error);
-        });
-    }
-
-    handlePostChange(event) {
-        let nam = event.target.name;
-        let val = event.target.value;
-
-        let newState = Object.assign({}, this.state);
-        newState.item[nam] = val;
-        this.setState(newState);
-
-        console.log(this.state);
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        axios.put(SERVICE_URL + '/users/' + this.state.item.id, this.state.item, {
-            headers: {"Authorization": localStorage.getItem('authorization')}
-        })
-        .then((response) => {
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        });
     }
 
     render() {
@@ -81,12 +33,12 @@ export class GeneralForm extends Component {
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="firstname"
                                     id="outlined-full-width"
                                     label="Firstname"
                                     style={{ margin: 8 }}
-                                    value={this.state.item.firstname}
+                                    value={this.props.item.firstname}
                                     placeholder="Enter your firstname"
                                     helperText="Should not be empty"
                                     fullWidth
@@ -99,11 +51,11 @@ export class GeneralForm extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="lastname"
                                     id="outlined-full-width"
                                     label="Lastname"
-                                    value={this.state.item.lastname}
+                                    value={this.props.item.lastname}
                                     style={{ margin: 8 }}
                                     placeholder="Enter your lastname"
                                     helperText="Should not be empty"
@@ -117,11 +69,11 @@ export class GeneralForm extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="company"
                                     id="outlined-full-width"
                                     label="Company"
-                                    value={this.state.item.company}
+                                    value={this.props.item.company}
                                     style={{ margin: 8 }}
                                     placeholder="Enter your company name"
                                     helperText="Should not be empty"
@@ -135,11 +87,11 @@ export class GeneralForm extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="profession"
                                     id="outlined-full-width"
                                     label="Role"
-                                    value={this.state.item.profession}
+                                    value={this.props.item.profession}
                                     style={{ margin: 8 }}
                                     placeholder="Enter your professional role"
                                     helperText="Should not be empty"
@@ -153,11 +105,11 @@ export class GeneralForm extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="email"
                                     id="outlined-full-width"
                                     label="email"
-                                    value={this.state.item.email}
+                                    value={this.props.item.email}
                                     style={{ margin: 8 }}
                                     placeholder="Enter your email"
                                     helperText="Should not be empty"
@@ -171,11 +123,11 @@ export class GeneralForm extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    onChange={this.handlePostChange}
+                                    onChange={this.props.handlePostChange}
                                     name="summary"
                                     id="outlined-full-width"
                                     label="Summary"
-                                    value={this.state.item.summary}
+                                    value={this.props.item.summary}
                                     style={{ margin: 8 }}
                                     placeholder="Write a summary about yourself"
                                     helperText="Max characters: 500"
@@ -190,7 +142,7 @@ export class GeneralForm extends Component {
                                 />
                             </Grid>
                             <Grid item xs={12} alignItems={'flex-end'}>
-                                <Button onClick={this.handleSubmit} className={classes.buttonStyle}>Save Changes</Button>
+                                <Button onClick={this.props.handleSubmit} className={classes.buttonStyle}>Save Changes</Button>
                             </Grid>
                         </Grid>
                     </Container>

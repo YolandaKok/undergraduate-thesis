@@ -30,51 +30,29 @@ export class SignUp extends Component {
     }
 
     checkNullOrUndefined(event) {
-        console.log("hello");
         event.preventDefault();
         if(this.state.username === '' || this.state.password === '' || this.state.email === '' || this.state.firstname === '' || this.state.lastname === '')
             this.setState({"validated": true});
         else
             this.setState({"validated": false});
 
-        if(this.state.password === this.state.repeatPassword) {
-            this.setState({"passwordMatches": false});
-        } else {
-            this.setState({"passwordMatches": true});
+        if(this.state.password !== '') {
+            if(this.state.repeatPassword !== '') {
+                if(this.state.password === this.state.repeatPassword) {
+                    this.setState({"passwordMatches": false});
+                } else {
+                    this.setState({"passwordMatches": true});
+                }
+                // Password test regular expression.
+            }
+            this.setState({"checkRegular": this.state.passwordRegularExpression.test(this.state.password)});
         }
-
-        // Password test regular expression.
-        this.setState({"checkRegular": this.state.passwordRegularExpression.test(this.state.password)});
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        axios.post(
-            SERVICE_URL + '/users/signup', {
-            username: this.state.username,
-            password: this.state.password,
-            email: this.state.email, firstname: this.state.firstname, lastname: this.state.lastname
-        })
-        .then((response) => {
-            console.log(response);
-            console.log(response.config.data);
-            axios.post(SERVICE_URL + '/login', response.config.data).then((response) => {
-                console.log("loggedIn");
-                console.log(response);
-                localStorage.setItem('authorization', response.headers.authorization);
-                localStorage.setItem('username_info', this.state.username);
-                this.setState({"redirect": true});
-            }, (error) => {
-               console.log(error);
-            });
-        }, (error) => {
-            console.log(error);
-        });
     }
 
     handlePostChange(event) {
         let nam = event.target.name;
         let val = event.target.value;
+        this.setState({[nam]: val});
         if(nam === 'username') {
             axios.get(SERVICE_URL + '/users/exists/' + val).then((response) => {
                 this.setState({"usernameFound": response.data.result});
@@ -82,8 +60,34 @@ export class SignUp extends Component {
 
             });
         }
-        this.setState({[nam]: val});
-        console.log(this.state);
+        if(nam === 'password' || nam === 'repeatPassword') {
+            this.checkNullOrUndefined(event);
+        }
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        axios.post(
+            SERVICE_URL + '/users/signup', {
+                username: this.state.username,
+                password: this.state.password,
+                email: this.state.email, firstname: this.state.firstname, lastname: this.state.lastname
+            })
+            .then((response) => {
+                console.log(response);
+                console.log(response.config.data);
+                axios.post(SERVICE_URL + '/login', response.config.data).then((response) => {
+                    console.log("loggedIn");
+                    console.log(response);
+                    localStorage.setItem('authorization', response.headers.authorization);
+                    localStorage.setItem('username_info', this.state.username);
+                    this.setState({"redirect": true});
+                }, (error) => {
+                    console.log(error);
+                });
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     render() {
@@ -100,7 +104,7 @@ export class SignUp extends Component {
                         <Col xs={0} sm={0} md={2} lg={3}></Col>
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
-                                <Form onChange={this.checkNullOrUndefined}>
+                                <Form onChange={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined}>
                                     <h1 className="text-center">Sign Up</h1>
                                     <h6 className="text-center">Sign up to visualize and experiment with
                                         various <br></br> algorithms.</h6>
@@ -133,10 +137,10 @@ export class SignUp extends Component {
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Repeat Password</Form.Label>
-                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onChange={this.handlePostChange} name="repeatPassword" type="password" onMouseOut={this.checkNullOrUndefined}></Form.Control>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onChange={this.handlePostChange} name="repeatPassword" type="password"></Form.Control>
                                         <FormError formError={this.state.passwordMatches == true ? "Password does not match." : ""}/>
                                     </Form.Group>
-                                    <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} onMouseEnter={this.checkNullOrUndefined} variant="secondary" type="submit" block>
+                                    <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} variant="secondary" type="submit" block>
                                         Sign Up
                                     </Button>
                                 </Form>

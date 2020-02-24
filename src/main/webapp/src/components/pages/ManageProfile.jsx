@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import GeneralForm from "../forms/GeneralForm";
 import Paper from "@material-ui/core/Paper";
+import {CustomizedAlert} from "../errors/CustomizedAlert";
 const axios = require('axios');
 
 const styles = theme => ({
@@ -41,12 +42,55 @@ export class ManageProfile extends Component {
             "firstname": '',
             "lastname": '',
             "role": '',
-            "summary": ''
+            "summary": '',
+            item: {
+                id: '',
+                firstname: '',
+                lastname: '',
+                email: '',
+                company: '',
+                profession: '',
+                summary: ''
+            },
+            requestValue: null,
+            message: null
         }
+        this.handlePostChange = this.handlePostChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
         this.getUserInfo();
+        this.getProfileInfo();
+    }
+
+    handlePostChange(event) {
+        let nam = event.target.name;
+        let val = event.target.value;
+
+        let newState = Object.assign({}, this.state);
+        newState.item[nam] = val;
+        this.setState(newState);
+
+        console.log(this.state);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        axios.put(SERVICE_URL + '/users/' + this.state.item.id, this.state.item, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({"requestValue": "success"});
+            this.setState({"message": "You have successfully updated your profile information."});
+            this.getUserInfo();
+            this.getProfileInfo();
+        }, (error) => {
+            this.setState({"requestValue": "danger"});
+            this.setState({"message": "Oops, something went wrong."});
+            console.log(error);
+        });
     }
 
     getUserInfo() {
@@ -64,6 +108,18 @@ export class ManageProfile extends Component {
         });
     }
 
+    getProfileInfo() {
+        axios.get(SERVICE_URL + '/users/' + localStorage.getItem("username_info"), {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.setState({"item": response.data});
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
     render() {
         const {classes} = this.props;
         return(
@@ -72,8 +128,10 @@ export class ManageProfile extends Component {
                     <Grid container spacing={2} className={styles1.gridPadding}>
                         <Grid item xs={12}>
                             <CustomBreadCrumb name="Home,Manage Profile" title="Profile" />
-                            {/*<CustomizedAlert value={this.state.requestValue}*/}
-                            {/*                 message={this.state.message}></CustomizedAlert>*/}
+                            {
+                                this.state.requestValue != null ? <CustomizedAlert value={this.state.requestValue}
+                                                                                   message={this.state.message}/> : ''
+                            }
                         </Grid>
                         <Grid item xs={2}>
                             <List className={classes.list}>
@@ -99,7 +157,7 @@ export class ManageProfile extends Component {
                             <Container>
                                 <Grid container justify={'center'}>
                                     <Grid item xs={12} component={Paper}>
-                                        <CustomTab first={<GeneralForm/>}/>
+                                        <CustomTab first={<GeneralForm item={this.state.item} handlePostChange={this.handlePostChange} handleSubmit={this.handleSubmit}/>}/>
                                     </Grid>
                                 </Grid>
                             </Container>
