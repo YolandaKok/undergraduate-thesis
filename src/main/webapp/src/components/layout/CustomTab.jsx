@@ -70,7 +70,7 @@ export default function SimpleTabs(props) {
                 {firstTab}
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                {secondTab}
             </TabPanel>
         </div>
     );

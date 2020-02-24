@@ -26,6 +26,7 @@ export class GeneralForm extends Component {
 
     render() {
         const {classes} = this.props;
+        console.log(this.props);
         return(
             <Fragment>
                 <FormControl>

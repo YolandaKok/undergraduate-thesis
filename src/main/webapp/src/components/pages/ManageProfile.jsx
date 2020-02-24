@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import GeneralForm from "../forms/GeneralForm";
 import Paper from "@material-ui/core/Paper";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
+import SecurityForm from "../forms/SecurityForm";
 const axios = require('axios');
 
 const styles = theme => ({
@@ -52,11 +53,27 @@ export class ManageProfile extends Component {
                 profession: '',
                 summary: ''
             },
+            security: {
+              password: '',
+              newPassword: '',
+              repeatNewPassword: ''
+            },
+            errors: {
+              password: '',
+              newPassword: '',
+              repeatNewPassword: ''
+            },
+            passwordRegularExpression: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
             requestValue: null,
-            message: null
+            message: null,
+            validate: true
         }
         this.handlePostChange = this.handlePostChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.handleSecurityChange = this.handleSecurityChange.bind(this);
+        this.handleSecuritySubmit = this.handleSecuritySubmit.bind(this);
+        this.validateData = this.validateData.bind(this);
     }
 
     componentDidMount() {
@@ -65,6 +82,7 @@ export class ManageProfile extends Component {
     }
 
     handlePostChange(event) {
+        event.preventDefault();
         let nam = event.target.name;
         let val = event.target.value;
 
@@ -73,6 +91,41 @@ export class ManageProfile extends Component {
         this.setState(newState);
 
         console.log(this.state);
+    }
+
+    handleSecurityChange(event) {
+        event.preventDefault();
+        let nam = event.target.name;
+        let val = event.target.value;
+
+        let newState = Object.assign({}, this.state);
+        newState.security[nam] = val;
+        this.setState(newState);
+        let errors = this.state.errors;
+        switch(nam) {
+            case 'password':
+                errors.password =
+                    !this.state.passwordRegularExpression.test(val)
+                        ? 'Password must contain at least one uppercase, one lowercase and one special character and be 8 characters long.'
+                        : '';
+                break;
+            case 'newPassword':
+                this.state.passwordRegularExpression.test(val);
+                errors.newPassword =
+                    !this.state.passwordRegularExpression.test(val)
+                        ? 'Password must contain at least one uppercase, one lowercase and one special character and be 8 characters long.'
+                        : '';
+                break;
+            case 'repeatNewPassword':
+                errors.repeatNewPassword =
+                    this.state.security.newPassword != this.state.security.repeatNewPassword
+                        ? 'Password does not match.'
+                        : '';
+                break;
+            default:
+                break;
+        }
+        this.setState({errors, [nam]: val});
     }
 
     handleSubmit(event) {
@@ -91,6 +144,28 @@ export class ManageProfile extends Component {
             this.setState({"message": "Oops, something went wrong."});
             console.log(error);
         });
+    }
+
+    handleSecuritySubmit(event) {
+        event.preventDefault();
+    }
+
+    validateData(event) {
+        event.preventDefault();
+        console.log(this.state);
+        if(this.state.errors.password != ''
+            || this.state.errors.newPassword != ''
+            || this.state.errors.repeatNewPassword != ''
+            || this.state.security.password == ''
+            || this.state.security.newPassword == ''
+            || this.state.security.repeatNewPassword == '') {
+            this.setState({"validate": true});
+            this.props.validate = true;
+            return true;
+        }
+        this.setState({"validate": false});
+        this.props.validate = false;
+        return false;
     }
 
     getUserInfo() {
@@ -157,7 +232,10 @@ export class ManageProfile extends Component {
                             <Container>
                                 <Grid container justify={'center'}>
                                     <Grid item xs={12} component={Paper}>
-                                        <CustomTab first={<GeneralForm item={this.state.item} handlePostChange={this.handlePostChange} handleSubmit={this.handleSubmit}/>}/>
+                                        <CustomTab first={<GeneralForm item={this.state.item} handlePostChange={this.handlePostChange} handleSubmit={this.handleSubmit} />}
+                                                   second={<SecurityForm validate={this.state.validate} validateData={this.validateData} security={this.state}
+                                                                         handleSecurityChange={this.handleSecurityChange}
+                                                                         handleSubmit={this.handleSecuritySubmit} />} />
                                     </Grid>
                                 </Grid>
                             </Container>

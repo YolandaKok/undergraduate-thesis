@@ -97,8 +97,6 @@ export class SignUp extends Component {
 
         return (
             <Fragment>
-                <div></div>
-                <NavBar/>
                 <Container>
                     <Row className={styles.formMargin}>
                         <Col xs={0} sm={0} md={2} lg={3}></Col>
