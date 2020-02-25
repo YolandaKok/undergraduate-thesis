@@ -4,6 +4,7 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
+import {withRouter} from "react-router-dom";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -82,4 +83,4 @@ export class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

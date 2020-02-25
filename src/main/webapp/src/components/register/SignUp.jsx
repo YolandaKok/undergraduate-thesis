@@ -4,6 +4,7 @@ import NavBar from "../navigation/NavBar";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
 import {FormError} from "../errors/FormError";
+import {withRouter} from "react-router-dom";
 const axios = require('axios');
 
 export class SignUp extends Component {
@@ -152,4 +153,4 @@ export class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

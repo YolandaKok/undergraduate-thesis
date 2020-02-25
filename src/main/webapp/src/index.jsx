@@ -19,8 +19,12 @@ import ManageProfile from "./components/pages/ManageProfile";
 const routing = (
     <BrowserRouter>
         <div>
-            <Route exact path="/signin" component={SignIn}/>
-            <Route exact path="/signup" component={SignUp}/>
+            <Route exact path="/signin" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><HomepageLayout/></Homepage> : <SignIn/>}/>
+            <Route exact path="/signup" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><HomepageLayout/></Homepage> : <SignUp/>}/>
             <Route exact path="/" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><HomepageLayout/></Homepage> : <IndexPage/>}/>
