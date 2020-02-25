@@ -136,7 +136,7 @@ export class SignUp extends Component {
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Repeat Password</Form.Label>
-                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onClick={this.checkNullOrUndefined} onKeyUp={this.handlePostChange} name="repeatPassword" type="password"></Form.Control>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onKeyUp={this.handlePostChange} onBlur={this.checkNullOrUndefined} name="repeatPassword" type="password"></Form.Control>
                                         <FormError formError={this.state.passwordMatches == true ? "Password does not match." : ""}/>
                                     </Form.Group>
                                     <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} variant="secondary" type="submit" block>
