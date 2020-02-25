@@ -12,4 +12,6 @@ public interface UserService {
 
 	void updateUser(Long id, String firstname, String lastname, String email, String company, String role,
 			String summary);
+
+	boolean updatePassword(Long id, String oldPassword, String newPassword);
 }

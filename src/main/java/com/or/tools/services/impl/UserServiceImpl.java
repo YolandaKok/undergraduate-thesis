@@ -13,10 +13,10 @@ import com.or.tools.services.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private UserDAO dao;
 
 	@Autowired
-	private UserDAO dao;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
@@ -53,4 +53,16 @@ public class UserServiceImpl implements UserService {
 		dao.save(userToUpdate);
 	}
 
+	@Override
+	public boolean updatePassword(Long id, String oldPassword, String newPassword) {
+		UserDTO userToUpdate = dao.findById(id).get();
+		if (userToUpdate == null)
+			return false;
+		if (passwordEncoder.matches(oldPassword, userToUpdate.getPassword())) {
+			userToUpdate.setPassword(passwordEncoder.encode(newPassword));
+			dao.save(userToUpdate);
+			return true;
+		}
+		return false;
+	}
 }

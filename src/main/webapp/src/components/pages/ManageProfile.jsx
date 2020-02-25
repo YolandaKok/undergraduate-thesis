@@ -148,6 +148,27 @@ export class ManageProfile extends Component {
 
     handleSecuritySubmit(event) {
         event.preventDefault();
+        let item = {
+            "oldPassword": this.state.security.password,
+            "newPassword": this.state.security.newPassword
+        };
+        axios.put(SERVICE_URL + '/users/change/password/' + this.state.item.id, item, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+            if(response.data.item == true) {
+                this.setState({"requestValue": "success"});
+                this.setState({"message": "You have successfully updated password."});
+            } else {
+                this.setState({"requestValue": "danger"});
+                this.setState({"message": "Oops, Wrong password."});
+            }
+        }, (error) => {
+            this.setState({"requestValue": "danger"});
+            this.setState({"message": "Oops, something went wrong."});
+            console.log(error);
+        });
     }
 
     validateData(event) {

@@ -8,4 +8,6 @@ import com.or.tools.entities.UserDTO;
 @Repository
 public interface UserDAO extends JpaRepository<UserDTO, Long> {
 	UserDTO findByUsername(String username);
+
+	UserDTO findByIdAndPassword(Long id, String password);
 }

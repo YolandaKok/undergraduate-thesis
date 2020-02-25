@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.or.tools.entities.UserDTO;
+import com.or.tools.requests.PasswordRequest;
 import com.or.tools.requests.SignUpRequest;
 import com.or.tools.requests.UserRequest;
 import com.or.tools.response.AcceptResponse;
+import com.or.tools.response.SingleItemResponse;
 import com.or.tools.response.UserResponse;
 import com.or.tools.services.UserService;
 
@@ -54,6 +56,13 @@ public class UserEndpoint {
 	public void userUpdate(@PathVariable Long id, @RequestBody UserResponse request) {
 		service.updateUser(id, request.getFirstname(), request.getLastname(), request.getEmail(), request.getCompany(),
 				request.getProfession(), request.getSummary());
+	}
+
+	@PutMapping("/change/password/{id}")
+	public SingleItemResponse<Boolean> updatePassword(@PathVariable Long id, @RequestBody PasswordRequest request) {
+		SingleItemResponse<Boolean> response = new SingleItemResponse<>();
+		response.setItem(service.updatePassword(id, request.getOldPassword(), request.getNewPassword()));
+		return response;
 	}
 
 	@GetMapping("/{username}")

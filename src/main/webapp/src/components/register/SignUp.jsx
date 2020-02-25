@@ -102,40 +102,40 @@ export class SignUp extends Component {
                         <Col xs={0} sm={0} md={2} lg={3}></Col>
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
-                                <Form onChange={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined}>
+                                <Form onKeyUp={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined}>
                                     <h1 className="text-center">Sign Up</h1>
                                     <h6 className="text-center">Sign up to visualize and experiment with
                                         various <br></br> algorithms.</h6>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
-                                        <Form.Control className={this.state.usernameFound != null ? (this.state.usernameFound == true ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter username" onChange={this.handlePostChange} name="username" required></Form.Control>
+                                        <Form.Control className={this.state.usernameFound != null ? (this.state.usernameFound == true ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter username" onKeyUp={this.handlePostChange} name="username" required></Form.Control>
                                         <FormError formError={this.state.usernameFound == true ? "Username already used" : ""}/>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Row>
                                             <Col>
                                                 <Form.Label className={styles.formFont}>Firstname</Form.Label>
-                                                <Form.Control placeholder="First name" onChange={this.handlePostChange} name="firstname" />
+                                                <Form.Control placeholder="First name" onKeyUp={this.handlePostChange} name="firstname" />
                                             </Col>
                                             <Col>
                                                 <Form.Label className={styles.formFont}>Lastname</Form.Label>
-                                                <Form.Control placeholder="Last name" onChange={this.handlePostChange} name="lastname" />
+                                                <Form.Control placeholder="Last name" onKeyUp={this.handlePostChange} name="lastname" />
                                             </Col>
                                         </Form.Row>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Email</Form.Label>
-                                        <Form.Control placeholder="Enter email" onChange={this.handlePostChange} name="email" required></Form.Control>
+                                        <Form.Control placeholder="Enter email" onKeyUp={this.handlePostChange} name="email" required></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Password</Form.Label>
                                         <Form.Text>Password must contain at least one uppercase, one lowercase and one special character. At least 8 characters long.</Form.Text>
-                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter password" onChange={this.handlePostChange} name="password" type="password" required></Form.Control>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} placeholder="Enter password" onKeyUp={this.handlePostChange} name="password" type="password" required></Form.Control>
                                         <FormError formError={this.state.checkRegular != null ? (!this.state.checkRegular ? "Check password validity." : "") : ""}/>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Repeat Password</Form.Label>
-                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onChange={this.handlePostChange} name="repeatPassword" type="password"></Form.Control>
+                                        <Form.Control className={this.state.passwordMatches != null ? (this.state.passwordMatches || !this.state.checkRegular ? styles.styleInputError : styles.styleInputSuccess) : ''} required placeholder="Repeat Password" onKeyUp={this.handlePostChange} name="repeatPassword" type="password"></Form.Control>
                                         <FormError formError={this.state.passwordMatches == true ? "Password does not match." : ""}/>
                                     </Form.Group>
                                     <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} variant="secondary" type="submit" block>
