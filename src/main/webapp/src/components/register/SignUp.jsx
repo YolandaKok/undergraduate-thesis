@@ -103,7 +103,7 @@ export class SignUp extends Component {
                         <Col xs={0} sm={0} md={2} lg={3}></Col>
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
-                                <Form onKeyUp={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined}>
+                                <Form onKeyUp={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined} onTouchEnd={this.checkNullOrUndefined}>
                                     <h1 className="text-center">Sign Up</h1>
                                     <h6 className="text-center">Sign up to visualize and experiment with
                                         various <br></br> algorithms.</h6>

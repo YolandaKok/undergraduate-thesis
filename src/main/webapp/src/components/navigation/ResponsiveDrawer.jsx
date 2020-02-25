@@ -207,12 +207,12 @@ function ResponsiveDrawer(props) {
                         </ListItem>
                         <Collapse in={openLibrary} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                {['Linear Optimization', 'Knapsack', 'Multiple Knapsacks', 'Travelling Salesman'].map((text) => (
-                                    <ListItem button className={classes.nested} key={text}>
+                                {props.algorithmLinks.map((text) => (
+                                    <ListItem button className={classes.nested} key={text.title} href={text.url} component="a">
                                         <ListItemIcon>
                                             <ChevronRightIcon/>
                                         </ListItemIcon>
-                                        <ListItemText primary={text} />
+                                        <ListItemText primary={text.title} />
                                     </ListItem>
                                 ))}
                             </List>
