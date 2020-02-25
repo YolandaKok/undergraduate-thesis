@@ -53,6 +53,11 @@ export class ManageProfile extends Component {
                 profession: '',
                 summary: ''
             },
+            userInfoErrors: {
+                firstname: '',
+                lastname: '',
+                email: ''
+            },
             security: {
               password: '',
               newPassword: '',
@@ -64,12 +69,15 @@ export class ManageProfile extends Component {
               repeatNewPassword: ''
             },
             passwordRegularExpression: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            emailRegularExpression: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
             requestValue: null,
             message: null,
-            validate: true
+            validate: true,
+            validateGeneral: true
         }
         this.handlePostChange = this.handlePostChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateDataGeneral = this.validateDataGeneral.bind(this);
 
         this.handleSecurityChange = this.handleSecurityChange.bind(this);
         this.handleSecuritySubmit = this.handleSecuritySubmit.bind(this);
@@ -90,7 +98,30 @@ export class ManageProfile extends Component {
         newState.item[nam] = val;
         this.setState(newState);
 
-        console.log(this.state);
+        let errors = this.state.userInfoErrors;
+        switch(nam) {
+            case 'firstname':
+                errors.firstname =
+                    this.state.item.firstname.length < 3
+                        ? 'Firstname should be at least 2 characters long.'
+                        : '';
+                break;
+            case 'lastname':
+                errors.lastname =
+                    this.state.item.lastname.length < 3
+                        ? 'Lastname should be at least 2 characters long.'
+                        : '';
+                break;
+            case 'email':
+                errors.email =
+                    !this.state.emailRegularExpression.test(val)
+                        ? 'Please enter a valid email address.'
+                        : '';
+                break;
+            default:
+                break;
+        }
+        this.setState({errors, [nam]: val});
     }
 
     handleSecurityChange(event) {
@@ -189,6 +220,20 @@ export class ManageProfile extends Component {
         return false;
     }
 
+    validateDataGeneral(event) {
+        event.preventDefault();
+        if(this.state.userInfoErrors.firstname != ''
+            || this.state.userInfoErrors.lastname != ''
+            || this.state.userInfoErrors.email != '') {
+            this.setState({"validateGeneral": true});
+            this.props.validateGeneral = true;
+            return true;
+        }
+        this.setState({"validateGeneral": false});
+        this.props.validateGeneral = false;
+        return false;
+    }
+
     getUserInfo() {
         axios.get(SERVICE_URL + '/users/' + localStorage.getItem("username_info"), {
             headers: {"Authorization": localStorage.getItem('authorization')}
@@ -229,32 +274,32 @@ export class ManageProfile extends Component {
                                                                                    message={this.state.message}/> : ''
                             }
                         </Grid>
-                        <Grid item xs={2}>
-                            <List className={classes.list}>
-                                {/*style ={ { backgroundImage: "url('https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300')" } }*/}
-                                <div>
+                        {/*<Grid item xs={0} md={0} lg={2} xl={2} display={{ xs: "none", md: "none", lg: "none", xl: "block" }}>*/}
+                        {/*    <List className={classes.list}>*/}
+                        {/*        /!*style ={ { backgroundImage: "url('https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300')" } }*!/*/}
+                        {/*        <div>*/}
 
-                                </div>
-                                {/*<Divider/>*/}
-                                <Typography className={classes.listItem}>
-                                    <Typography variant="h6" style={{fontWeight: 530}}>General</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>Firstname: {this.state.firstname}</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>Lastname: {this.state.lastname}</Typography>
-                                </Typography>
-                                <Divider/>
-                                <Typography className={classes.listItem}>
-                                    <Typography variant="h6">Summary</Typography>
-                                    <Typography variant="body1" className={classes.textItem}>{this.state.role} - {this.state.summary}</Typography>
-                                </Typography>
-                                <Divider/>
-                            </List>
-                        </Grid>
-                        <Grid item xs={8}>
+                        {/*        </div>*/}
+                        {/*        /!*<Divider/>*!/*/}
+                        {/*        <Typography className={classes.listItem}>*/}
+                        {/*            <Typography variant="h6" style={{fontWeight: 530}}>General</Typography>*/}
+                        {/*            <Typography variant="body1" className={classes.textItem}>Firstname: {this.state.firstname}</Typography>*/}
+                        {/*            <Typography variant="body1" className={classes.textItem}>Lastname: {this.state.lastname}</Typography>*/}
+                        {/*        </Typography>*/}
+                        {/*        <Divider/>*/}
+                        {/*        <Typography className={classes.listItem}>*/}
+                        {/*            <Typography variant="h6">Summary</Typography>*/}
+                        {/*            <Typography variant="body1" className={classes.textItem}>{this.state.role} - {this.state.summary}</Typography>*/}
+                        {/*        </Typography>*/}
+                        {/*        <Divider/>*/}
+                        {/*    </List>*/}
+                        {/*</Grid>*/}
+                        <Grid item xs={12} md={12} lg={12} xl={12}>
                             <Container>
                                 <Grid container justify={'center'}>
                                     <Grid item xs={12} component={Paper}>
-                                        <CustomTab first={<GeneralForm item={this.state.item} handlePostChange={this.handlePostChange} handleSubmit={this.handleSubmit} />}
-                                                   second={<SecurityForm validate={this.state.validate} validateData={this.validateData} security={this.state}
+                                        <CustomTab first={<GeneralForm data={this.state} validateGeneral={this.state.validateGeneral} handlePostChange={this.handlePostChange} handleSubmit={this.handleSubmit} validateData={this.validateDataGeneral} />}
+                                                   second={<SecurityForm security={this.state} validate={this.state.validate} validateData={this.validateData}
                                                                          handleSecurityChange={this.handleSecurityChange}
                                                                          handleSubmit={this.handleSecuritySubmit} />} />
                                     </Grid>

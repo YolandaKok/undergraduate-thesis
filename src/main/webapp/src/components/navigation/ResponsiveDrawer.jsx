@@ -156,6 +156,10 @@ function ResponsiveDrawer(props) {
         history.push('/myexperiments');
     }
 
+    const goToProfile = () => {
+        history.push('/profile');
+    }
+
     const drawer = (
         <div>
             <div className={classes.drawerHeader}>
@@ -236,7 +240,7 @@ function ResponsiveDrawer(props) {
                 <p className={styles.modalItem}>{props.firstname + " " + props.lastname}</p>
             </div>
             <hr></hr>
-            <MenuItem className={styles.buttonStyle} onClick={handleMenuClose}>Manage your Profile</MenuItem>
+            <MenuItem className={styles.buttonStyle} onClick={goToProfile}>Manage your Profile</MenuItem>
             <hr></hr>
             <MenuItem onClick={goToExperiments}>Saved Experiments</MenuItem>
             <hr></hr>
@@ -255,17 +259,7 @@ function ResponsiveDrawer(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
+
         </Menu>
     );
 
@@ -306,7 +300,7 @@ function ResponsiveDrawer(props) {
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
+                            onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
                             <MoreIcon />
