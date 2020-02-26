@@ -1,13 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ResponsiveDrawer from "../navigation/ResponsiveDrawer";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../../static/signup.module.css";
-import CustomBreadCrumb from "../layout/CustomBreadCrumb";
-import CustomCard from "../layout/CustomCard";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import Pagination from "react-bootstrap/Pagination";
 const axios = require('axios');
 
 

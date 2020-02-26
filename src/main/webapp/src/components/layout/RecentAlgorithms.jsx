@@ -34,9 +34,9 @@ export class RecentAlgorithms extends Component {
             let items = []
             for (let i = 0; i < this.state.totalPages; i++) {
                 if(response.data.numOfPage == i) {
-                    items.push(<Pagination.Item onClick={() => this.handlePageClick(i)} key={i} active>{i+1}</Pagination.Item>);
+                    items.push(<li className={styles.styleLinkActive} onClick={() => this.handlePageClick(i)} key={i} active>{i+1}</li>);
                 } else {
-                    items.push(<Pagination.Item onClick={() => this.handlePageClick(i)} key={i}>{i+1}</Pagination.Item>);
+                    items.push(<li className={styles.styleLink} onClick={() => this.handlePageClick(i)} key={i}>{i+1}</li>);
                 }
             }
             this.setState({"items": items});
