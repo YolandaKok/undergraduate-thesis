@@ -5,6 +5,8 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import styles from '../../static/signup.module.css';
 import {FormError} from "../errors/FormError";
 import {withRouter} from "react-router-dom";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
 const axios = require('axios');
 
 export class SignUp extends Component {
@@ -142,6 +144,10 @@ export class SignUp extends Component {
                                     <Button disabled={this.state.usernameFound || this.state.validated || this.state.passwordMatches || !this.state.checkRegular} onClick={this.handleSubmit} variant="secondary" type="submit" block>
                                         Sign Up
                                     </Button>
+                                    <Typography className="text-center" style={{marginTop: 8}}>
+                                        Do you have an account ?
+                                        <Link href='/signin'> Sign In</Link>
+                                    </Typography>
                                 </Form>
                             </Jumbotron>
                         </Col>

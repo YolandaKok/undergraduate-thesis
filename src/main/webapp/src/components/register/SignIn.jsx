@@ -5,6 +5,8 @@ import styles from "../../static/signup.module.css";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import {CustomizedAlert} from "../errors/CustomizedAlert";
 import {withRouter} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 const axios = require('axios');
 
 export class SignIn extends Component {
@@ -54,8 +56,8 @@ export class SignIn extends Component {
             <Fragment>
                 <Container>
                     <Row className={styles.formMargin}>
-                        <Col xs={0} sm={0} md={2} lg={3}></Col>
-                        <Col xs={12} sm={12} md={8} lg={6}>
+                        <Col xs={0} sm={0} md={2} lg={4}></Col>
+                        <Col xs={12} sm={12} md={8} lg={4}>
                             <Jumbotron className={styles.jumbotronStyle}>
                                 <Form>
                                     {this.state.formError ? <CustomizedAlert value={'danger'} message={'Wrong username or password.'}/> : ''}
@@ -73,9 +75,13 @@ export class SignIn extends Component {
                                         Sign In
                                     </Button>
                                 </Form>
+                                <Typography className="text-center" style={{marginTop: 8}}>
+                                    New to Visualize zone ?
+                                    <Link href='/signup'> Sign Up</Link>
+                                </Typography>
                             </Jumbotron>
                         </Col>
-                        <Col xs={0} sm={0} md={2} lg={3}></Col>
+                        <Col xs={0} sm={0} md={2} lg={4}></Col>
                     </Row>
                 </Container>
             </Fragment>
