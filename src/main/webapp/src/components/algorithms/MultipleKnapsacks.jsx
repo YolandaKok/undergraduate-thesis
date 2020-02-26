@@ -210,7 +210,7 @@ export class MultipleKnapsacks extends Component {
                 <Container fixed>
                     <Grid container spacing={2} className={styles.gridPadding}>
                         <Grid item xs={12}>
-                            <CustomBreadCrumb name="Home,OR Tools,Multiple Knapsacks" title="Multiple Knapsacks" />
+                            <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "OR Tools", "url": "/select/algorithm"}, {"title": "Multiple Knapsacks", "url": ""}]} title="Multiple Knapsacks" />
                             <CustomizedAlert value={this.state.uploadError}
                                              message={this.state.message}></CustomizedAlert>
                         </Grid>

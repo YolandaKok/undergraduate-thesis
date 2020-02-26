@@ -178,7 +178,7 @@ export class TSP extends Component {
                 <Container fixed>
                     <Grid container spacing={2} className={styles.gridPadding}>
                         <Grid item xs={12}>
-                            <CustomBreadCrumb name="Home,OR Tools,Travelling Salesman" title="Travelling Salesman" />
+                            <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "OR Tools", "url": "/select/algorithm"}, {"title": "Travelling Salesman", "url": ""}]} title="Travelling Salesman" />
                             <CustomizedAlert value={this.state.uploadError}
                                              message={this.state.message}></CustomizedAlert>
                             <CustomizedSteppers
@@ -195,26 +195,6 @@ export class TSP extends Component {
                                 finish={this.saveExperiment}
                             />
                         </Grid>
-
-                        {/*<CustomizedSteppers first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}*/}
-                        {/*                    second={<CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'} />}*/}
-                        {/*                    third={<CustomTable rows={this.state.results} checkResult={false} capacities={this.state.capacities} extraColumns={[]} extraColumnValues={[]} extraRows={this.state.extraRowsInitial}/>}*/}
-                        {/*                    fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}*/}
-                        {/*                    finish={this.saveExperiment}*/}
-                        {/*                    fifth={<InstructionsPanel/>}*/}
-                        {/*                    sixth={<CustomTable rows={this.state.packedItems} checkResult={true}*/}
-                        {/*                                        extraColumns={['Result']}*/}
-                        {/*                                        totalValue={this.state.totalValue}*/}
-                        {/*                                        totalWeight={this.state.totalWeight}*/}
-                        {/*                                        extraColumnValues={this.state.extraColumnValues}*/}
-                        {/*                                        extraRows={this.state.extraRowsFinal}*/}
-                        {/*                    />}*/}
-                        {/*                    completed={<ResultCompleted message={this.state.saveMessage}*/}
-                        {/*                                                value={this.state.value}*/}
-                        {/*                                                path={this.state.path}*/}
-                        {/*                                                componentName={this.state.componentName}*/}
-                        {/*                                                uploadMessage={this.state.message}/>}*/}
-                        {/*/>*/}
                     </Grid>
                 </Container>
             </Fragment>

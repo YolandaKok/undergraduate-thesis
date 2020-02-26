@@ -55,10 +55,12 @@ const useStyles = makeStyles(theme => ({
     },
     drawer: {
         width: drawerWidth,
-        flexShrink: 0
+        flexShrink: 0,
     },
     drawerPaper: {
         width: drawerWidth,
+        backgroundColor: "#d1b78f",
+        color: "black"
     },
     content: {
         flexGrow: 1,
@@ -87,6 +89,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         padding: theme.spacing(0, 1),
         justifyContent: "flex-end"},
+        marginTop: 30,
     avatarStyle: {
         cursor: "pointer",
     }
@@ -161,7 +164,7 @@ function ResponsiveDrawer(props) {
     }
 
     const drawer = (
-        <div>
+        <div >
             <div className={classes.drawerHeader}>
                 <IconButton onClick={handleDrawerClose}>
                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

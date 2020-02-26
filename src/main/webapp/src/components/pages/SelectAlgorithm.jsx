@@ -154,7 +154,7 @@ export default class SelectAlgorithm extends Component {
             <Container fixed>
                 <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
-                        <CustomBreadCrumb name="Home,Select Algorithm" title="Choose Algorithm" />
+                        <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Select Algorithm", "url": "/select/algorithm"}]} title="Choose Algorithm" />
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} xl={12}>
                         <SelectItemList passedFunction={this.passedFunction} library={this.state.library} data={this.state.librariesNames} label="Library"></SelectItemList>

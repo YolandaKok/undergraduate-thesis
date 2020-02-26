@@ -268,7 +268,7 @@ export class ManageProfile extends Component {
                 <Container fixed>
                     <Grid container spacing={2} className={styles1.gridPadding}>
                         <Grid item xs={12}>
-                            <CustomBreadCrumb name="Home,Manage Profile" title="Profile" />
+                            <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Manage Profile", "url": "/profile"}]} title="Profile" />
                             {
                                 this.state.requestValue != null ? <CustomizedAlert value={this.state.requestValue}
                                                                                    message={this.state.message}/> : ''

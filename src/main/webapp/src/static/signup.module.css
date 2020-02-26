@@ -31,7 +31,6 @@
 
 body {
   padding-bottom: 100px;
-  
   background-color: #E1E2E1;
 }
 
@@ -51,7 +50,7 @@ body {
   color: green;
 }
 
-.page-item.active .page-link {
+.page-link {
   color: white !important;
   background-color: #6f5a36 !important;
 }

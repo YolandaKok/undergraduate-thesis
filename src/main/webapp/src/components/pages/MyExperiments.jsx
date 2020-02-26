@@ -113,7 +113,7 @@ export class MyExperiments extends Component {
             <Container fixed>
                 <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
-                        <CustomBreadCrumb name="Home,My Experiments" title="Saved Experiments" />
+                        <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Saved Experiments", "url": "/myexperiments"}]} title="Saved Experiments" />
                         {this.state.deleteAlert ? <Alert variant={'success'}>
                             {'You have successfully deleted an item.'}
                         </Alert> : ''}

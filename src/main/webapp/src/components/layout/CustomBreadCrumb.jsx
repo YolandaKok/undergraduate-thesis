@@ -2,21 +2,16 @@ import React, {Component, Fragment} from 'react';
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import styles from "../../static/signup.module.css";
 import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import * as PropTypes from "prop-types";
-import SvgIcon from "@material-ui/core/SvgIcon";
 
 export default function CustomBreadCrumb(props) {
-    let names = props.name.split(',');
-
+    let links = props.links;
     return (
         <Fragment>
             <Breadcrumbs aria-label="breadcrumb" className={styles.breadCrumbStyle}>
                 {
-                    names.map((text, index)=>(
-                        <Link color="inherit" href="/" key={index}>
-                            {text}
+                    links.map((item, index)=>(
+                        <Link color="inherit" href={item.url} key={index}>
+                            {item.title}
                         </Link>
                     ))
                 }
@@ -26,9 +21,3 @@ export default function CustomBreadCrumb(props) {
         </Fragment>
     );
 }
-
-/* CustomBreadCrumb.propTypes = {
-    name: PropTypes.string.isRequired, // must be a string and defined
-    age: PropTypes.number.isRequired, // must be a number and defined
-    occupation: PropTypes.string.isRequired  // must be a string and defined
-}; */

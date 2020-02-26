@@ -80,7 +80,7 @@ class ShowResult extends Component {
             <Container fixed>
                 <Grid container spacing={3} className={styles.gridPadding}>
                     <Grid item xs={12}>
-                        <CustomBreadCrumb name="Home,Saved Experiments,Show Experiment" title="Show Experiment" />
+                        <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Saved Experiments", "url": "/myexperiments"}, {"title": "Show Experiment", "url": ""}]} title="Show Experiment" />
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
                         <CustomGraph data={this.state.results} titleX={'Values'} titleY={'Weights'}/>
