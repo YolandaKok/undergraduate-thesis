@@ -8,6 +8,7 @@ import {withRouter} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 const axios = require('axios');
+import logo from '../../images/logo.svg';
 
 export class SignIn extends Component {
     constructor(props) {
@@ -61,8 +62,9 @@ export class SignIn extends Component {
                             <Jumbotron className={styles.jumbotronStyle}>
                                 <Form>
                                     {this.state.formError ? <CustomizedAlert value={'danger'} message={'Wrong username or password.'}/> : ''}
-
-                                    <h1 className="text-center">Sign In</h1>
+                                    <div className="text-center" style={{marginRight: 20, marginBottom: 25}}>
+                                        <img src={logo} alt="Logo" />
+                                    </div>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
                                         <Form.Control placeholder="Enter username" onChange={this.handlePostChange} name="username"></Form.Control>
