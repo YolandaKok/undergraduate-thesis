@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.ortools.constraintsolver.Assignment;
@@ -17,6 +18,7 @@ import com.or.tools.model.Row;
 import com.or.tools.requests.DistanceRequest;
 import com.or.tools.response.RoutesResponse;
 
+@Service
 public class TSPService {
 
 	@Autowired

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add react-redux
+  /usr/local/bin/node /usr/local/bin/yarn install
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@material-ui/core/node_modules'
+  Error: EACCES: permission denied, mkdir '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/babel-preset-react-app/node_modules/json5'
 
 npm manifest: 
   {
@@ -46,6 +46,7 @@ npm manifest:
     },
     "dependencies": {
       "@material-ui/lab": "^4.0.0-alpha.40",
+      "@material-ui/system": "latest",
       "axios": "^0.19.0",
       "bootstrap": "^4.4.1",
       "clsx": "latest",
@@ -54,7 +55,7 @@ npm manifest:
       "cross-env": "^6.0.3",
       "eslint-import-resolver-webpack": "^0.12.0",
       "externals": "^0.0.1",
-      "file-loader": "^5.0.2",
+      "file-loader": "^5.1.0",
       "jquery": "^3.4.1",
       "moment": "^2.24.0",
       "popper.js": "^1.16.0",
@@ -66,11 +67,12 @@ npm manifest:
       "react-dropzone": "^10.2.1",
       "react-moment": "^0.9.7",
       "react-paginate": "^6.3.2",
+      "react-redux": "^7.2.0",
       "react-router": "^5.1.2",
       "react-router-dom": "^5.1.2",
       "react-scripts": "^3.3.0",
       "react-vis": "^1.11.7",
-      "@material-ui/system": "latest"
+      "url-loader": "^3.0.0"
     }
   }
 
@@ -1319,6 +1321,15 @@ Lockfile:
     version "4.7.1"
     resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.7.1.tgz#d928dacc0eeae6bea569ff3ee079f409efb3517d"
     integrity sha512-zH02p+FOimXLSKOW/OT2laYkl9bB3dD1AvnZqsHYoseUaq0aVrpbl2BGjQi+vJ5lg8w73uYlt9zOWzb3+1UdMQ==
+    dependencies:
+      "@babel/runtime" "^7.4.4"
+      "@material-ui/utils" "^4.7.1"
+      prop-types "^15.7.2"
+  
+  "@material-ui/system@latest":
+    version "4.9.3"
+    resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.9.3.tgz#ee48990d7941237fdaf21b7b399981d614bb0875"
+    integrity sha512-DBGsTKYrLlFpHG8BUp0X6ZpvaOzef+GhSwn/8DwVTXUdHitphaPQoL9xucrI8X9MTBo//El+7nylko7lo7eJIw==
     dependencies:
       "@babel/runtime" "^7.4.4"
       "@material-ui/utils" "^4.7.1"
@@ -4656,6 +4667,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
     integrity sha1-TapNnbAPmBmIDHn6RXrlsJof04k=
   
+  emojis-list@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
+    integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
+  
   encodeurl@~1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
@@ -5287,12 +5303,12 @@ Lockfile:
       loader-utils "^1.2.3"
       schema-utils "^2.5.0"
   
-  file-loader@^5.0.2:
-    version "5.0.2"
-    resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-5.0.2.tgz#7f3d8b4ac85a5e8df61338cfec95d7405f971caa"
-    integrity sha512-QMiQ+WBkGLejKe81HU8SZ9PovsU/5uaLo0JdTCEXOYv7i7jfAjHZi1tcwp9tSASJPOmmHZtbdCervFmXMH/Dcg==
+  file-loader@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-5.1.0.tgz#cb56c070efc0e40666424309bd0d9e45ac6f2bb8"
+    integrity sha512-u/VkLGskw3Ue59nyOwUwXI/6nuBCo7KBkniB/l7ICwr/7cPNGsL1WCXUp3GB0qgOOKU1TiP49bv4DZF/LJqprg==
     dependencies:
-      loader-utils "^1.2.3"
+      loader-utils "^1.4.0"
       schema-utils "^2.5.0"
   
   file-selector@^0.1.12:
@@ -5973,6 +5989,13 @@ Lockfile:
     version "3.3.1"
     resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#101685d3aff3b23ea213163f6e8e12f4f111e19f"
     integrity sha512-wbg3bpgA/ZqWrZuMOeJi8+SKMhr7X9TesL/rXMjTzh0p0JUBo3II8DHboYbuIXWRlttrUFxwcu/5kygrCw8fJw==
+    dependencies:
+      react-is "^16.7.0"
+  
+  hoist-non-react-statics@^3.3.0:
+    version "3.3.2"
+    resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+    integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
     dependencies:
       react-is "^16.7.0"
   
@@ -7579,6 +7602,15 @@ Lockfile:
     dependencies:
       big.js "^5.2.2"
       emojis-list "^2.0.0"
+      json5 "^1.0.1"
+  
+  loader-utils@^1.4.0:
+    version "1.4.0"
+    resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
+    integrity sha512-qH0WSMBtn/oHuwjy/NucEgbx5dbxxnxup9s4PVXJUDHZBQY+s0NWA9rJf53RBnQZxfch7euUui7hpoAPvALZdA==
+    dependencies:
+      big.js "^5.2.2"
+      emojis-list "^3.0.0"
       json5 "^1.0.1"
   
   locate-path@^2.0.0:
@@ -10045,7 +10077,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.4.tgz#0d165d6d27488e660bc08e57bdabaad741366f7a"
     integrity sha512-ueZzLmHltszTshDMwyfELDq8zOA803wQ1ZuzCccXa1m57k1PxSHfflPD5W9YIiTXLs0JTLzoj6o1LuM5N6zzNA==
   
-  react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1, react-is@^16.8.4:
+  react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
     version "16.12.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
     integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
@@ -10088,6 +10120,17 @@ Lockfile:
     integrity sha512-Ch++Njfv8UHpLtIMiQouAPeJQA5Ki86kIYfCer6c1B96Rvn3UF27se+goCilCP8oHNXNsA2R2kxvzanY1YIkyg==
     dependencies:
       prop-types "^15.6.1"
+  
+  react-redux@^7.2.0:
+    version "7.2.0"
+    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.0.tgz#f970f62192b3981642fec46fd0db18a074fe879d"
+    integrity sha512-EvCAZYGfOLqwV7gh849xy9/pt55rJXPwmYvI4lilPM5rUT/1NxuuN59ipdBksRVSvz0KInbPnp4IfoXJXCqiDA==
+    dependencies:
+      "@babel/runtime" "^7.5.5"
+      hoist-non-react-statics "^3.3.0"
+      loose-envify "^1.4.0"
+      prop-types "^15.7.2"
+      react-is "^16.9.0"
   
   react-router-dom@^5.1.2:
     version "5.1.2"
@@ -12008,6 +12051,15 @@ Lockfile:
     version "2.3.0"
     resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-2.3.0.tgz#e0e2ef658f003efb8ca41b0f3ffbf76bab88658b"
     integrity sha512-goSdg8VY+7nPZKUEChZSEtW5gjbS66USIGCeSJ1OVOJ7Yfuh/36YxCwMi5HVEJh6mqUYOoy3NJ0vlOMrWsSHog==
+    dependencies:
+      loader-utils "^1.2.3"
+      mime "^2.4.4"
+      schema-utils "^2.5.0"
+  
+  url-loader@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-3.0.0.tgz#9f1f11b371acf6e51ed15a50db635e02eec18368"
+    integrity sha512-a84JJbIA5xTFTWyjjcPdnsu+41o/SNE8SpXMdUvXs6Q+LuhCD9E2+0VCiuDWqgo3GGXVlFHzArDmBpj9PgWn4A==
     dependencies:
       loader-utils "^1.2.3"
       mime "^2.4.4"

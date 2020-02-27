@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.ortools.linearsolver.MPConstraint;
@@ -17,6 +18,7 @@ import com.or.tools.model.MultipleKnapsackModel;
 import com.or.tools.model.MultipleKnapsackResponse;
 import com.or.tools.util.IOUtils;
 
+@Service
 public class MultipleKnapsacksService {
 
 	@Autowired
