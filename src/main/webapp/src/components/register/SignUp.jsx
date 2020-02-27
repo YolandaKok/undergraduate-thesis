@@ -8,6 +8,7 @@ import {withRouter} from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 const axios = require('axios');
+import logo from '../../images/logo.svg';
 
 export class SignUp extends Component {
     constructor(props) {
@@ -106,8 +107,10 @@ export class SignUp extends Component {
                         <Col xs={12} sm={12} md={8} lg={6}>
                             <Jumbotron className={styles.jumbotronStyle}>
                                 <Form onKeyUp={this.checkNullOrUndefined} onMouseOver={this.checkNullOrUndefined}>
-                                    <h1 className="text-center">Sign Up</h1>
-                                    <h6 className="text-center">Sign up to visualize and experiment with
+                                    <div className="text-center" style={{marginRight: 20, marginBottom: 25}}>
+                                        <img src={logo} alt="Logo" />
+                                    </div>
+                                    <h6 className="text-center" style={{fontStyle: 'oblique'}}>Sign up to visualize and experiment with
                                         various <br></br> algorithms.</h6>
                                     <Form.Group>
                                         <Form.Label className={styles.formFont}>Username</Form.Label>
