@@ -67,7 +67,7 @@ export default class HomepageLayout extends Component {
             <Container fixed>
                 <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
-                        <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Overview", "url": "/"}]} title="RecentExperiments" />
+                        <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Overview", "url": "/"}]} title="Recent Experiments" />
                     </Grid>
                     <Grid item xs={12} md={4} lg={3} xl={3}>
                         <CustomCard title="New Experiment" content="Create a new experiment" href="/select/algorithm"/>
