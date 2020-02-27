@@ -2,6 +2,7 @@ package com.or.tools.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.or.tools.model.KnapsackModel;
+import com.or.tools.model.LinearConstrain;
+import com.or.tools.model.LinearObjective;
+import com.or.tools.model.LinearOptModel;
 import com.or.tools.model.MultipleKnapsackModel;
 
 @Component
@@ -216,11 +220,14 @@ public class IOUtils {
 		return response;
 	}
 
-	public void readLinearOptData(MultipartFile file) {
+	public LinearOptModel readLinearOptData(MultipartFile file) {
 		int numOfRows = 0;
 
 		int numOfConstrains = 0;
 
+		LinearOptModel model = new LinearOptModel();
+		LinearObjective objective = new LinearObjective();
+		List<LinearConstrain> constrains = new ArrayList<>();
 		if (!file.isEmpty()) {
 			// Read the file
 			try {
@@ -232,6 +239,7 @@ public class IOUtils {
 				for (String row : rows) {
 					if (numOfRows != 0) {
 						if (numOfRows == 1) {
+							objective = new LinearObjective();
 							log.info("New Row: ");
 							String[] columns = row.split(";");
 							int attributes = 0;
@@ -242,13 +250,16 @@ public class IOUtils {
 								if (attributes == 1) {
 									// objective x
 									System.out.println("Objective x: " + column);
+									objective.setX(Double.parseDouble(column));
 								} else if (attributes == 2) {
 									// objective y
 									System.out.println("Objective y: " + column);
+									objective.setY(Double.parseDouble(column));
 								}
 								attributes++;
 							}
 						} else {
+							LinearConstrain constrain = new LinearConstrain();
 							String[] columns = row.split(";");
 							int attributes = 0;
 							for (String column : columns) {
@@ -258,18 +269,23 @@ public class IOUtils {
 								if (attributes == 1) {
 									// constrain x
 									System.out.println("Constrain x: " + column);
+									constrain.setX(Double.parseDouble(column));
 								} else if (attributes == 2) {
 									// constrain y
 									System.out.println("Constrain y: " + column);
+									constrain.setY(Double.parseDouble(column));
 								} else if (attributes == 3) {
 									// constrain operator
 									System.out.println("Constrain operator: " + column);
+									constrain.setOperator(column);
 								} else if (attributes == 4) {
 									// constrain constant
 									System.out.println("Constrain constant: " + column);
+									constrain.setConstant(Double.parseDouble(column));
 								}
 								attributes++;
 							}
+							constrains.add(constrain);
 							numOfConstrains++;
 						}
 					}
@@ -282,6 +298,9 @@ public class IOUtils {
 				e.printStackTrace();
 			}
 		}
+		model.setConstrains(constrains);
+		model.setObjective(objective);
+		return model;
 	}
 
 }

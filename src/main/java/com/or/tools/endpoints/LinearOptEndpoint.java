@@ -15,6 +15,8 @@ import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
+import com.or.tools.model.LinearConstrain;
+import com.or.tools.model.LinearOptModel;
 import com.or.tools.model.Matrix;
 import com.or.tools.util.IOUtils;
 
@@ -74,18 +76,26 @@ public class LinearOptEndpoint {
 	}
 
 	@GetMapping("/cramer")
-	public void solveCramer() {
-		Matrix mat = new Matrix(Arrays.asList(3d, -1d), Arrays.asList(1d, 2d));
-		List<Double> b = Arrays.asList(0d, 14d);
+	public List<List<Double>> solveCramer(LinearOptModel model) {
+		List<List<Double>> result = new ArrayList<>();
+
+		List<LinearConstrain> constrains = model.getConstrains();
+
+		for (int i = 0; i < constrains.size() - 1; i++) {
+			Matrix mat = new Matrix(Arrays.asList(constrains.get(i).getX(), constrains.get(i).getY()),
+					Arrays.asList(constrains.get(i + 1).getX(), constrains.get(i + 1).getY()));
+			List<Double> b = Arrays.asList(constrains.get(i).getConstant(), constrains.get(i + 1).getConstant());
+			System.out.println("Solution = " + cramersRule(mat, b));
+			result.add(cramersRule(mat, b));
+		}
+		Matrix mat = new Matrix(Arrays.asList(constrains.get(0).getX(), constrains.get(0).getY()), Arrays
+				.asList(constrains.get(constrains.size() - 1).getX(), constrains.get(constrains.size() - 1).getY()));
+		List<Double> b = Arrays.asList(constrains.get(0).getConstant(),
+				constrains.get(constrains.size() - 1).getConstant());
 		System.out.println("Solution = " + cramersRule(mat, b));
+		result.add(cramersRule(mat, b));
 
-		Matrix mat1 = new Matrix(Arrays.asList(3d, -1d), Arrays.asList(1d, -1d));
-		List<Double> b1 = Arrays.asList(0d, 0d);
-		System.out.println("Solution = " + cramersRule(mat1, b1));
-
-		Matrix mat2 = new Matrix(Arrays.asList(1d, 2d), Arrays.asList(1d, -1d));
-		List<Double> b2 = Arrays.asList(14d, 0d);
-		System.out.println("Solution = " + cramersRule(mat1, b2));
+		return result;
 	}
 
 	private static List<Double> cramersRule(Matrix matrix, List<Double> b) {
@@ -98,8 +108,9 @@ public class LinearOptEndpoint {
 	}
 
 	@PostMapping("/data")
-	public void reorganiseData(MultipartFile file) {
-		ioUtils.readLinearOptData(file);
+	public List<List<Double>> reorganiseData(MultipartFile file) {
+		LinearOptModel model = ioUtils.readLinearOptData(file);
+		return solveCramer(model);
 	}
 
 }

@@ -15,6 +15,7 @@ import ShowResult from "./components/layout/ShowResult";
 import ShowResultMultiple from "./components/layout/ShowResultMultiple";
 import ShowResultRouting from "./components/layout/ShowResultRouting";
 import ManageProfile from "./components/pages/ManageProfile";
+import LinearOpt from "./components/algorithms/LinearOpt";
 
 const routing = (
     <BrowserRouter>
@@ -43,6 +44,10 @@ const routing = (
             <Route exact path="/algorithms/travellingsalesman/:id" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><TSP/></Homepage> : <IndexPage/>}></Route>
+
+            <Route exact path="/algorithms/linearoptimization/:id" component={() => ["null", '', undefined, null].every((text) => {
+                return localStorage.getItem('authorization') !== text;
+            }) ? <Homepage><LinearOpt/></Homepage> : <IndexPage/>}/>
 
             <Route exact path="/myexperiments" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
