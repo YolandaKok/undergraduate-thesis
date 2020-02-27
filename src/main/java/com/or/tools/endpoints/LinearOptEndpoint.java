@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 import com.or.tools.model.Matrix;
+import com.or.tools.util.IOUtils;
 
 @RestController
 @RequestMapping("/linear")
 public class LinearOptEndpoint {
+
+	@Autowired
+	private IOUtils ioUtils;
 
 	@PostMapping("/constrains")
 	public void insertConstrains() {
@@ -89,6 +95,11 @@ public class LinearOptEndpoint {
 			result.add(matrix.replaceColumn(b, i).determinant() / denominator);
 		}
 		return result;
+	}
+
+	@PostMapping("/data")
+	public void reorganiseData(MultipartFile file) {
+		ioUtils.readLinearOptData(file);
 	}
 
 }

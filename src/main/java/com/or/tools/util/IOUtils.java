@@ -216,4 +216,72 @@ public class IOUtils {
 		return response;
 	}
 
+	public void readLinearOptData(MultipartFile file) {
+		int numOfRows = 0;
+
+		int numOfConstrains = 0;
+
+		if (!file.isEmpty()) {
+			// Read the file
+			try {
+				byte[] bytes = file.getBytes();
+				String data = new String(bytes);
+				String[] rows = data.split("\n");
+				log.info("Number of rows: {}", rows.length);
+
+				for (String row : rows) {
+					if (numOfRows != 0) {
+						if (numOfRows == 1) {
+							log.info("New Row: ");
+							String[] columns = row.split(";");
+							int attributes = 0;
+							for (String column : columns) {
+								if (column.charAt(0) == '"') {
+									column = column.substring(1, column.length() - 1);
+								}
+								if (attributes == 1) {
+									// objective x
+									System.out.println("Objective x: " + column);
+								} else if (attributes == 2) {
+									// objective y
+									System.out.println("Objective y: " + column);
+								}
+								attributes++;
+							}
+						} else {
+							String[] columns = row.split(";");
+							int attributes = 0;
+							for (String column : columns) {
+								if (column.charAt(0) == '"') {
+									column = column.substring(1, column.length() - 1);
+								}
+								if (attributes == 1) {
+									// constrain x
+									System.out.println("Constrain x: " + column);
+								} else if (attributes == 2) {
+									// constrain y
+									System.out.println("Constrain y: " + column);
+								} else if (attributes == 3) {
+									// constrain operator
+									System.out.println("Constrain operator: " + column);
+								} else if (attributes == 4) {
+									// constrain constant
+									System.out.println("Constrain constant: " + column);
+								}
+								attributes++;
+							}
+							numOfConstrains++;
+						}
+					}
+
+					numOfRows++;
+				}
+
+			} catch (IOException e) {
+				log.error("Error during reading {} please fix and re upload the file", e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
