@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,7 @@ public class LinearOptEndpoint {
 	@Autowired
 	private IOUtils ioUtils;
 
-	@PostMapping("/constrains")
-	public void insertConstrains() {
+	private void result(LinearOptModel model) {
 		MPSolver solver = new MPSolver("LinearProgrammingExample",
 				MPSolver.OptimizationProblemType.GLOP_LINEAR_PROGRAMMING);
 
@@ -108,9 +108,12 @@ public class LinearOptEndpoint {
 	}
 
 	@PostMapping("/data")
-	public List<List<Double>> reorganiseData(MultipartFile file) {
+	public Pair<List<List<Double>>, Long> reorganiseData(MultipartFile file) {
 		LinearOptModel model = ioUtils.readLinearOptData(file);
-		return solveCramer(model);
+		List<List<Double>> response = solveCramer(model);
+		Long l = (long) 2;
+		Pair<List<List<Double>>, Long> res = new Pair<List<List<Double>>, Long>(response, l);
+		return res;
 	}
 
 }
