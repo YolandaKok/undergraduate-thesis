@@ -25,7 +25,9 @@ class ShowResultLinear extends Component {
                 { label: "values", key: "x" },
                 { label: "weights", key: "y" },
             ],
-            headersTable: []
+            headersTable: [],
+            headersResult: ['optimal x', 'optimal y', 'optimal value'],
+            resultData: [[]]
         }
     }
 
@@ -44,6 +46,13 @@ class ShowResultLinear extends Component {
             this.setState({"headersTable": resultObj.headers});
             this.setState({"rows": resultObj.rows});
             this.setState({"optimalValue": resultObj.optimalValue});
+            let r = [];
+            r.push(resultObj.results[2][0]);
+            r.push(resultObj.results[2][1]);
+            r.push(resultObj.optimalValue);
+            let b = [];
+            b.push(r);
+            this.setState({"resultData": b});
         },
         (error) => {
             console.log("error");
@@ -65,24 +74,24 @@ class ShowResultLinear extends Component {
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
                         {this.state.result != null && this.state.results != null ? <SimpleTable headers={this.state.headersTable} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue}/> : ''}
-                        {/*<Container>*/}
-                        {/*    <Grid container spacing={3}>*/}
-                        {/*        <Grid item xs={6}>*/}
-                        {/*            <CSVLink uFEFF={false} headers={this.state.headers} filename={"my-file.csv"} data={this.state.initialData} separator={";"}>*/}
-                        {/*                <Button variant='outlined' fullWidth>*/}
-                        {/*                    Download Initial (.csv)*/}
-                        {/*                </Button>*/}
-                        {/*            </CSVLink>*/}
-                        {/*        </Grid>*/}
-                        {/*        <Grid item xs={6}>*/}
-                        {/*            <CSVLink filename={"my-file.csv"} data={this.state.results} separator={";"}>*/}
-                        {/*                <Button variant='contained' color='primary' fullWidth>*/}
-                        {/*                    Download Result (.csv)*/}
-                        {/*                </Button>*/}
-                        {/*            </CSVLink>*/}
-                        {/*        </Grid>*/}
-                        {/*    </Grid>*/}
-                        {/*</Container>*/}
+                        <Container>
+                            <Grid container spacing={3}>
+                                <Grid item xs={6}>
+                                    <CSVLink uFEFF={false} headers={this.state.headersTable} filename={"linear-opt-initial-" + this.props.match.params.id + ".csv"} data={this.state.rows} separator={";"}>
+                                        <Button variant='outlined' fullWidth>
+                                            Download Initial (.csv)
+                                        </Button>
+                                    </CSVLink>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <CSVLink headers={this.state.headersResult} filename={"linear-opt-results-" + this.props.match.params.id + ".csv"} data={this.state.resultData} separator={";"}>
+                                        <Button variant='contained' color='primary' fullWidth>
+                                            Download Result (.csv)
+                                        </Button>
+                                    </CSVLink>
+                                </Grid>
+                            </Grid>
+                        </Container>
                     </Grid>
                 </Grid>
             </Container>

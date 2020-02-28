@@ -8,15 +8,10 @@ import {CustomizedAlert} from "../errors/CustomizedAlert";
 import CustomizedSteppers from "../layout/CustomizedSteppers";
 import DragAndDrop from "../drag-and-drop/DragAndDrop";
 import SimpleTable from "../layout/SimpleTable";
-import RouteGraph from "../graphs/RouteGraph";
 import InstructionsPanel from "../layout/InstructionsPanel";
 import ResultCompleted from "../layout/ResultCompleted";
-import CustomGraph from "../graphs/CustomGraph";
-import CustomTable from "../layout/CustomTable";
 import LinearGraph from "../graphs/LinearGraph";
-
 const axios = require('axios');
-
 
 export class LinearOpt extends Component {
     constructor(props) {
@@ -37,11 +32,43 @@ export class LinearOpt extends Component {
         this.getInitialData = this.getInitialData.bind(this);
         this.getResult = this.getResult.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillMount() {
         this.setState({"algorithmId": this.props.match.params.id});
+        this.getDataSamples(this.props.match.params.id);
     }
+
+    getDataSamples(id) {
+        axios.get(SERVICE_URL + '/samples/' + id , {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({"samples": response.data});
+        },
+        (error) => {
+
+        });
+    }
+
+    handleChange(event) {
+        this.setState({"sampleId": event.target.value});
+        console.log("Id: " + event.target.value);
+        console.log(this.state.samples.length);
+        for(let i = 0; i < this.state.samples.length; i++) {
+            if(this.state.samples[i].id == event.target.value) {
+                console.log(this.state.samples);
+                let finalData = JSON.parse(this.state.samples[i].dataResult);
+                this.setState({"results": finalData.results});
+                this.setState({"result": finalData.resultLine});
+                this.setState({"optimalValue": finalData.optimalValue});
+                this.setState({"rows": finalData.rows});
+            }
+        }
+    }
+
 
     /* Pass Function to Drag And Drop to get Data */
     passedForDragAndDrop(formData) {
@@ -129,10 +156,6 @@ export class LinearOpt extends Component {
             this.setState({path: "/"});
             this.setState({componentName: "Homepage"});
         });
-    }
-
-    handleChange() {
-
     }
 
     render() {
