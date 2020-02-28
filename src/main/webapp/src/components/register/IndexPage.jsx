@@ -6,7 +6,6 @@ export class IndexPage extends Component {
         return(
             <div>
                 <NavBar/>
-                <LinearGraph/>
                 {this.props.children}
             </div>
         );

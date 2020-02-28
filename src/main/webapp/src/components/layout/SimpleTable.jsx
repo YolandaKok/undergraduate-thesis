@@ -23,7 +23,8 @@ function CustomTable(props) {
     const classes = useStyles();
     let rows = props.rows;
     let headers = props.headers;
-
+    if(props.result != null)
+        console.log("R: " + props.result[0][0]);
     return (
         <div>
             <h5>Distance Matrix</h5>
@@ -34,7 +35,7 @@ function CustomTable(props) {
                 <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableBody>
                         <TableRow>
-                            <TableCell></TableCell>
+                            {props.noHeaders ? '' : <TableCell></TableCell>}
                             {
                                 headers.map((item) => {
                                     return(<TableCell style={{fontWeight: "bold"}}>{item}</TableCell>);
@@ -44,7 +45,7 @@ function CustomTable(props) {
                         {rows.map((row, index) => {
                                 return (
                                     <TableRow key={index}>
-                                        <TableCell style={{fontWeight: "bold"}}>{headers[index]}</TableCell>
+                                        { props.noHeaders ? '' : <TableCell style={{fontWeight: "bold"}}>{headers[index]}</TableCell>}
                                         {
                                             row.map((item, index) => {
                                                 return (<TableCell>{item}</TableCell>);
@@ -53,6 +54,46 @@ function CustomTable(props) {
                                     </TableRow>
                                 );
                             })
+                        }
+
+                        {
+                            !props.noHeaders ? '' : <TableRow>
+                                                        <TableCell style={{fontWeight: "bold"}}>Solution</TableCell>
+                                                        <TableCell></TableCell>
+                                                        <TableCell></TableCell>
+                                                        <TableCell></TableCell>
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                        }
+
+                        {
+                            !props.noHeaders ? '' : <TableRow>
+                                <TableCell style={{fontWeight: "bold"}}>Optimal X</TableCell>
+                                <TableCell style={{fontWeight: "bold"}}>{props.result != null ? (Math.round(props.result[1][0] * 100) / 100).toFixed(2) : ''}</TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        }
+
+                        {
+                            !props.noHeaders ? '' : <TableRow>
+                                <TableCell style={{fontWeight: "bold"}}>Optimal Y</TableCell>
+                                <TableCell style={{fontWeight: "bold"}}>{props.result != null ? (Math.round(props.result[1][1] * 100) / 100).toFixed(2) : ''}</TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        }
+
+                        {
+                            !props.noHeaders ? '' : <TableRow>
+                                <TableCell style={{fontWeight: "bold"}}>Optimal Objective Value</TableCell>
+                                <TableCell style={{fontWeight: "bold"}}>{(Math.round(props.optimalValue * 100) / 100).toFixed(2)}</TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
                         }
 
                     </TableBody>

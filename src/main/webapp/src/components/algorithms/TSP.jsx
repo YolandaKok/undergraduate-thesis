@@ -184,7 +184,7 @@ export class TSP extends Component {
                             <CustomizedSteppers
                                 steps={["Upload Document", "Show Result"]}
                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
-                                third={<SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities}/>}
+                                third={<SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities} noHeaders={false}/>}
                                 second={<RouteGraph data={this.state.data}/>}
                                 fifth={<InstructionsPanel/>}
                                 completed={<ResultCompleted message={this.state.saveMessage}

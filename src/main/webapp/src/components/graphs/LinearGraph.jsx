@@ -35,8 +35,23 @@ export default class LinearGraph extends Component {
         return result;
     }
 
+    createResult(result) {
+        return(
+                <LineSeries
+                    className="first-series"
+                    data={[{x: result[0][0], y: result[0][1]},{x: result[1][0], y: result[1][1]}, {x: result[2][0], y: result[2][1]}]}
+                    style={{
+                        strokeLinejoin: 'round',
+                        strokeWidth: 2
+                    }}
+                />
+            );
+    }
+
     render() {
         let data = this.props.data;
+        console.log("Data: " + data);
+        let result = this.props.resultLine;
         return (
             <Fragment>
                 <h5>Graph</h5>
@@ -56,6 +71,14 @@ export default class LinearGraph extends Component {
                     {
                         this.createLines(data)
                     }
+                    <LineSeries
+                        className="first-series"
+                        data={[{x: result[0][0], y: result[0][1]},{x: result[1][0], y: result[1][1]}, {x: result[2][0], y: result[2][1]}]}
+                        style={{
+                            strokeLinejoin: 'round',
+                            strokeWidth: 2
+                        }}
+                    />
                 </FlexibleWidthXYPlot>
             </Fragment>
         );
@@ -98,12 +121,4 @@ export default class LinearGraph extends Component {
 //         strokeLinejoin: 'round',
 //         strokeWidth: 4
 //     }}
-// />
-// <LineSeries
-// className="first-series"
-// data={[{x: 0.0, y: 34/4},{x: 6.0, y: 4.0}, {x: 7.0, y: 13/4}]}
-// style={{
-//     strokeLinejoin: 'round',
-//         strokeWidth: 2
-// }}
 // />

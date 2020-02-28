@@ -8,6 +8,7 @@ import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,9 @@ import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
+import com.or.tools.model.ConstraintM;
 import com.or.tools.model.LinearConstrain;
+import com.or.tools.model.LinearObjective;
 import com.or.tools.model.LinearOptModel;
 import com.or.tools.model.Matrix;
 import com.or.tools.util.IOUtils;
@@ -28,7 +31,8 @@ public class LinearOptEndpoint {
 	@Autowired
 	private IOUtils ioUtils;
 
-	private void result(LinearOptModel model) {
+	@PostMapping("/result")
+	private Pair<List<List<Double>>, Double> result(@RequestBody LinearOptModel model) {
 		MPSolver solver = new MPSolver("LinearProgrammingExample",
 				MPSolver.OptimizationProblemType.GLOP_LINEAR_PROGRAMMING);
 
@@ -38,26 +42,18 @@ public class LinearOptEndpoint {
 		MPVariable y = solver.makeNumVar(0.0, infinity, "y");
 		System.out.println("Number of variables = " + solver.numVariables());
 
-		// x + 2*y <= 14.
-		MPConstraint c0 = solver.makeConstraint(-infinity, 14.0, "c0");
-		c0.setCoefficient(x, 1);
-		c0.setCoefficient(y, 2);
-
-		// 3*x - y >= 0.
-		MPConstraint c1 = solver.makeConstraint(0.0, infinity, "c1");
-		c1.setCoefficient(x, 3);
-		c1.setCoefficient(y, -1);
-
-		// x - y <= 2.
-		MPConstraint c2 = solver.makeConstraint(-infinity, 2.0, "c2");
-		c2.setCoefficient(x, 1);
-		c2.setCoefficient(y, -1);
-		System.out.println("Number of constraints = " + solver.numConstraints());
+		for (int i = 0; i < model.getConstrains().size(); i++) {
+			ConstraintM m = new ConstraintM();
+			m = calculateInfinity(model.getConstrains().get(i));
+			MPConstraint c0 = solver.makeConstraint(m.getValue1(), m.getValue2(), "c" + i);
+			c0.setCoefficient(x, model.getConstrains().get(i).getX());
+			c0.setCoefficient(y, model.getConstrains().get(i).getY());
+		}
 
 		// Maximize 3 * x + 4 * y.
 		MPObjective objective = solver.objective();
-		objective.setCoefficient(x, 3);
-		objective.setCoefficient(y, 4);
+		objective.setCoefficient(x, model.getObjective().getX());
+		objective.setCoefficient(y, model.getObjective().getY());
 		objective.setMaximization();
 
 		final MPSolver.ResultStatus resultStatus = solver.solve();
@@ -73,6 +69,56 @@ public class LinearOptEndpoint {
 
 		// The objective value of the solution.
 		System.out.println("Optimal objective value = " + solver.objective().value());
+
+		Pair<List<List<Double>>, Double> res = new Pair<List<List<Double>>, Double>(
+				morePoints(x.solutionValue(), y.solutionValue(), solver.objective().value(), model.getObjective()),
+				solver.objective().value());
+
+		return res;
+
+	}
+
+	private List<List<Double>> morePoints(Double x, Double y, Double constant, LinearObjective obj) {
+		List<List<Double>> result = new ArrayList<>();
+		List<Double> result1 = new ArrayList<>();
+		List<Double> result2 = new ArrayList<>();
+		List<Double> result3 = new ArrayList<>();
+
+		Double x1 = 0.0;
+		Double y1 = constant / obj.getY();
+
+		Double nextX = x + 1.0;
+		Double tempX = nextX * obj.getX();
+
+		Double y2 = (constant - tempX) / obj.getY();
+		Double x2 = nextX;
+
+		result1.add(x1);
+		result1.add(y1);
+		result2.add(x);
+		result2.add(y);
+		result3.add(x2);
+		result3.add(y2);
+
+		result.add(result1);
+		result.add(result2);
+		result.add(result3);
+
+		return result;
+
+	}
+
+	private ConstraintM calculateInfinity(LinearConstrain constrain) {
+		double infinity = java.lang.Double.POSITIVE_INFINITY;
+		ConstraintM result = new ConstraintM();
+		if (constrain.getOperator().equals("<=")) {
+			result.setValue1(-infinity);
+			result.setValue2(constrain.getConstant());
+		} else if (constrain.getOperator().contentEquals(">=")) {
+			result.setValue1(constrain.getConstant());
+			result.setValue2(infinity);
+		}
+		return result;
 	}
 
 	@GetMapping("/cramer")
@@ -108,11 +154,10 @@ public class LinearOptEndpoint {
 	}
 
 	@PostMapping("/data")
-	public Pair<List<List<Double>>, Long> reorganiseData(MultipartFile file) {
+	public Pair<List<List<Double>>, LinearOptModel> reorganiseData(MultipartFile file) {
 		LinearOptModel model = ioUtils.readLinearOptData(file);
 		List<List<Double>> response = solveCramer(model);
-		Long l = (long) 2;
-		Pair<List<List<Double>>, Long> res = new Pair<List<List<Double>>, Long>(response, l);
+		Pair<List<List<Double>>, LinearOptModel> res = new Pair<List<List<Double>>, LinearOptModel>(response, model);
 		return res;
 	}
 
