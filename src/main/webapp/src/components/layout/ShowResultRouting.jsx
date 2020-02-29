@@ -74,7 +74,7 @@ class ShowResultRouting extends Component {
                         <RouteGraph data={this.state.data} />
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities} />
+                        <SimpleTable rows={this.state.distanceMatrix} headers={this.state.cities} title={'Distance Matrix'}/>
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>

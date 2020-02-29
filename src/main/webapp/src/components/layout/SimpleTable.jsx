@@ -23,11 +23,12 @@ function CustomTable(props) {
     const classes = useStyles();
     let rows = props.rows;
     let headers = props.headers;
+    let title = props.title;
     if(props.result != null)
         console.log("R: " + props.result[0][0]);
     return (
         <div>
-            <h5>Distance Matrix</h5>
+            <h5>{title}</h5>
             <hr className={styles.marginHr}></hr>
             <main className={styles1.App}>
             </main>

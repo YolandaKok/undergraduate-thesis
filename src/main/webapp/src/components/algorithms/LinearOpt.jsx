@@ -170,7 +170,7 @@ export class LinearOpt extends Component {
                             <CustomizedSteppers steps={["Upload File", "Show Results"]}
                                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                                 second={<LinearGraph data={this.state.results} resultLine={this.state.result} />}
-                                                third={<SimpleTable headers={this.state.headers} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue} />}
+                                                third={<SimpleTable headers={this.state.headers} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue} title={'Results'} />}
                                                 finish={this.saveExperiment}
                                                 fifth={<InstructionsPanel/>}
                                                 completed={<ResultCompleted message={this.state.saveMessage}

@@ -73,7 +73,7 @@ class ShowResultLinear extends Component {
                         }
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        {this.state.result != null && this.state.results != null ? <SimpleTable headers={this.state.headersTable} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue}/> : ''}
+                        {this.state.result != null && this.state.results != null ? <SimpleTable title={'Results'} headers={this.state.headersTable} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue}/> : ''}
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
