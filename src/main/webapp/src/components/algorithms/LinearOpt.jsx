@@ -26,7 +26,8 @@ export class LinearOpt extends Component {
             dataFromFile: null,
             result: null,
             optimalValue: null,
-            algorithmId: ''
+            algorithmId: '',
+            instructionsData: [['objective', '3', '4', '', ''], ['constrain1', '1', '2', '<=', '8'], ['constrain2', '3', '-1', '>=', '0'], ['constrain3', '1', '-1', '<=', '1']]
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
@@ -172,7 +173,7 @@ export class LinearOpt extends Component {
                                                 second={<LinearGraph data={this.state.results} resultLine={this.state.result} />}
                                                 third={<SimpleTable headers={this.state.headers} rows={this.state.rows} noHeaders={true} result={this.state.result} optimalValue={this.state.optimalValue} title={'Results'} />}
                                                 finish={this.saveExperiment}
-                                                fifth={<InstructionsPanel/>}
+                                                fifth={<InstructionsPanel headers={this.state.headers} data={this.state.instructionsData}/>}
                                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                                             value={this.state.value}
                                                                             path={this.state.path}

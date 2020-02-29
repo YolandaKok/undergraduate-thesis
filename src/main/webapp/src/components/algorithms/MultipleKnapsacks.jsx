@@ -36,6 +36,8 @@ export class MultipleKnapsacks extends Component {
             extraColumnValues: [],
             extraRowsInitial: undefined,
             extraRowsFinal: undefined,
+            headers: ['Values', 'Weights'],
+            instructionsData: [['15', '23'], ['33', '45'], ['313', '145'], ['233', '345'], ['433', '545'], ['313', '435'], ['bins', '{100,100,50,300}']]
         };
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.saveExperiment = this.saveExperiment.bind(this);
@@ -220,7 +222,7 @@ export class MultipleKnapsacks extends Component {
                                             third={<CustomTable rows={this.state.results} checkResult={false} extraColumns={[]} extraColumnValues={[]} extraRows={this.state.extraRowsInitial} />}
                                             fourth={<CustomGraph data={this.state.packedItems} titleX={'Values'} titleY={'Weights'}/>}
                                             finish={this.saveExperiment}
-                                            fifth={<InstructionsPanel/>}
+                                            fifth={<InstructionsPanel headers={this.state.headers} data={this.state.instructionsData}/>}
                                             sixth={<CustomTable rows={this.state.packedItems} checkResult={true}
                                                                 totalValue={this.state.totalValue}
                                                                 totalWeight={this.state.totalWeight}

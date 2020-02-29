@@ -30,7 +30,9 @@ export class TSP extends Component {
             routes: [],
             routeDistance: null,
             algorithmId: '',
-            data: []
+            data: [],
+            headers: ['Cities'],
+            instructionsData: [['Athens'], ['Turin'], ['Berlin'], ['Frankfurt'], ['Rome'], ['Cairo']]
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
@@ -186,7 +188,7 @@ export class TSP extends Component {
                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                 third={<SimpleTable title={'Distance Matrix'} rows={this.state.distanceMatrix} headers={this.state.cities} noHeaders={false}/>}
                                 second={<RouteGraph data={this.state.data}/>}
-                                fifth={<InstructionsPanel/>}
+                                fifth={<InstructionsPanel headers={this.state.headers} data={this.state.instructionsData}/>}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}
                                                             path={this.state.path}

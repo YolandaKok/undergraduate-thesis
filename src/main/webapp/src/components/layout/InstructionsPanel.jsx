@@ -23,7 +23,8 @@ const useStyles = makeStyles({
 export default function CustomTable(props) {
 
     const classes = useStyles();
-
+    let headers = props.headers;
+    let instructionsData = props.data;
     return(
         <Fragment>
             <h5>Document Layout</h5>
@@ -35,39 +36,32 @@ export default function CustomTable(props) {
                 <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Values</TableCell>
-                            <TableCell>Weights</TableCell>
+                            {
+                                headers.map((item, index) => {
+                                    return(
+                                        <TableCell>{item}</TableCell>
+                                    )
+                                })
+                            }
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow>
-                            <TableCell>15</TableCell>
-                            <TableCell>21</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>15</TableCell>
-                            <TableCell>21</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>15</TableCell>
-                            <TableCell>21</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>15</TableCell>
-                            <TableCell>21</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>18</TableCell>
-                            <TableCell>28</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>capacities</TableCell>
-                            <TableCell>250</TableCell>
-                        </TableRow>
+                        {
+                            instructionsData.map((item, index) => {
+                                return(
+                                    <TableRow>
+                                        {
+                                            item.map((cellItem, index) => {
+                                                return(<TableCell>{cellItem}</TableCell>)
+                                            })
+                                        }
+                                    </TableRow>
+                                )
+                            })
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>
-
         </Fragment>
     );
 }

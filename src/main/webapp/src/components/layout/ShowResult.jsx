@@ -90,14 +90,14 @@ class ShowResult extends Component {
                         <Container>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
-                                    <CSVLink uFEFF={false} headers={this.state.headers} filename={"my-file.csv"} data={this.state.initialData} separator={";"}>
+                                    <CSVLink uFEFF={false} headers={this.state.headers} filename={"knapsack-initial-" + this.props.match.params.id + ".csv"} data={this.state.initialData} separator={";"}>
                                         <Button variant='outlined' fullWidth>
                                             Download Initial (.csv)
                                         </Button>
                                     </CSVLink>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <CSVLink filename={"my-file.csv"} data={this.state.results} separator={";"}>
+                                    <CSVLink filename={"knapsack-result-" + this.props.match.params.id + ".csv"} data={this.state.results} separator={";"}>
                                         <Button variant='contained' color='primary' fullWidth>
                                             Download Result (.csv)
                                         </Button>
