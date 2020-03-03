@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import IndexPage from './components/register/IndexPage';
 import SignIn from './components/register/SignIn';
 import SignUp from './components/register/SignUp';
@@ -17,10 +17,11 @@ import ShowResultRouting from "./components/layout/ShowResultRouting";
 import ManageProfile from "./components/pages/ManageProfile";
 import LinearOpt from "./components/algorithms/LinearOpt";
 import ShowResultLinear from "./components/layout/ShowResultLinear";
+import NotFound from "./components/pages/NotFound";
 
 const routing = (
     <BrowserRouter>
-        <div>
+        <Switch>
             <Route exact path="/signin" component={() => ["null", '', undefined, null].every((text) => {
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><HomepageLayout/></Homepage> : <SignIn/>}/>
@@ -74,7 +75,10 @@ const routing = (
                 return localStorage.getItem('authorization') !== text;
             }) ? <Homepage><ShowResultLinear/></Homepage> : <IndexPage/>}/>
 
-        </div>
+            <Route path="">
+                <Homepage><NotFound/></Homepage>
+            </Route>
+        </Switch>
     </BrowserRouter>
 );
 
