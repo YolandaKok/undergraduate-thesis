@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import styles from "../../static/signup.module.css";
+import styles1 from "../../static/signup.module.css";
 import CustomBreadCrumb from "./CustomBreadCrumb";
 import CustomCard from "./CustomCard";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 import RecentAlgorithms from "./RecentAlgorithms";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import withStyles from "@material-ui/core/styles/withStyles";
+import {withRouter} from "react-router-dom";
 
-export default class HomepageLayout extends Component {
+const styles = theme => ({
+    media: {
+        height: 120,
+    },
+    menuButton: {
+        color: "red",
+    },
+    cardStyle: {
+        backgroundColor: "#d1b78f"
+    },
+    cardAction: {
+        backgroundColor: "#d1b78f",
+        color: "black",
+        align: 'center'
+    },
+    styleButton: {
+        backgroundColor: "#d1b78f",
+        color: 'black'
+    }
+})
+
+class HomepageLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,9 +68,9 @@ export default class HomepageLayout extends Component {
             let items = []
             for (let i = 0; i < this.state.totalPages; i++) {
                 if(response.data.numOfPage == i) {
-                    items.push(<li className={styles.styleLinkActive} onClick={() => this.handlePageClick(i)} key={i} active>{i+1}</li>);
+                    items.push(<li className={styles1.styleLinkActive} onClick={() => this.handlePageClick(i)} key={i} active>{i+1}</li>);
                 } else {
-                    items.push(<li className={styles.styleLink} onClick={() => this.handlePageClick(i)} key={i}>{i+1}</li>);
+                    items.push(<li className={styles1.styleLink} onClick={() => this.handlePageClick(i)} key={i}>{i+1}</li>);
                 }
             }
             this.setState({"items": items});
@@ -63,14 +94,34 @@ export default class HomepageLayout extends Component {
 
 
     render() {
+        const {classes} = this.props;
         return (
             <Container fixed>
-                <Grid container spacing={2} className={styles.gridPadding} alignItems="stretch">
+                <Grid container spacing={2} className={styles1.gridPadding} alignItems="stretch">
                     <Grid item xs={12}>
                         <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Overview", "url": "/"}]} title="Recent Experiments" />
                     </Grid>
                     <Grid item xs={12} md={4} lg={3} xl={3}>
-                        <CustomCard title="New Experiment" content="Create a new experiment" href="/select/algorithm"/>
+                        <Card className={classes.cardStyle}>
+                            <CardActionArea className={classes.cardAction} onClick={(event) => {this.props.history.push("/select/algorithm");}}>
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        <AddCircleOutlineIcon/>
+                                        {'New Experiment'}
+                                    </Typography>
+                                    <Typography variant="body2" component="p">
+                                        {'Create a new experiment'}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions className={classes.styleButton}>
+                                <Button size="small" color="black">
+                                    Read More
+                                </Button>
+                                <Button size="small" color="black">
+                                </Button>
+                            </CardActions>
+                        </Card>
                     </Grid>
                     {
                         this.state.results.map((item, index) => (
@@ -90,3 +141,5 @@ export default class HomepageLayout extends Component {
         );
     }
 }
+
+export default withRouter((withStyles(styles)(HomepageLayout)))
