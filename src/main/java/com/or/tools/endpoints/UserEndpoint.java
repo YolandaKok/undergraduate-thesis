@@ -3,6 +3,7 @@ package com.or.tools.endpoints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,12 +54,14 @@ public class UserEndpoint {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("@userAuth.checkUser(authentication.name,#id)")
 	public void userUpdate(@PathVariable Long id, @RequestBody UserResponse request) {
 		service.updateUser(id, request.getFirstname(), request.getLastname(), request.getEmail(), request.getCompany(),
 				request.getProfession(), request.getSummary());
 	}
 
 	@PutMapping("/change/password/{id}")
+	@PreAuthorize("@userAuth.checkUser(authentication.name,#id)")
 	public SingleItemResponse<Boolean> updatePassword(@PathVariable Long id, @RequestBody PasswordRequest request) {
 		SingleItemResponse<Boolean> response = new SingleItemResponse<>();
 		response.setItem(service.updatePassword(id, request.getOldPassword(), request.getNewPassword()));

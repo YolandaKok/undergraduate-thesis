@@ -52,6 +52,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
+		// UserDAO userDAO = BeanUtil.getBean(UserDAO.class);
+		/* Get User Roles */
+		// UserDTO user = userDAO.findByUsername(((User)
+		// auth.getPrincipal()).getUsername());
 		/* Get User Roles */
 		String token = JWT.create().withSubject(((User) auth.getPrincipal()).getUsername())
 				.withExpiresAt(new Date(System.currentTimeMillis() + 864_000_000))

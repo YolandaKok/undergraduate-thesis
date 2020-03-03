@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 @EntityScan("com.or.tools.entities")
 @EnableJpaRepositories(basePackages = "com.or.tools.repositories")
 @EnableTransactionManagement
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AppApplication {
 
 	public static void main(String[] args) {
