@@ -2,13 +2,10 @@ package com.or.tools.response;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class ExperimentResponse {
 	private Long id;
 	private String algorithmName;
 	private String description;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	private Date modificationDate;
 	private String initialData;
 	private String resultData;

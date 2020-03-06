@@ -15,7 +15,7 @@ const styles = theme => ({
         height: 120,
     },
     menuButton: {
-        color: "red",
+        color: "black",
     },
     cardStyle: {
         backgroundColor: "#d1b78f"
@@ -26,7 +26,7 @@ const styles = theme => ({
     },
     styleButton: {
         backgroundColor: "#d1b78f",
-        color: 'black'
+        color: 'black',
     }
 })
 
@@ -34,6 +34,17 @@ export class CustomCard extends Component {
     constructor(props) {
         super(props);
 
+    }
+
+    addOne(month) {
+        return month + 1;
+    }
+
+    formatNumber(date) {
+        if(date < 10)
+            return '0' + date;
+        else
+            return date;
     }
 
     render() {
@@ -59,9 +70,10 @@ export class CustomCard extends Component {
                     <Button size="small" color="black">
                         Read More
                     </Button>
-                    <Button size="small" color="black">
-                        {date}
-                    </Button>
+                    <Typography variant="h6" component="p" style={{fontSize: '0.9rem'}}>
+                        {date !== '' ? this.formatNumber((new Date(date)).getHours()) + ':' + this.formatNumber((new Date(date)).getMinutes()) + '  ' : ''}
+                        {date !== '' ? this.formatNumber(new Date(date).getDate()) + '/' + this.formatNumber(this.addOne((new Date(date)).getMonth())) + '/' + (new Date(date)).getFullYear() : ''}
+                    </Typography>
                     {this.props.removeIcon ? <IconButton onClick={() => this.props.deleteFunction(this.props.id, this.props.functionToCall, this.props.passThis)} className={classes.menuButton} aria-label="delete">
                         <DeleteIcon />
                     </IconButton> : ''}

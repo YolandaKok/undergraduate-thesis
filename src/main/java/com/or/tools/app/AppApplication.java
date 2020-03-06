@@ -35,10 +35,6 @@ public class AppApplication {
 		return builder.build();
 	}
 
-	/**
-	 *
-	 * BCrypt Password
-	 */
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

@@ -118,7 +118,7 @@ class HomepageLayout extends Component {
                                 <Button size="small" color="black">
                                     Read More
                                 </Button>
-                                <Button size="small" color="black">
+                                <Button disabled={true} size="small" color="black">
                                 </Button>
                             </CardActions>
                         </Card>
