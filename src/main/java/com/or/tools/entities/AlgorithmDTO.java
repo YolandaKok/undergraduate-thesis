@@ -29,6 +29,8 @@ public class AlgorithmDTO {
 	private Date date;
 	@Column(name = "CATEGORY")
 	private String category;
+	@Column(name = "INFO_LINK")
+	private String infoLink;
 
 	@OneToMany(mappedBy = "algorithm", orphanRemoval = true)
 	private List<ExperimentDTO> experiments;
@@ -109,6 +111,14 @@ public class AlgorithmDTO {
 
 	public void setDataSamples(List<DataSampleDTO> dataSamples) {
 		this.dataSamples = dataSamples;
+	}
+
+	public String getInfoLink() {
+		return infoLink;
+	}
+
+	public void setInfoLink(String infoLink) {
+		this.infoLink = infoLink;
 	}
 
 }

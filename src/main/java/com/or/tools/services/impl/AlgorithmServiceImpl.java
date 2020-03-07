@@ -40,6 +40,7 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 			response.setCategory(algorithms.get(i).getCategory());
 			response.setDescription(algorithms.get(i).getDescription());
 			response.setLibrary(algorithms.get(i).getLibrary().getName());
+			response.setLink(algorithms.get(i).getInfoLink());
 			responses.add(response);
 		}
 

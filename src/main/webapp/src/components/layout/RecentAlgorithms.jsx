@@ -64,7 +64,7 @@ export class RecentAlgorithms extends Component {
                 {
                     this.state.results.map((item, index) => (
                         <Grid item xs={12} md={12} lg={3} xl={3}>
-                            <CustomCard title={item.name} content={item.description} href={"/algorithms/" + item.name.replace(/\s/g, "").toLowerCase() + "/" + item.id}/>
+                            <CustomCard link={item.link} title={item.name} content={item.description} href={"/algorithms/" + item.name.replace(/\s/g, "").toLowerCase() + "/" + item.id}/>
                         </Grid>
                     ))
                 }

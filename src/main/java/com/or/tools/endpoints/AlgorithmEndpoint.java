@@ -37,6 +37,7 @@ public class AlgorithmEndpoint {
 			itemResponse.setDescription(item.getDescription());
 			itemResponse.setLibrary(item.getLibrary().getName());
 			itemResponse.setName(item.getName());
+			itemResponse.setLink(item.getInfoLink());
 			exResponses.add(itemResponse);
 		}
 		CustomPage<AlgorithmResponse> pageResponse = new CustomPage<>();

@@ -164,7 +164,7 @@ export default class SelectAlgorithm extends Component {
                     {
                         this.state.results.map((result, index) => (
                             <Grid item xs={12} md={4} lg={4} xl={4} key={index}>
-                                <CustomCard title={result.name} content={result.description} href={"/algorithms/" + result.name.replace(/\s/g, "").toLowerCase() + "/" + result.id}/>
+                                <CustomCard link={result.link} title={result.name} content={result.description} href={"/algorithms/" + result.name.replace(/\s/g, "").toLowerCase() + "/" + result.id}/>
                             </Grid>
                         ))
                     }

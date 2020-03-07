@@ -6,6 +6,15 @@ public class AlgorithmResponse {
 	private String description;
 	private String category;
 	private String library;
+	private String link;
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
 
 	public Long getId() {
 		return id;

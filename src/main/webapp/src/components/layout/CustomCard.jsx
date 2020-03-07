@@ -33,7 +33,9 @@ const styles = theme => ({
 export class CustomCard extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            open: false
+        }
     }
 
     addOne(month) {
@@ -47,12 +49,15 @@ export class CustomCard extends Component {
             return date;
     }
 
+
+
     render() {
         /* Get props for custom cards */
         let title = this.props.title;
         let content = this.props.content;
         let href = this.props.href;
         let date = this.props.date;
+        let link = this.props.link;
         const {classes} = this.props;
         return (
             <Card className={classes.cardStyle}>
@@ -67,7 +72,7 @@ export class CustomCard extends Component {
                     </CardContent>
                 </CardActionArea>
                 <CardActions className={classes.styleButton}>
-                    <Button size="small" color="black">
+                    <Button href={link} target="_blank" size="small" color="black">
                         Read More
                     </Button>
                     <Typography variant="h6" component="p" style={{fontSize: '0.9rem'}}>

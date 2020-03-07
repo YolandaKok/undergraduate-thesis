@@ -9,6 +9,15 @@ public class ExperimentResponse {
 	private Date modificationDate;
 	private String initialData;
 	private String resultData;
+	private String link;
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
 
 	public Long getId() {
 		return id;

@@ -126,7 +126,7 @@ class HomepageLayout extends Component {
                     {
                         this.state.results.map((item, index) => (
                             <Grid item xs={12} md={4} lg={3} xl={3}>
-                                <CustomCard id={item.id} title={item.algorithmName} content={item.description} href={'/show/result/' + item.algorithmName.replace(/\s/g, "").toLowerCase() + "/"  + item.id} date={item.modificationDate}/>
+                                <CustomCard link={item.link} id={item.id} title={item.algorithmName} content={item.description} href={'/show/result/' + item.algorithmName.replace(/\s/g, "").toLowerCase() + "/"  + item.id} date={item.modificationDate}/>
                             </Grid>
                         ))
                     }

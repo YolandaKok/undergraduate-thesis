@@ -47,6 +47,7 @@ public class ExperimentEndpoint {
 			itemResponse.setDescription(item.getAlgorithmDTO().getDescription());
 			itemResponse.setModificationDate(item.getModificationDate());
 			itemResponse.setId(item.getId());
+			itemResponse.setLink(item.getAlgorithmDTO().getInfoLink());
 			exResponses.add(itemResponse);
 		}
 		CustomPage<ExperimentResponse> pageResponse = new CustomPage<>();
@@ -68,6 +69,7 @@ public class ExperimentEndpoint {
 		response.setDescription(experiment.get().getAlgorithmDTO().getDescription());
 		response.setInitialData(experiment.get().getData());
 		response.setResultData(experiment.get().getResultData());
+		response.setLink(experiment.get().getAlgorithmDTO().getInfoLink());
 		response.setModificationDate(experiment.get().getModificationDate());
 		return response;
 	}
@@ -95,6 +97,7 @@ public class ExperimentEndpoint {
 			itemResponse.setAlgorithmName(item.getAlgorithm());
 			itemResponse.setDescription(item.getAlgorithmDTO().getDescription());
 			itemResponse.setModificationDate(item.getModificationDate());
+			itemResponse.setLink(item.getAlgorithmDTO().getInfoLink());
 			itemResponse.setId(item.getId());
 			exResponses.add(itemResponse);
 		}
