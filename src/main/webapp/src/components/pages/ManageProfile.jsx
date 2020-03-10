@@ -274,27 +274,27 @@ export class ManageProfile extends Component {
                                                                                    message={this.state.message}/> : ''
                             }
                         </Grid>
-                        {/*<Grid xl={2}>*/}
-                        {/*    <List className={classes.list} display={{ xs: 'none', md: 'none', lg: 'none', xl: 'block' }}>*/}
-                        {/*        /!*style ={ { backgroundImage: "url('https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300')" } }*!/*/}
-                        {/*        <div>*/}
+                        <Grid xl={2}>
+                            <List className={classes.list} display={{ xs: 'none', md: 'none', lg: 'none', xl: 'block' }}>
+                                {/*style ={ { backgroundImage: "url('https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300')" } }*/}
+                                <div>
 
-                        {/*        </div>*/}
-                        {/*        /!*<Divider/>*!/*/}
-                        {/*        <Typography className={classes.listItem}>*/}
-                        {/*            <Typography variant="h6" style={{fontWeight: 530}}>General</Typography>*/}
-                        {/*            <Typography variant="body1" className={classes.textItem}>Firstname: {this.state.firstname}</Typography>*/}
-                        {/*            <Typography variant="body1" className={classes.textItem}>Lastname: {this.state.lastname}</Typography>*/}
-                        {/*        </Typography>*/}
-                        {/*        <Divider/>*/}
-                        {/*        <Typography className={classes.listItem}>*/}
-                        {/*            <Typography variant="h6">Summary</Typography>*/}
-                        {/*            <Typography variant="body1" className={classes.textItem}>{this.state.role} - {this.state.summary}</Typography>*/}
-                        {/*        </Typography>*/}
-                        {/*        <Divider/>*/}
-                        {/*    </List>*/}
-                        {/*</Grid>*/}
-                        <Grid item xs={12} md={12} lg={12} xl={12}>
+                                </div>
+                                {/*<Divider/>*/}
+                                <Typography className={classes.listItem}>
+                                    <Typography variant="h6" style={{fontWeight: 530}}>General</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>Firstname: {this.state.firstname}</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>Lastname: {this.state.lastname}</Typography>
+                                </Typography>
+                                <Divider/>
+                                <Typography className={classes.listItem}>
+                                    <Typography variant="h6">Summary</Typography>
+                                    <Typography variant="body1" className={classes.textItem}>{this.state.role} - {this.state.summary}</Typography>
+                                </Typography>
+                                <Divider/>
+                            </List>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={10} xl={10}>
                             <Container>
                                 <Grid container justify={'center'}>
                                     <Grid item xs={12} component={Paper}>

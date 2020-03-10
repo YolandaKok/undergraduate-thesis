@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import styles from "../../static/signup.module.css";

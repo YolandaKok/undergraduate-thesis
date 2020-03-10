@@ -1,21 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import styles from "../../static/signup.module.css";
 import {
-    FlexibleWidthXYPlot,
     FlexibleXYPlot,
-    Hint,
     HorizontalGridLines,
-    MarkSeries,
     VerticalGridLines,
     XAxis,
     YAxis
 } from "react-vis";
-import {ForceGraph, ForceGraphArrowLink, ForceGraphNode} from "react-vis-force";
-import Paper from "@material-ui/core/Paper";
-import XYPlot from "react-vis/es/plot/xy-plot";
 import ChartLabel from "react-vis/es/plot/chart-label";
 import LineSeries from "react-vis/es/plot/series/line-series";
-import {Container} from "react-bootstrap";
 
 export default class RouteGraph extends Component {
     constructor(props) {
