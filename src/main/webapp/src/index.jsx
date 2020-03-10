@@ -18,6 +18,7 @@ import ManageProfile from "./components/pages/ManageProfile";
 import LinearOpt from "./components/algorithms/LinearOpt";
 import ShowResultLinear from "./components/layout/ShowResultLinear";
 import NotFound from "./components/pages/NotFound";
+import GoogleMapsGraph from "./components/graphs/GoogleMapsGraph";
 
 const jwtDecode = require('jwt-decode');
 

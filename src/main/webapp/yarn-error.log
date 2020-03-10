@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add google-maps-react
+  /usr/local/bin/node /usr/local/lib/node_modules/yarn/bin/yarn.js add google-maps-react
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/generator/node_modules/jsesc/jsesc.js'
+  Error: EACCES: permission denied, unlink '/home/yolanda/undergraduate-thesis/src/main/webapp/node_modules/@babel/generator/node_modules/jsesc/LICENSE-MIT.txt'
 
 npm manifest: 
   {
@@ -57,6 +57,7 @@ npm manifest:
       "eslint-import-resolver-webpack": "^0.12.0",
       "externals": "^0.0.1",
       "file-loader": "^5.1.0",
+      "google-maps-react": "^2.0.2",
       "jquery": "^3.4.1",
       "jwt-decode": "^2.2.0",
       "moment": "^2.24.0",
@@ -5817,6 +5818,11 @@ Lockfile:
       glob "~7.1.1"
       lodash "~4.17.10"
       minimatch "~3.0.2"
+  
+  google-maps-react@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/google-maps-react/-/google-maps-react-2.0.2.tgz#e03fbba032fe570fb38744bf9cd10b946c591cae"
+    integrity sha512-6cYauGwt22haDUrWxKQ6yoNOqjiuxHo8YYcmb+aBvNICokdXmZOUB6Ah4vD5VexMVlrwP2PFqA/D8sHpEB52KA==
   
   graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
     version "4.2.3"

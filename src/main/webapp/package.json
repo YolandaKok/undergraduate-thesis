@@ -49,6 +49,7 @@
     "react-csv": "^1.1.2",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
+    "react-google-maps": "^9.4.5",
     "react-moment": "^0.9.7",
     "react-paginate": "^6.3.2",
     "react-redux": "^7.2.0",

@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.maps.GeoApiContext;
+
 @Configuration
 @ComponentScan(basePackages = "com.or.tools")
 @SpringBootApplication
@@ -38,6 +40,12 @@ public class AppApplication {
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public GeoApiContext createGoogleClient() {
+		GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyBT4mw-5ZlaiE8j_6GdNgHTgZi7PJrNa5s").build();
+		return context;
 	}
 
 }
