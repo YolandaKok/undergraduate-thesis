@@ -168,9 +168,6 @@ public class TSPService {
 			ArrayList<Integer> row = new ArrayList<Integer>();
 			for (int j = 0; j < rows.get(i).getElements().size(); j++) {
 				row.add(rows.get(i).getElements().get(j).getDistance().getValue() / 1000);
-				// distances[i][j] = (long) ((Integer
-				// .toUnsignedLong(rows.get(i).getElements().get(j).getDistance().getValue()) /
-				// 1000) * 1.609344);
 			}
 			distanceMatrix.add(row);
 		}
