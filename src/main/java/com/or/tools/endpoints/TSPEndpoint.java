@@ -38,7 +38,7 @@ public class TSPEndpoint {
 
 	@GetMapping("/distance/matrix")
 	public long[][] distanceMatrix(ArrayList<String> cities) {
-		return service.calculateDistanceMatrix(cities);
+		return service.calculateDistanceMatrix(cities, false);
 	}
 
 	@PostMapping("/result")

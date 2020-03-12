@@ -81,7 +81,7 @@ public class TSPService {
 		return response;
 	}
 
-	public long[][] calculateDistanceMatrix(ArrayList<String> cities) {
+	public long[][] calculateDistanceMatrix(ArrayList<String> cities, boolean meters) {
 		int max_elements = 100;
 		int num_addresses = cities.size();
 
@@ -109,7 +109,7 @@ public class TSPService {
 				origin_addresses.add(cities.get(k));
 			}
 			response = send_request(origin_addresses, dest_addresses);
-			array = build_distance_matrix(response, cities.size());
+			array = build_distance_matrix(response, cities.size(), meters);
 			for (int j = 0; j < array.size(); j++) {
 				for (int w = 0; w < array.get(0).size(); w++) {
 					distanceMatrix[x][y] = array.get(j).get(w);
@@ -127,7 +127,7 @@ public class TSPService {
 				origin_addresses.add(cities.get(i));
 			}
 			response = send_request(origin_addresses, dest_addresses);
-			array = build_distance_matrix(response, cities.size());
+			array = build_distance_matrix(response, cities.size(), meters);
 			for (int j = 0; j < array.size(); j++) {
 				for (int w = 0; w < array.get(0).size(); w++) {
 					distanceMatrix[x][y] = array.get(j).get(w);
@@ -160,16 +160,19 @@ public class TSPService {
 		return object;
 	}
 
-	private ArrayList<ArrayList<Integer>> build_distance_matrix(DistanceMatrixModel response, int length) {
+	private ArrayList<ArrayList<Integer>> build_distance_matrix(DistanceMatrixModel response, int length,
+			boolean meters) {
 		ArrayList<ArrayList<Integer>> distanceMatrix = new ArrayList<>();
 		// long[][] distances = new long[length][length];
 		ArrayList<Row> rows = response.getRows();
 		for (int i = 0; i < rows.size(); i++) {
 			ArrayList<Integer> row = new ArrayList<Integer>();
 			for (int j = 0; j < rows.get(i).getElements().size(); j++) {
-				System.out.println(rows.get(i).getElements().get(j).getDistance().getValue());
-				System.out.println(rows.get(i).getElements().get(j).getDistance().getValue() / 1000);
-				row.add(rows.get(i).getElements().get(j).getDistance().getValue());
+				if (meters) {
+					row.add(rows.get(i).getElements().get(j).getDistance().getValue());
+				} else {
+					row.add(rows.get(i).getElements().get(j).getDistance().getValue() / 1000);
+				}
 			}
 			distanceMatrix.add(row);
 		}

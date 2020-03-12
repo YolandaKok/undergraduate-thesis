@@ -32,6 +32,7 @@ import com.google.ortools.constraintsolver.RoutingModel;
 import com.google.ortools.constraintsolver.RoutingSearchParameters;
 import com.google.ortools.constraintsolver.main;
 import com.or.tools.model.Coords;
+import com.or.tools.model.PathModel;
 
 @Service
 public class VehicleRoutingService {
@@ -67,6 +68,7 @@ public class VehicleRoutingService {
 		return CompletableFuture.completedFuture(point);
 	}
 
+	// TODO: Make this function asynchronous
 	public List<LatLng> findStepsBetween(String origin, List<String> waypointsStrings) {
 		Waypoint[] waypoints = new Waypoint[waypointsStrings.size()];
 		for (int i = 0; i < waypointsStrings.size(); i++) {
@@ -93,16 +95,13 @@ public class VehicleRoutingService {
 		return result;
 	}
 
-	public void findRoutes(List<String> cities, int vehicles, int startIndex, long maxArcDistance) {
-		long[][] distanceMatrix = service.calculateDistanceMatrix((ArrayList<String>) cities);
-		// Create Routing Index Manager
-		// data.vehicleNumber
-		// 0
+	public List<PathModel> findRoutes(List<String> cities, int vehicles, int startIndex, long maxArcDistance) {
+		// Information about the paths
+		List<PathModel> paths = new ArrayList<>();
+		long[][] distanceMatrix = service.calculateDistanceMatrix((ArrayList<String>) cities, true);
 		RoutingIndexManager manager = new RoutingIndexManager(distanceMatrix.length, vehicles, startIndex);
-
 		// Create Routing Model.
 		RoutingModel routing = new RoutingModel(manager);
-
 		// Create and register a transit callback.
 		final int transitCallbackIndex = routing.registerTransitCallback((long fromIndex, long toIndex) -> {
 			// Convert from routing variable Index to user NodeIndex.
@@ -110,41 +109,48 @@ public class VehicleRoutingService {
 			int toNode = manager.indexToNode(toIndex);
 			return distanceMatrix[fromNode][toNode];
 		});
-
 		// Define cost of each arc.
 		routing.setArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
-
 		// Add Distance constraint.
 		routing.addDimension(transitCallbackIndex, 0, maxArcDistance, true, // start cumul to zero
 				"Distance");
 		RoutingDimension distanceDimension = routing.getMutableDimension("Distance");
 		distanceDimension.setGlobalSpanCostCoefficient(100);
-
 		// Setting first solution heuristic.
 		RoutingSearchParameters searchParameters = main.defaultRoutingSearchParameters().toBuilder()
 				.setFirstSolutionStrategy(FirstSolutionStrategy.Value.PATH_CHEAPEST_ARC).build();
-
 		// Solve the problem.
 		Assignment solution = routing.solveWithParameters(searchParameters);
-
 		long maxRouteDistance = 0;
 		// 4 -> vehicle number
 		for (int i = 0; i < vehicles; ++i) {
+			PathModel pathModel = new PathModel();
+			List<String> waypoints = new ArrayList<>();
 			long index = routing.start(i);
 			logger.info("Route for Vehicle " + i + ":");
 			long routeDistance = 0;
+			int countItems = 0;
 			String route = "";
 			while (!routing.isEnd(index)) {
+				if (countItems == 0)
+					pathModel.setOrigin(cities.get(manager.indexToNode(index)));
+				else
+					waypoints.add(cities.get(manager.indexToNode(index)));
 				route += manager.indexToNode(index) + " -> ";
 				long previousIndex = index;
 				index = solution.value(routing.nextVar(index));
 				routeDistance += routing.getArcCostForVehicle(previousIndex, index, i);
+				countItems++;
 			}
 			logger.info(route + manager.indexToNode(index));
 			logger.info("Distance of the route: " + routeDistance + "m");
 			maxRouteDistance = Math.max(routeDistance, maxRouteDistance);
+			pathModel.setWaypoints(waypoints);
+			pathModel.setRouteDistance(routeDistance);
+			paths.add(pathModel);
 		}
 		logger.info("Maximum of the route distances: " + maxRouteDistance + "m");
+		return paths;
 	}
 
 }

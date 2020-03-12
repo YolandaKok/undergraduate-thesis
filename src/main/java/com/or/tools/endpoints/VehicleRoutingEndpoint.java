@@ -24,6 +24,7 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.or.tools.algorithms.VehicleRoutingService;
 import com.or.tools.model.Coords;
+import com.or.tools.model.PathModel;
 import com.or.tools.response.VehicleRoutingResult;
 import com.or.tools.util.IOUtils;
 
@@ -68,10 +69,12 @@ public class VehicleRoutingEndpoint {
 	}
 
 	@PostMapping("/solve")
-	public VehicleRoutingResult solve(@RequestParam("file") MultipartFile file) {
+	public List<PathModel> solve(@RequestParam("file") MultipartFile file) {
 		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
-		// service.findRoutes(cities);
-		return result;
+		List<PathModel> paths = service.findRoutes(result.getDestinations(), result.getNumOfVehicles(),
+				result.getStartIndex(), result.getMaxArcDistance());
+		// service.findStepsBetween(result.getDestinations().get(result.getStartIndex()),);
+		return paths;
 	}
 
 	@PostMapping("/test")
