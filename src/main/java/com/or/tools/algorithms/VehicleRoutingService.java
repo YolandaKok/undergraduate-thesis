@@ -46,9 +46,7 @@ public class VehicleRoutingService {
 
 	@Async
 	public CompletableFuture<Coords> getCoords(String city) {
-
 		logger.info("Compute coordinates for {}", city);
-
 		GeocodingResult[] results = null;
 		try {
 			results = GeocodingApi.geocode(geoApiContext, city).await();
@@ -62,7 +60,6 @@ public class VehicleRoutingService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		Coords point = new Coords();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		point.setLat(Double.parseDouble(gson.toJson(results[0].geometry.location.lat)));
@@ -96,12 +93,12 @@ public class VehicleRoutingService {
 		return result;
 	}
 
-	public void findRoutes(List<String> cities) {
+	public void findRoutes(List<String> cities, int vehicles, int startIndex, long maxArcDistance) {
 		long[][] distanceMatrix = service.calculateDistanceMatrix((ArrayList<String>) cities);
 		// Create Routing Index Manager
 		// data.vehicleNumber
 		// 0
-		RoutingIndexManager manager = new RoutingIndexManager(distanceMatrix.length, 4, 0);
+		RoutingIndexManager manager = new RoutingIndexManager(distanceMatrix.length, vehicles, startIndex);
 
 		// Create Routing Model.
 		RoutingModel routing = new RoutingModel(manager);
@@ -118,7 +115,7 @@ public class VehicleRoutingService {
 		routing.setArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
 		// Add Distance constraint.
-		routing.addDimension(transitCallbackIndex, 0, 40000, true, // start cumul to zero
+		routing.addDimension(transitCallbackIndex, 0, maxArcDistance, true, // start cumul to zero
 				"Distance");
 		RoutingDimension distanceDimension = routing.getMutableDimension("Distance");
 		distanceDimension.setGlobalSpanCostCoefficient(100);
@@ -132,7 +129,7 @@ public class VehicleRoutingService {
 
 		long maxRouteDistance = 0;
 		// 4 -> vehicle number
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < vehicles; ++i) {
 			long index = routing.start(i);
 			logger.info("Route for Vehicle " + i + ":");
 			long routeDistance = 0;

@@ -14,6 +14,7 @@ import com.or.tools.model.LinearConstrain;
 import com.or.tools.model.LinearObjective;
 import com.or.tools.model.LinearOptModel;
 import com.or.tools.model.MultipleKnapsackModel;
+import com.or.tools.response.VehicleRoutingResult;
 
 @Component
 public class IOUtils {
@@ -216,8 +217,91 @@ public class IOUtils {
 				e.printStackTrace();
 			}
 		}
-
 		return response;
+	}
+
+	public VehicleRoutingResult readVehicleRouting(MultipartFile file) {
+		VehicleRoutingResult result = new VehicleRoutingResult();
+		List<String> cities = new ArrayList<>();
+		int vehicles = -1;
+		long maxArcDistance = -1;
+		int startIndex = -1;
+
+		MultipleKnapsackModel response = new MultipleKnapsackModel();
+
+		int numOfRows = 0;
+		int totalRows;
+
+		double[] bins;
+		double[] values;
+		double[] weights;
+
+		if (!file.isEmpty()) {
+			// Read the file
+			try {
+				byte[] bytes = file.getBytes();
+				String data = new String(bytes);
+				String[] rows = data.split("\n");
+				totalRows = rows.length;
+
+				int num = 0;
+
+				for (String row : rows) {
+					if (numOfRows != 0 && numOfRows != (totalRows - 1)) {
+						log.info("New Row: ");
+						String[] columns = row.split(";");
+						int attributes = 0;
+						for (String column : columns) {
+							if (column.charAt(0) == '"') {
+								column = column.substring(1, column.length() - 1);
+							}
+							cities.add(column);
+							attributes++;
+							log.info("Attribute: {}", column);
+						}
+						num++;
+					}
+					if (numOfRows == totalRows - 1) {
+						log.info("New Row: ");
+						String[] columns = row.split(";");
+						int attributes = 0;
+						for (String column : columns) {
+							if (column.charAt(0) == '"') {
+								column = column.substring(1, column.length() - 1);
+							}
+							if (attributes == 0) {
+							} else if (attributes == 1) {
+								System.out.println(column);
+								column = column.substring(1, column.length() - 1);
+								System.out.println(column);
+								String[] items = column.split(",");
+								for (int k = 0; k < items.length; k++) {
+									if (k == 0) {
+										vehicles = Integer.parseInt(items[k]);
+									} else if (k == 1) {
+										maxArcDistance = Long.parseLong(items[k]);
+									} else if (k == 2) {
+										startIndex = Integer.parseInt(items[k]);
+									}
+								}
+							}
+							attributes++;
+							log.info("Attribute: {}", column);
+						}
+					}
+					numOfRows++;
+				}
+			} catch (IOException e) {
+				log.error("Error during reading {} please fix and re upload the file", e.getMessage());
+				e.printStackTrace();
+			}
+		}
+
+		result.setDestinations(cities);
+		result.setMaxArcDistance(maxArcDistance);
+		result.setNumOfVehicles(vehicles);
+		result.setStartIndex(startIndex);
+		return result;
 	}
 
 	public LinearOptModel readLinearOptData(MultipartFile file) {

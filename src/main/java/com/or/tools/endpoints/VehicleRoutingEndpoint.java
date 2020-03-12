@@ -24,6 +24,7 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.or.tools.algorithms.VehicleRoutingService;
 import com.or.tools.model.Coords;
+import com.or.tools.response.VehicleRoutingResult;
 import com.or.tools.util.IOUtils;
 
 @RestController
@@ -67,9 +68,10 @@ public class VehicleRoutingEndpoint {
 	}
 
 	@PostMapping("/solve")
-	public void solve(@RequestParam("file") MultipartFile file) {
-		ArrayList<String> cities = ioUtils.readTspData(file);
-		service.findRoutes(cities);
+	public VehicleRoutingResult solve(@RequestParam("file") MultipartFile file) {
+		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
+		// service.findRoutes(cities);
+		return result;
 	}
 
 	@PostMapping("/test")
