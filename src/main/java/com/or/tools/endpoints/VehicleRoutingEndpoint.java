@@ -105,7 +105,10 @@ public class VehicleRoutingEndpoint {
 	public List<LatLng> solvePolyline(@RequestParam("origin") String origin,
 			@RequestParam("destination") String destination) {
 		System.out.println(origin + " " + destination);
-		return service.findStepsBetween(origin, destination);
+		List<String> array = new ArrayList<>();
+		array.add("Galatsiou 130, Galatsi");
+		array.add("Patission 200, Athens");
+		return service.findStepsBetween(origin, array);
 	}
 
 }

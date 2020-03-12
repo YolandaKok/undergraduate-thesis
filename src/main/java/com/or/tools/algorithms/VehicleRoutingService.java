@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApiRequest;
+import com.google.maps.DirectionsApiRequest.Waypoint;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
@@ -68,10 +70,19 @@ public class VehicleRoutingService {
 		return CompletableFuture.completedFuture(point);
 	}
 
-	public List<LatLng> findStepsBetween(String origin, String destination) {
+	public List<LatLng> findStepsBetween(String origin, List<String> waypointsStrings) {
+		Waypoint[] waypoints = new Waypoint[waypointsStrings.size()];
+		for (int i = 0; i < waypointsStrings.size(); i++) {
+			Waypoint waypoint = new Waypoint(waypointsStrings.get(i));
+			waypoints[i] = waypoint;
+		}
 		DirectionsResult results = null;
 		try {
-			results = DirectionsApi.getDirections(geoApiContext, origin, destination).await();
+			DirectionsApiRequest request = DirectionsApi.newRequest(geoApiContext);
+			request.origin(origin);
+			request.destination(origin);
+			request.waypoints(waypoints);
+			results = request.await();
 		} catch (ApiException | InterruptedException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
