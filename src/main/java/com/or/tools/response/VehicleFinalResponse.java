@@ -9,6 +9,15 @@ public class VehicleFinalResponse {
 	private LatLng center;
 	private List<List<LatLng>> routes;
 	private List<Coords> markers;
+	private List<List<Integer>> routesInt;
+
+	public List<List<Integer>> getRoutesInt() {
+		return routesInt;
+	}
+
+	public void setRoutesInt(List<List<Integer>> routesInt) {
+		this.routesInt = routesInt;
+	}
 
 	public List<Coords> getMarkers() {
 		return markers;

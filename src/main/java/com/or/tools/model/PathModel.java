@@ -6,6 +6,15 @@ public class PathModel {
 	private String origin;
 	private List<String> waypoints;
 	private long routeDistance;
+	private List<Integer> routes;
+
+	public List<Integer> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(List<Integer> routes) {
+		this.routes = routes;
+	}
 
 	public String getOrigin() {
 		return origin;

@@ -71,7 +71,8 @@ public class VehicleRoutingService {
 
 	// TODO: Make this function asynchronous
 	@Async
-	public CompletableFuture<List<LatLng>> findStepsBetween(String origin, List<String> waypointsStrings) {
+	public CompletableFuture<List<LatLng>> findStepsBetween(String origin, List<String> waypointsStrings,
+			List<Integer> routesInt, Long distance) {
 		Waypoint[] waypoints = new Waypoint[waypointsStrings.size()];
 		for (int i = 0; i < waypointsStrings.size(); i++) {
 			Waypoint waypoint = new Waypoint(waypointsStrings.get(i));
@@ -128,6 +129,7 @@ public class VehicleRoutingService {
 		for (int i = 0; i < vehicles; ++i) {
 			PathModel pathModel = new PathModel();
 			List<String> waypoints = new ArrayList<>();
+			List<Integer> routes = new ArrayList<>();
 			long index = routing.start(i);
 			logger.info("Route for Vehicle " + i + ":");
 			long routeDistance = 0;
@@ -138,6 +140,7 @@ public class VehicleRoutingService {
 					pathModel.setOrigin(cities.get(manager.indexToNode(index)));
 				else
 					waypoints.add(cities.get(manager.indexToNode(index)));
+				routes.add(manager.indexToNode(index));
 				route += manager.indexToNode(index) + " -> ";
 				long previousIndex = index;
 				index = solution.value(routing.nextVar(index));
@@ -149,6 +152,7 @@ public class VehicleRoutingService {
 			maxRouteDistance = Math.max(routeDistance, maxRouteDistance);
 			pathModel.setWaypoints(waypoints);
 			pathModel.setRouteDistance(routeDistance);
+			pathModel.setRoutes(routes);
 			paths.add(pathModel);
 		}
 		logger.info("Maximum of the route distances: " + maxRouteDistance + "m");

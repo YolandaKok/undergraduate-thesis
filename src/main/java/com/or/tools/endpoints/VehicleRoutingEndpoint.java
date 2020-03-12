@@ -99,12 +99,14 @@ public class VehicleRoutingEndpoint {
 		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
 		List<PathModel> paths = service.findRoutes(result.getDestinations(), result.getNumOfVehicles(),
 				result.getStartIndex(), result.getMaxArcDistance());
+
 		List<CompletableFuture<List<LatLng>>> finalPathsFuture = new ArrayList<>();
 		List<List<LatLng>> finalPaths = new ArrayList<>();
 
 		for (PathModel item : paths) {
 			CompletableFuture<List<LatLng>> path;
-			path = service.findStepsBetween(item.getOrigin(), item.getWaypoints());
+			path = service.findStepsBetween(item.getOrigin(), item.getWaypoints(), item.getRoutes(),
+					item.getRouteDistance());
 			finalPathsFuture.add(path);
 		}
 		VehicleFinalResponse response = new VehicleFinalResponse();
@@ -125,6 +127,7 @@ public class VehicleRoutingEndpoint {
 		for (int i = 0; i < response.getRoutes().size(); i++) {
 			response.setMarkers(findCoordsMarkers(result.getDestinations()));
 		}
+		response.setRoutesInt(paths.stream().map(x -> x.getRoutes()).collect(Collectors.toList()));
 		return response;
 	}
 
