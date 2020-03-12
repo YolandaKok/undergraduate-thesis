@@ -24,7 +24,9 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.or.tools.algorithms.VehicleRoutingService;
 import com.or.tools.model.Coords;
+import com.or.tools.model.Marker;
 import com.or.tools.model.PathModel;
+import com.or.tools.response.VehicleFinalResponse;
 import com.or.tools.response.VehicleRoutingResult;
 import com.or.tools.util.IOUtils;
 
@@ -68,13 +70,49 @@ public class VehicleRoutingEndpoint {
 		return coords;
 	}
 
+	private List<Coords> findCoordsMarkers(List<String> markers) {
+		List<Marker> response = new ArrayList<>();
+		List<CompletableFuture<Coords>> coordsFuture = new ArrayList<>();
+
+		for (String location : markers) {
+			coordsFuture.add(service.getCoords(location));
+		}
+		List<Coords> coords;
+
+		coords = coordsFuture.stream().map(x -> {
+			try {
+				return x.get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		return coords;
+	}
+
 	@PostMapping("/solve")
-	public List<PathModel> solve(@RequestParam("file") MultipartFile file) {
+	public VehicleFinalResponse solve(@RequestParam("file") MultipartFile file) {
 		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
 		List<PathModel> paths = service.findRoutes(result.getDestinations(), result.getNumOfVehicles(),
 				result.getStartIndex(), result.getMaxArcDistance());
-		// service.findStepsBetween(result.getDestinations().get(result.getStartIndex()),);
-		return paths;
+		List<List<LatLng>> finalPaths = new ArrayList<>();
+		for (PathModel item : paths) {
+			List<LatLng> path = new ArrayList<>();
+			path = service.findStepsBetween(item.getOrigin(), item.getWaypoints());
+			finalPaths.add(path);
+		}
+		VehicleFinalResponse response = new VehicleFinalResponse();
+		response.setRoutes(finalPaths);
+		response.setCenter(finalPaths.get(0).get(0));
+		for (int i = 0; i < response.getRoutes().size(); i++) {
+			response.setMarkers(findCoordsMarkers(result.getDestinations()));
+		}
+		return response;
 	}
 
 	@PostMapping("/test")

@@ -65,6 +65,7 @@ public class VehicleRoutingService {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		point.setLat(Double.parseDouble(gson.toJson(results[0].geometry.location.lat)));
 		point.setLng(Double.parseDouble(gson.toJson(results[0].geometry.location.lng)));
+		point.setAddress(city);
 		return CompletableFuture.completedFuture(point);
 	}
 

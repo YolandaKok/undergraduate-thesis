@@ -2,11 +2,22 @@ package com.or.tools.response;
 
 import java.util.List;
 
+import com.or.tools.model.Coords;
+
 public class VehicleRoutingResult {
 	private List<String> destinations;
 	private int numOfVehicles;
 	private long maxArcDistance;
 	private int startIndex;
+	List<Coords> markers;
+
+	public List<Coords> getMarkers() {
+		return markers;
+	}
+
+	public void setMarkers(List<Coords> markers) {
+		this.markers = markers;
+	}
 
 	public List<String> getDestinations() {
 		return destinations;
