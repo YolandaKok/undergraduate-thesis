@@ -70,7 +70,8 @@ public class VehicleRoutingService {
 	}
 
 	// TODO: Make this function asynchronous
-	public List<LatLng> findStepsBetween(String origin, List<String> waypointsStrings) {
+	@Async
+	public CompletableFuture<List<LatLng>> findStepsBetween(String origin, List<String> waypointsStrings) {
 		Waypoint[] waypoints = new Waypoint[waypointsStrings.size()];
 		for (int i = 0; i < waypointsStrings.size(); i++) {
 			Waypoint waypoint = new Waypoint(waypointsStrings.get(i));
@@ -93,7 +94,7 @@ public class VehicleRoutingService {
 		List<LatLng> result = gson.fromJson(gson.toJson(routes[0].overviewPolyline.decodePath()),
 				new TypeToken<List<LatLng>>() {
 				}.getType());
-		return result;
+		return CompletableFuture.completedFuture(result);
 	}
 
 	public List<PathModel> findRoutes(List<String> cities, int vehicles, int startIndex, long maxArcDistance) {

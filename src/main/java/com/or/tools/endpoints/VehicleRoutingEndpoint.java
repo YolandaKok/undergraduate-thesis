@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,13 +99,27 @@ public class VehicleRoutingEndpoint {
 		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
 		List<PathModel> paths = service.findRoutes(result.getDestinations(), result.getNumOfVehicles(),
 				result.getStartIndex(), result.getMaxArcDistance());
+		List<CompletableFuture<List<LatLng>>> finalPathsFuture = new ArrayList<>();
 		List<List<LatLng>> finalPaths = new ArrayList<>();
+
 		for (PathModel item : paths) {
-			List<LatLng> path = new ArrayList<>();
+			CompletableFuture<List<LatLng>> path;
 			path = service.findStepsBetween(item.getOrigin(), item.getWaypoints());
-			finalPaths.add(path);
+			finalPathsFuture.add(path);
 		}
 		VehicleFinalResponse response = new VehicleFinalResponse();
+		finalPaths = finalPathsFuture.stream().map(x -> {
+			try {
+				return x.get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
 		response.setRoutes(finalPaths);
 		response.setCenter(finalPaths.get(0).get(0));
 		for (int i = 0; i < response.getRoutes().size(); i++) {
@@ -144,14 +157,14 @@ public class VehicleRoutingEndpoint {
 		return routes;
 	}
 
-	@GetMapping("/polyline")
-	public List<LatLng> solvePolyline(@RequestParam("origin") String origin,
-			@RequestParam("destination") String destination) {
-		System.out.println(origin + " " + destination);
-		List<String> array = new ArrayList<>();
-		array.add("Galatsiou 130, Galatsi");
-		array.add("Patission 200, Athens");
-		return service.findStepsBetween(origin, array);
-	}
+//	@GetMapping("/polyline")
+//	public List<LatLng> solvePolyline(@RequestParam("origin") String origin,
+//			@RequestParam("destination") String destination) {
+//		System.out.println(origin + " " + destination);
+//		List<String> array = new ArrayList<>();
+//		array.add("Galatsiou 130, Galatsi");
+//		array.add("Patission 200, Athens");
+//		return service.findStepsBetween(origin, array);
+//	}
 
 }
