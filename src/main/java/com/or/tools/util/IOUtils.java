@@ -227,14 +227,8 @@ public class IOUtils {
 		long maxArcDistance = -1;
 		int startIndex = -1;
 
-		MultipleKnapsackModel response = new MultipleKnapsackModel();
-
 		int numOfRows = 0;
 		int totalRows;
-
-		double[] bins;
-		double[] values;
-		double[] weights;
 
 		if (!file.isEmpty()) {
 			// Read the file

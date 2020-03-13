@@ -60,6 +60,13 @@ export default function CustomTable(props) {
                             })
                         }
                     </TableBody>
+                    {
+                        props.moreInfo ? <p style={{padding: 16, fontWeight: "bold", fontSize: 10}}>The parameters are:
+                            1. Number of vehicles
+                            2. Max arc distance in meters
+                            3. Starting Point Index</p> : ''
+                    }
+
                 </Table>
             </TableContainer>
         </Fragment>

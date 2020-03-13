@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { withGoogleMap, GoogleMap, Polyline, Marker, InfoWindow } from 'react-google-maps';
+import styles from "../../static/signup.module.css";
 
 class GoogleMapsGraph extends Component {
     constructor(props) {
@@ -1216,8 +1217,10 @@ class GoogleMapsGraph extends Component {
         ));
         return(
             <div>
+                <h5>Graph</h5>
+                <hr className={styles.marginHr}></hr>
                 <GoogleMapExample
-                    containerElement={ <div style={{ height: `500px`, width: '500px' }} /> }
+                    containerElement={ <div style={{ height: `500px`, width: '500px', paddingBottom: 30 }} /> }
                     mapElement={ <div style={{ height: `100%` }} /> }
                 />
             </div>

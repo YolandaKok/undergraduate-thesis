@@ -1,6 +1,5 @@
 package com.or.tools.endpoints;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -8,18 +7,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.errors.ApiException;
-import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.or.tools.algorithms.VehicleRoutingService;
 import com.or.tools.model.Coords;
@@ -69,6 +64,7 @@ public class VehicleRoutingEndpoint {
 		return coords;
 	}
 
+	@Async
 	private List<Coords> findCoordsMarkers(List<String> markers) {
 		List<Marker> response = new ArrayList<>();
 		List<CompletableFuture<Coords>> coordsFuture = new ArrayList<>();
@@ -92,6 +88,12 @@ public class VehicleRoutingEndpoint {
 		}).collect(Collectors.toList());
 
 		return coords;
+	}
+
+	@PostMapping("/data")
+	public VehicleRoutingResult getInitialData(@RequestParam("file") MultipartFile file) {
+		VehicleRoutingResult result = ioUtils.readVehicleRouting(file);
+		return result;
 	}
 
 	@PostMapping("/solve")
@@ -129,35 +131,6 @@ public class VehicleRoutingEndpoint {
 		}
 		response.setRoutesInt(paths.stream().map(x -> x.getRoutes()).collect(Collectors.toList()));
 		return response;
-	}
-
-	@PostMapping("/test")
-	public List<Coords> find(@RequestParam("file") MultipartFile file) {
-		ArrayList<String> cities = ioUtils.readTspData(file);
-		ArrayList<Coords> routes = new ArrayList<>();
-
-		for (String city : cities) {
-			GeocodingResult[] results = null;
-			try {
-				results = GeocodingApi.geocode(geoApiContext, city).await();
-			} catch (ApiException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			Coords point = new Coords();
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			point.setLat(Double.parseDouble(gson.toJson(results[0].geometry.location.lat)));
-			point.setLng(Double.parseDouble(gson.toJson(results[0].geometry.location.lng)));
-			routes.add(point);
-		}
-		return routes;
 	}
 
 //	@GetMapping("/polyline")
