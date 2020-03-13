@@ -244,19 +244,15 @@ public class IOUtils {
 					if (numOfRows != 0 && numOfRows != (totalRows - 1)) {
 						log.info("New Row: ");
 						String[] columns = row.split(";");
-						int attributes = 0;
 						for (String column : columns) {
 							if (column.charAt(0) == '"') {
 								column = column.substring(1, column.length() - 1);
 							}
 							cities.add(column);
-							attributes++;
-							log.info("Attribute: {}", column);
 						}
 						num++;
 					}
 					if (numOfRows == totalRows - 1) {
-						log.info("New Row: ");
 						String[] columns = row.split(";");
 						int attributes = 0;
 						for (String column : columns) {

@@ -38,7 +38,10 @@ export class VehicleRouting extends Component {
                     ['parameters', '{2,500000,0}']],
                 moreInfo: true
             },
-            matrix: [[]]
+            matrix: [[]],
+            routes: [],
+            markers: [],
+            center: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
@@ -71,12 +74,31 @@ export class VehicleRouting extends Component {
             }
             matrix.push(['parameters', '{' + this.state.initialData.numOfVehicles + ',' + this.state.initialData.maxArcDistance + ',' + this.state.initialData.startIndex + '}']);
             this.setState({matrix: matrix});
-            // this.getResult();
+            this.getResult();
         },
         (error) => {
             console.log("Check File Format: " + error);
             this.setState({uploadError: 'danger'});
             this.setState({message: 'Error while uploading file !'});
+        });
+    }
+
+    getResult() {
+        axios.post(SERVICE_URL + '/routing/solve' , this.state.formData, {
+            headers: {"Authorization": localStorage.getItem('authorization'), 'Content-Type': 'multipart/form-data'}
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({center: response.data.center})
+            this.setState({routes: response.data.routes});
+            this.setState({markers: response.data.markers});
+            this.setState({uploadError: 'success'});
+            this.setState({message: 'The results are ready !'});
+        },
+        (error) => {
+            console.log("Check File Format: " + error);
+            this.setState({uploadError: 'danger'});
+            this.setState({message: 'Error while calculating distances !'});
         });
     }
 
@@ -93,7 +115,7 @@ export class VehicleRouting extends Component {
                                 steps={["Upload Document", "Show Result"]}
                                 first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
                                 third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers}/>}
-                                second={<GoogleMapsGraph/>}
+                                second={<GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />}
                                 fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo}/>}
                                 // completed={<ResultCompleted message={this.state.saveMessage}
                                 //                             value={this.state.value}
