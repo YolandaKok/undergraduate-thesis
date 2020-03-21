@@ -7,7 +7,6 @@ export class IndexPage extends Component {
         return(
             <div>
                 <NavBar/>
-                <GoogleMapsGraph/>
                 {this.props.children}
             </div>
         );
