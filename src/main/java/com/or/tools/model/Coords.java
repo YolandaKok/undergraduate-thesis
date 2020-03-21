@@ -5,6 +5,8 @@ public class Coords {
 	private Double lat;
 	private Double lng;
 	private String address;
+	private Integer label;
+	private Integer vehicle;
 
 	public String getAddress() {
 		return address;
@@ -28,6 +30,22 @@ public class Coords {
 
 	public void setLng(Double lng) {
 		this.lng = lng;
+	}
+
+	public Integer getLabel() {
+		return label;
+	}
+
+	public void setLabel(Integer label) {
+		this.label = label;
+	}
+
+	public Integer getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Integer vehicle) {
+		this.vehicle = vehicle;
 	}
 
 }
