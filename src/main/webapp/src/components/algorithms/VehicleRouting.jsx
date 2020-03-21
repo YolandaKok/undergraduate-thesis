@@ -41,10 +41,12 @@ export class VehicleRouting extends Component {
             matrix: [[]],
             routes: [],
             markers: [],
+            paths: [],
             center: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
         this.getInitialData = this.getInitialData.bind(this);
+        this.saveExperiment = this.saveExperiment.bind(this);
     }
 
     componentWillMount() {
@@ -92,6 +94,7 @@ export class VehicleRouting extends Component {
             this.setState({center: response.data.center})
             this.setState({routes: response.data.routes});
             this.setState({markers: response.data.markers});
+            this.setState({paths: response.data.paths});
             this.setState({uploadError: 'success'});
             this.setState({message: 'The results are ready !'});
         },
@@ -99,6 +102,37 @@ export class VehicleRouting extends Component {
             console.log("Check File Format: " + error);
             this.setState({uploadError: 'danger'});
             this.setState({message: 'Error while calculating distances !'});
+        });
+    }
+
+    saveExperiment() {
+        // Create JSON Object for initial data
+        let initialData = {}
+        // Json object for result data
+        let resultData = {
+            "center": this.state.center,
+            "routes": this.state.routes,
+            "markers": this.state.markers,
+            "paths": this.state.paths
+        }
+        axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
+            date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
+            headers: {"Authorization": localStorage.getItem('authorization')}
+        })
+        .then((response) => {
+            console.log(response);
+            let message = "You have saved the experiment successfully. Go to ";
+            this.setState({saveMessage: message});
+            this.setState({value: "success"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
+        },
+        (error) => {
+            console.log("error");
+            this.setState({saveMessage: "Oops, something went wrong."});
+            this.setState({value: "danger"});
+            this.setState({path: "/"});
+            this.setState({componentName: "Homepage"});
         });
     }
 
@@ -117,12 +151,12 @@ export class VehicleRouting extends Component {
                                 third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers}/>}
                                 second={<GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />}
                                 fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo}/>}
-                                // completed={<ResultCompleted message={this.state.saveMessage}
-                                //                             value={this.state.value}
-                                //                             path={this.state.path}
-                                //                             componentName={this.state.componentName}
-                                //                             uploadMessage={this.state.message}/>}
-                                // finish={this.saveExperiment}
+                                completed={<ResultCompleted message={this.state.saveMessage}
+                                                            value={this.state.value}
+                                                            path={this.state.path}
+                                                            componentName={this.state.componentName}
+                                                            uploadMessage={this.state.message}/>}
+                                finish={this.saveExperiment}
                             />
                         </Grid>
                     </Grid>
