@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.maps.GeoApiContext;
 import com.google.maps.model.LatLng;
 import com.or.tools.algorithms.VehicleRoutingService;
 import com.or.tools.model.Coords;
-import com.or.tools.model.Marker;
 import com.or.tools.model.PathModel;
 import com.or.tools.response.VehicleFinalResponse;
 import com.or.tools.response.VehicleRoutingResult;
@@ -28,45 +26,13 @@ import com.or.tools.util.IOUtils;
 @RequestMapping(value = "/routing")
 public class VehicleRoutingEndpoint {
 	@Autowired
-	private GeoApiContext geoApiContext;
-
-	@Autowired
 	private IOUtils ioUtils;
 
 	@Autowired
 	private VehicleRoutingService service;
 
-	// Destination points in map
-	@PostMapping("/points")
-	public List<Coords> findCoordinates(@RequestParam("file") MultipartFile file) {
-		// Read data for city
-		ArrayList<String> cities = ioUtils.readTspData(file);
-
-		List<CompletableFuture<Coords>> coordsFuture = new ArrayList<>();
-
-		for (String city : cities) {
-			coordsFuture.add(service.getCoords(city));
-		}
-		List<Coords> coords;
-
-		coords = coordsFuture.stream().map(x -> {
-			try {
-				return x.get();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}).collect(Collectors.toList());
-		return coords;
-	}
-
 	@Async
 	private List<Coords> findCoordsMarkers(List<String> markers) {
-		List<Marker> response = new ArrayList<>();
 		List<CompletableFuture<Coords>> coordsFuture = new ArrayList<>();
 
 		for (String location : markers) {
@@ -126,21 +92,9 @@ public class VehicleRoutingEndpoint {
 		}).collect(Collectors.toList());
 		response.setRoutes(finalPaths);
 		response.setCenter(finalPaths.get(0).get(0));
-		for (int i = 0; i < response.getRoutes().size(); i++) {
-			response.setMarkers(findCoordsMarkers(result.getDestinations()));
-		}
-		response.setRoutesInt(paths.stream().map(x -> x.getRoutes()).collect(Collectors.toList()));
+		response.setMarkers(findCoordsMarkers(result.getDestinations()));
+		response.setPaths(paths);
 		return response;
 	}
-
-//	@GetMapping("/polyline")
-//	public List<LatLng> solvePolyline(@RequestParam("origin") String origin,
-//			@RequestParam("destination") String destination) {
-//		System.out.println(origin + " " + destination);
-//		List<String> array = new ArrayList<>();
-//		array.add("Galatsiou 130, Galatsi");
-//		array.add("Patission 200, Athens");
-//		return service.findStepsBetween(origin, array);
-//	}
 
 }

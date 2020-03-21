@@ -40,7 +40,7 @@ export class CustomMarker extends Component {
                     "lat": parseFloat(lat),
                     "lng": parseFloat(lng),
                 }}
-                label={'A'}
+                label={address}
                 onClick={this.handleMouseOver}
             >
                 {this.state.showInfoWindow && (

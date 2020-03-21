@@ -91,7 +91,6 @@ public class VehicleRoutingService {
 		}
 		DirectionsRoute[] routes = results.routes;
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		System.out.println("Polyline " + gson.toJson(routes[0].overviewPolyline.decodePath()));
 		List<LatLng> result = gson.fromJson(gson.toJson(routes[0].overviewPolyline.decodePath()),
 				new TypeToken<List<LatLng>>() {
 				}.getType());

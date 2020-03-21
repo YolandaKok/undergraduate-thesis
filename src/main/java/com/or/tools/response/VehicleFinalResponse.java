@@ -4,19 +4,20 @@ import java.util.List;
 
 import com.google.maps.model.LatLng;
 import com.or.tools.model.Coords;
+import com.or.tools.model.PathModel;
 
 public class VehicleFinalResponse {
 	private LatLng center;
 	private List<List<LatLng>> routes;
 	private List<Coords> markers;
-	private List<List<Integer>> routesInt;
+	private List<PathModel> paths;
 
-	public List<List<Integer>> getRoutesInt() {
-		return routesInt;
+	public List<PathModel> getPaths() {
+		return paths;
 	}
 
-	public void setRoutesInt(List<List<Integer>> routesInt) {
-		this.routesInt = routesInt;
+	public void setPaths(List<PathModel> paths) {
+		this.paths = paths;
 	}
 
 	public List<Coords> getMarkers() {
