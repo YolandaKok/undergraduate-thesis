@@ -182,7 +182,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function getStepContent(step, first, second, third, fourth, fifth, sixth, completed) {
+function getStepContent(step, first, second, third, fourth, fifth, sixth, seventh, completed) {
     switch (step) {
         case 0:
             return (
@@ -207,7 +207,9 @@ function getStepContent(step, first, second, third, fourth, fifth, sixth, comple
                                 <Grid container justify="center" spacing={6}>
                                     <Grid xs={12} md={12} lg={5} xl={5}>{second}</Grid>
                                     <Grid item xs={0} md={0} lg={1} xl={1}></Grid>
-                                    <Grid xs={12} md={12} lg={5} xl={5}>{third}</Grid>
+                                    {
+                                        seventh != undefined ? <Grid xs={12} md={12} lg={5} xl={5}>{seventh}</Grid> : <Grid xs={12} md={12} lg={5} xl={5}>{third}</Grid>
+                                    }
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -272,7 +274,7 @@ export function CustomizedSteppers(props) {
                 {activeStep === steps.length ? (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.completed)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.seventh, props.completed)}
                         </Typography>
                         <Button onClick={handleReset} className={classes.button}>
                             Reset
@@ -284,7 +286,7 @@ export function CustomizedSteppers(props) {
                 ) : (
                     <div>
                         <Typography className={classes.instructions}>
-                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.completed)}
+                            {getStepContent(activeStep, props.first, props.second, props.third, props.fourth, props.fifth, props.sixth, props.seventh, props.completed)}
                         </Typography>
                         <div>
                             <Button

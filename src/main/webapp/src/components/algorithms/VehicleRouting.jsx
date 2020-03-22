@@ -42,6 +42,8 @@ export class VehicleRouting extends Component {
             routes: [],
             markers: [],
             paths: [],
+            headers: ['Routes          ', ''],
+            resultsMatrix: [[]],
             center: null
         }
         this.passedForDragAndDrop = this.passedForDragAndDrop.bind(this);
@@ -95,6 +97,21 @@ export class VehicleRouting extends Component {
             this.setState({routes: response.data.routes});
             this.setState({markers: response.data.markers});
             this.setState({paths: response.data.paths});
+            let matrix = [[]];
+            for(let i = 0; i < response.data.paths.length; i++) {
+                matrix.push(['Vehicle', i]);
+                matrix.push(['Starting Point', response.data.paths[i].origin]);
+                let routes = "";
+                for(let j = 0; j < response.data.paths[i].waypoints.length; j++) {
+                    console.log(response.data.paths[i].waypoints[j]);
+                    routes += response.data.paths[i].waypoints[j];
+                    routes += ',';
+                }
+                routes = routes.substring(0, routes.length-2);
+                matrix.push(['Routes', routes]);
+                matrix.push(['Total Distance (meters)', response.data.paths[i].routeDistance]);
+            }
+            this.setState({"resultsMatrix": matrix});
             this.setState({uploadError: 'success'});
             this.setState({message: 'The results are ready !'});
         },
@@ -151,6 +168,7 @@ export class VehicleRouting extends Component {
                                 third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers}/>}
                                 second={<GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />}
                                 fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo}/>}
+                                seventh={<TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} />}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}
                                                             path={this.state.path}
