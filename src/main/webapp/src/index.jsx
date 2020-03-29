@@ -17,6 +17,7 @@ import ShowResultRouting from "./components/layout/ShowResultRouting";
 import ManageProfile from "./components/pages/ManageProfile";
 import LinearOpt from "./components/algorithms/LinearOpt";
 import ShowResultLinear from "./components/layout/ShowResultLinear";
+import ShowResultVehicleRouting from "./components/layout/ShowResultVehicleRouting";
 import NotFound from "./components/pages/NotFound";
 import VehicleRouting from "./components/algorithms/VehicleRouting";
 const jwtDecode = require('jwt-decode');
@@ -53,6 +54,8 @@ const routing = (
             <Route exact path="/show/result/travellingsalesman/:id" component={() => checkToken() ? <Homepage><ShowResultRouting/></Homepage> : <IndexPage/>}/>
 
             <Route exact path="/show/result/linearoptimization/:id" component={() => checkToken() ? <Homepage><ShowResultLinear/></Homepage> : <IndexPage/>}/>
+
+            <Route exact path="/show/result/vehiclerouting/:id" component={() => checkToken() ? <Homepage><ShowResultVehicleRouting/></Homepage> : <IndexPage/>}/>
 
             <Route path="">
                 <Homepage><NotFound/></Homepage>
