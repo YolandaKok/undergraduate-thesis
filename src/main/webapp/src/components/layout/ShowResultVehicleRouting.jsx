@@ -8,6 +8,9 @@ import {Paper} from "@material-ui/core";
 import styles from '../../static/signup.module.css';
 import RouteGraph from "../graphs/RouteGraph";
 import GoogleMapsGraph from "../graphs/GoogleMapsGraph";
+import SimpleTable from "./SimpleTable";
+import {CSVLink} from "react-csv";
+import TableSimple from "./TableSimple";
 const axios = require('axios');
 
 export class ShowResultVehicleRouting extends Component {
@@ -16,7 +19,9 @@ export class ShowResultVehicleRouting extends Component {
         this.state = {
             center: {lat: 38.02217, lng: 23.75288},
             routes: [],
-            markers: []
+            markers: [],
+            headers: [],
+            resultsMatrix: [[]],
         }
     }
 
@@ -32,6 +37,8 @@ export class ShowResultVehicleRouting extends Component {
             this.setState({"center": resultObj.center});
             this.setState({"routes": resultObj.routes});
             this.setState({"markers": resultObj.markers});
+            this.setState({"headers": resultObj.headers});
+            this.setState({"resultsMatrix": resultObj.resultsMatrix});
         },
         (error) => {
             console.log("error");
@@ -45,9 +52,30 @@ export class ShowResultVehicleRouting extends Component {
                     <Grid item xs={12}>
                         <CustomBreadCrumb links={[{"title": "Home", "url": "/"}, {"title": "Saved Experiments", "url": "/myexperiments"}, {"title": "Show Experiment", "url": ""}]} title="Show Experiment" />
                     </Grid>
-                </Grid>
-                <Grid item xs={12} md={12} lg={6} xl={6}>
-                    <GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />
+                    <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
+                        <GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
+                        <TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} />
+                        {/*<Container>*/}
+                        {/*    <Grid container spacing={3}>*/}
+                        {/*        <Grid item xs={6}>*/}
+                        {/*            <CSVLink uFEFF={false} headers={this.state.headers} filename={"routing-initial-" + this.props.match.params.id + ".csv"} data={this.state.initialData} separator={";"}>*/}
+                        {/*                <Button variant='outlined' fullWidth>*/}
+                        {/*                    Download Initial (.csv)*/}
+                        {/*                </Button>*/}
+                        {/*            </CSVLink>*/}
+                        {/*        </Grid>*/}
+                        {/*        <Grid item xs={6}>*/}
+                        {/*            <CSVLink filename={"routing-result-" + this.props.match.params.id + ".csv"} data={this.state.results} separator={";"}>*/}
+                        {/*                <Button variant='contained' color='primary' fullWidth>*/}
+                        {/*                    Download Result (.csv)*/}
+                        {/*                </Button>*/}
+                        {/*            </CSVLink>*/}
+                        {/*        </Grid>*/}
+                        {/*    </Grid>*/}
+                        {/*</Container>*/}
+                    </Grid>
                 </Grid>
             </Container>
         );

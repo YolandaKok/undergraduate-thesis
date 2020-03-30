@@ -130,7 +130,9 @@ export class VehicleRouting extends Component {
             "center": this.state.center,
             "routes": this.state.routes,
             "markers": this.state.markers,
-            "paths": this.state.paths
+            "paths": this.state.paths,
+            "resultsMatrix": this.state.resultsMatrix,
+            "headers": this.state.headers
         }
         axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
             date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {
@@ -164,16 +166,16 @@ export class VehicleRouting extends Component {
                                              message={this.state.message}></CustomizedAlert>
                             <CustomizedSteppers
                                 steps={["Upload Document", "Show Result"]}
-                                first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples}/>}
-                                third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers}/>}
+                                first={<DragAndDrop passedFunction={this.passedForDragAndDrop} handleChange={this.handleChange} data={this.state.samples} />}
+                                third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers} />}
                                 second={<GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />}
-                                fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo}/>}
+                                fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo} />}
                                 seventh={<TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} />}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}
                                                             path={this.state.path}
                                                             componentName={this.state.componentName}
-                                                            uploadMessage={this.state.message}/>}
+                                                            uploadMessage={this.state.message} />}
                                 finish={this.saveExperiment}
                             />
                         </Grid>
