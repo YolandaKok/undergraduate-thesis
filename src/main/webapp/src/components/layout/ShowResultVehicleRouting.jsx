@@ -56,7 +56,7 @@ export class ShowResultVehicleRouting extends Component {
                         <GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />
                     </Grid>
                     <Grid item xs={12} md={12} lg={6} xl={6} component={Paper}>
-                        <TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} />
+                        <TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} count={this.state.routes.length} />
                         {/*<Container>*/}
                         {/*    <Grid container spacing={3}>*/}
                         {/*        <Grid item xs={6}>*/}

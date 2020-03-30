@@ -170,7 +170,7 @@ export class VehicleRouting extends Component {
                                 third={<TableSimple title={'Initial Data'} rows={this.state.matrix} headers={this.state.instructionsPanel.headers} />}
                                 second={<GoogleMapsGraph center={this.state.center} routes={this.state.routes} markers={this.state.markers} />}
                                 fifth={<InstructionsPanel headers={this.state.instructionsPanel.headers} data={this.state.instructionsPanel.instructionsData} moreInfo={this.state.instructionsPanel.moreInfo} />}
-                                seventh={<TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} />}
+                                seventh={<TableSimple title="Vehicles' Routes" rows={this.state.resultsMatrix} headers={this.state.headers} count={this.state.routes.length} />}
                                 completed={<ResultCompleted message={this.state.saveMessage}
                                                             value={this.state.value}
                                                             path={this.state.path}

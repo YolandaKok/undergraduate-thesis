@@ -8,6 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import styles from "../../static/signup.module.css";
 import styles1 from "../../static/dropzone.module.css";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableHead from "@material-ui/core/TableHead";
 
 const useStyles = makeStyles({
     table: {
@@ -16,12 +18,29 @@ const useStyles = makeStyles({
     },
 });
 
+function stableSort(array) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    return stabilizedThis.map(el => el[0]);
+}
+
 function TableSimple(props) {
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = event => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     const classes = useStyles();
     let rows = props.rows;
     let headers = props.headers;
     let title = props.title;
+    let count = props.count;
     return (
         <div>
             <h5>{title}</h5>
@@ -30,30 +49,35 @@ function TableSimple(props) {
             </main>
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableBody>
+                    <TableHead>
                         <TableRow>
-                            {
-                                headers.map((item) => {
-                                    return(<TableCell style={{fontWeight: "bold"}}>{item}</TableCell>);
-                                })
-                            }
+                            <TableCell>Routes</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
-                        {rows.map((row, index) => {
+                    </TableHead>
+                    <TableBody>
+                        {stableSort(rows)
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, index) => {
                             return (
                                 <TableRow key={index}>
-                                    {
-                                        row.map((item, index) => {
-                                            return (<TableCell>{item}</TableCell>);
-                                        })
-                                    }
+                                    <TableCell>{row[0]}</TableCell>
+                                    <TableCell>{row[1]}</TableCell>
                                 </TableRow>
                             );
-                        })
-                        }
-
+                        })}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
         </div>
     );
 }
