@@ -101,13 +101,12 @@ export class VehicleRouting extends Component {
             for(let i = 0; i < response.data.paths.length; i++) {
                 matrix.push(['Vehicle', i]);
                 matrix.push(['Starting Point', response.data.paths[i].origin]);
-                let routes = "";
+                let routes = [];
+                let route = "";
                 for(let j = 0; j < response.data.paths[i].waypoints.length; j++) {
-                    console.log(response.data.paths[i].waypoints[j]);
-                    routes += response.data.paths[i].waypoints[j];
-                    routes += ',';
+                    route = response.data.paths[i].waypoints[j];
+                    routes.push(route);
                 }
-                routes = routes.substring(0, routes.length-2);
                 matrix.push(['Routes', routes]);
                 matrix.push(['Total Distance (meters)', response.data.paths[i].routeDistance]);
             }

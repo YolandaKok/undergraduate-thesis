@@ -62,7 +62,13 @@ function TableSimple(props) {
                             return (
                                 <TableRow key={index}>
                                     <TableCell>{row[0]}</TableCell>
-                                    <TableCell>{row[1]}</TableCell>
+                                    {
+                                        row[0] == 'Routes' ? <TableCell>{
+                                            row[1].map((item, index) => {
+                                            return(<TableRow>{index + 1}. {item}</TableRow>)
+                                        })}
+                                        </TableCell> : <TableCell>{row[1]}</TableCell>
+                                    }
                                 </TableRow>
                             );
                         })}
