@@ -248,7 +248,8 @@ public class IOUtils {
 							if (column.charAt(0) == '"') {
 								column = column.substring(1, column.length() - 1);
 							}
-							cities.add(column);
+							if (!column.equals(""))
+								cities.add(column);
 						}
 						num++;
 					}

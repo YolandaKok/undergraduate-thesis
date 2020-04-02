@@ -131,7 +131,9 @@ export class VehicleRouting extends Component {
             "markers": this.state.markers,
             "paths": this.state.paths,
             "resultsMatrix": this.state.resultsMatrix,
-            "headers": this.state.headers
+            "headers": this.state.headers,
+            "destinations": this.state.initialData.destinations,
+            "parameters": '{' + this.state.initialData.numOfVehicles + ',' + this.state.initialData.maxArcDistance + ',' + this.state.initialData.startIndex + '}'
         }
         axios.post(SERVICE_URL + '/experiments' , {username:  localStorage.getItem('username_info'), algorithmId: this.state.algorithmId,
             date: new Date(), data: JSON.stringify(initialData), result: JSON.stringify(resultData)}, {

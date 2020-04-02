@@ -56,7 +56,7 @@ class ShowResultRouting extends Component {
             resultObj.distanceMatrix.forEach((item, index) => {
                 results2.push([resultObj.cities[index]].concat(item));
             })
-                this.setState({"results": results2});
+            this.setState({"results": results2});
         },
         (error) => {
             console.log("error");
