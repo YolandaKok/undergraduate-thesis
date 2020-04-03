@@ -26,7 +26,9 @@ export class ShowResultVehicleRouting extends Component {
             ],
             resultsMatrix: [[]],
             destinations: [],
-            parameters: ''
+            parameters: '',
+            results: [],
+            paths: []
         }
     }
 
@@ -45,6 +47,7 @@ export class ShowResultVehicleRouting extends Component {
             this.setState({"headers": resultObj.headers});
             this.setState({"resultsMatrix": resultObj.resultsMatrix});
             this.setState({"parameters": resultObj.parameters});
+            this.setState({"paths": resultObj.paths});
             let destinations = [];
             for(let i = 0; i < resultObj.destinations.length; i++) {
                 let obj = {x: resultObj.destinations[i]}
@@ -53,6 +56,21 @@ export class ShowResultVehicleRouting extends Component {
             let obj = {x: "parameters", y: resultObj.parameters}
             destinations.push(obj);
             this.setState({"destinations": destinations})
+
+            let item = [];
+            let paths = this.state.paths;
+            for(let i = 0; i < paths.length; i++) {
+                item.push(['Vehicle', i + 1]);
+                item.push(['origin', paths[i].origin]);
+                for(let j = 0; j < paths[i].waypoints.length; j++) {
+                    if(j == 0)
+                        item.push(['Waypoints', paths[i].waypoints[j]])
+                    else
+                        item.push(["", paths[i].waypoints[j]])
+                }
+                item.push(['Total Distance', paths[i].routeDistance]);
+            }
+            this.setState({"results": item});
         },
         (error) => {
             console.log("error");
@@ -81,11 +99,11 @@ export class ShowResultVehicleRouting extends Component {
                                     </CSVLink>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    {/*<CSVLink filename={"vehicle-routing-result-" + this.props.match.params.id + ".csv"} data={this.state.results} separator={";"}>*/}
-                                    {/*    <Button variant='contained' color='primary' fullWidth>*/}
-                                    {/*        Download Result (.csv)*/}
-                                    {/*    </Button>*/}
-                                    {/*</CSVLink>*/}
+                                    <CSVLink filename={"vehicle-routing-result-" + this.props.match.params.id + ".csv"} data={this.state.results} separator={";"}>
+                                        <Button variant='contained' color='primary' fullWidth>
+                                            Download Result (.csv)
+                                        </Button>
+                                    </CSVLink>
                                 </Grid>
                             </Grid>
                         </Container>
