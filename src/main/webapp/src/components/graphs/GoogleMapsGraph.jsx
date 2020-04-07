@@ -13,11 +13,12 @@ class GoogleMapsGraph extends Component {
         let center = this.props.center;
         let routes = this.props.routes;
         let routesInt = this.props.routesInt;
-        let colors = ['#478912', '#dd3333', '#1122ff'];
+        let colors = ['#478912', '#dd3333', '#1122ff', '#df5643',
+            '#00bdaa', '#400082', '#fe346e', '#f1e7b6'];
         const GoogleMapExample = withGoogleMap(props => (
             <GoogleMap
                 center={{lat: center.lat, lng: center.lng}}
-                defaultZoom = { 13 }
+                defaultZoom = { 11 }
             >
 
             {
