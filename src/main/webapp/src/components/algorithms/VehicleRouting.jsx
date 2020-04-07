@@ -72,7 +72,7 @@ export class VehicleRouting extends Component {
             this.setState({message: 'You have uploaded the file successfully !'});
             // Create Matrix
             this.setState({initialData: response.data});
-            let matrix = [[]];
+            let matrix = [];
             for(let i = 0; i < this.state.initialData.destinations.length; i++) {
                 matrix.push([this.state.initialData.destinations[i], '']);
             }
@@ -97,7 +97,7 @@ export class VehicleRouting extends Component {
             this.setState({routes: response.data.routes});
             this.setState({markers: response.data.markers});
             this.setState({paths: response.data.paths});
-            let matrix = [[]];
+            let matrix = [];
             for(let i = 0; i < response.data.paths.length; i++) {
                 matrix.push(['Vehicle', i]);
                 matrix.push(['Starting Point', response.data.paths[i].origin]);

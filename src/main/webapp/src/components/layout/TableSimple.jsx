@@ -25,14 +25,14 @@ function stableSort(array) {
 
 function TableSimple(props) {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = event => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(parseInt(event.target.value, 8));
         setPage(0);
     };
 
@@ -76,7 +76,7 @@ function TableSimple(props) {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[4, 8, 12]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
