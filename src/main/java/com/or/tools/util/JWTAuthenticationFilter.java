@@ -2,7 +2,6 @@ package com.or.tools.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -58,7 +57,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// auth.getPrincipal()).getUsername());
 		/* Get User Roles */
 		String token = JWT.create().withSubject(((User) auth.getPrincipal()).getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 864_000_000))
 				.sign(Algorithm.HMAC512(jwtSecretPassword.getBytes()));
 		res.addHeader("Authorization", "Bearer " + token);
 	}
