@@ -28,7 +28,7 @@
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.40",
     "@material-ui/system": "latest",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "clsx": "latest",
     "copy-webpack-plugin": "^5.0.5",
